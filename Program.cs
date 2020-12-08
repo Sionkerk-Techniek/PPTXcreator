@@ -26,8 +26,18 @@ namespace PPTXcreator
             string path = "../../../PPTXcreatorfiles/template_voor-dienst.pptx";
             PresentationDocument pptx = PresentationDocument.Open(path, true); // open pptx file
             PresentationPart part = pptx.PresentationPart;
-            //OpenXmlElementList slideIDs = part.Presentation.SlideIdList.ChildElements;
+
             
+            // This dictionary will eventually be replaced by values from the form
+            Dictionary<String, String> templateContents = new Dictionary<String, String>()
+            {
+                { "#TIJD_NU", "13:37" },
+                { "#DS_NU", "ds. Voornaam Achternaam" },
+                { "#DS_NU_PLAATS", "Null Island" },
+                { "#THEMA", "testthema" }
+            };
+            
+
             // Loop over slides
             foreach (SlidePart slide in part.SlideParts)
             {
@@ -37,10 +47,21 @@ namespace PPTXcreator
                 // Loop over text in slides
                 foreach (Drawing.Text text in slide.Slide.Descendants<Drawing.Text>())
                 {
-                    Console.WriteLine(text.Text);
+                    StringBuilder sb = new StringBuilder(text.Text);
+                    Console.WriteLine(text.Text); // for debugging
+
+                    // loop over replacable keywords
+                    foreach (KeyValuePair<String, String> kvp in templateContents)
+                    {
+                        sb.Replace(kvp.Key, kvp.Value);
+                    }
+                    text.Text = sb.ToString(); // hopefully this saves to the file
+
+                    Console.WriteLine(text.Text); // for debugging
                 }
             }
 
+            pptx.Close();
         }
     }
 }
