@@ -31,9 +31,18 @@ namespace PPTXcreator
             { "#DS_NAAM_1", "ds. Voornaam Achternaam" },
             { "#DS_PLAATS_2", "Null Island" },
             { "#DS_NAAM_2", "ds. Voornaam Achternaam" },
-            { "#ZINGEN_7X", "wat we hier zingen\r\nwerkt deze enter?\nen deze?\r\n4\r\n5\r\n6\r\n7" },
+            { "#ORGANIST", "Abc van de Defgijklmnopqrstuvwxyz" },
+            { "#ZINGEN_1", "Ps 151 : 1, 2 en 3" },
+            { "#ZINGEN_2", "Ps 152 : 1, 2 en 3" },
+            { "#ZINGEN_3", "Ps 153 : 1, 2 en 3 WK" },
+            { "#ZINGEN_4", "Ps 154 : 1, 2 en 3" },
+            { "#ZINGEN_5", "Ps 155 : 1, 2 en 3" },
+            { "#ZINGEN_6", "Ps 156 : 1, 2 en 3" },
+            { "#ZINGEN_7", "Ps 157 : 1, 2 en 3 WK" },
             { "#LEZING", "asdf" },
-            { "#THEMA", "testthema" }
+            { "#THEMA", "testthema" },
+            { "#COLLECTE_1", "doel 1" },
+            { "#COLLECTE_2", "doel 2" },
         };
 
 
@@ -58,7 +67,9 @@ namespace PPTXcreator
                     {
                         sb.Replace(kvp.Key, kvp.Value);
                     }
+                    //sb.Replace(Environment.NewLine, new Drawing.Break().ToString());
                     text.Text = sb.ToString();
+                    //Console.WriteLine(new Drawing.Text().XName);
                 }
             }
         }
@@ -74,9 +85,9 @@ namespace PPTXcreator
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Window());
 
-            
             PresentationDocument pptx = PresentationDocument.Open(Path, true); // open pptx file
             ReplacePlaceholders(pptx);
+            pptx.SaveAs(Path.Substring(0, 26) + "edited.pptx");
             pptx.Close();
         }
     }
