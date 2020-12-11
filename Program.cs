@@ -67,9 +67,9 @@ namespace PPTXcreator
                     {
                         sb.Replace(kvp.Key, kvp.Value);
                     }
-                    //sb.Replace(Environment.NewLine, new Drawing.Break().ToString());
+                    
                     text.Text = sb.ToString();
-                    //Console.WriteLine(new Drawing.Text().XName);
+                    
                 }
             }
         }
@@ -81,10 +81,12 @@ namespace PPTXcreator
         [STAThread]
         public static void Main()
         {
+            // start de UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Window());
 
+            // edit de powerpoints met ReplacePlaceholders() en sla het resultaat op
             PresentationDocument pptx = PresentationDocument.Open(Path, true); // open pptx file
             ReplacePlaceholders(pptx);
             pptx.SaveAs(Path.Substring(0, 26) + "edited.pptx");
