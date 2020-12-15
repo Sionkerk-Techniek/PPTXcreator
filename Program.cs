@@ -14,12 +14,6 @@ namespace PPTXcreator
     static class Program
     {
         /// <summary>
-        /// The path at which the .pptx file is located. Will be replaced by a path from the form in the future
-        /// </summary>
-        public static string Path = "../../../PPTXcreatorfiles/template_voor-dienst.pptx";
-
-
-        /// <summary>
         /// Dictionary containing the values with which the keys will be replaced in the slides.
         /// This dictionary will eventually be filled with form values instead of this way.
         /// </summary>
@@ -81,15 +75,17 @@ namespace PPTXcreator
         [STAThread]
         public static void Main()
         {
-            // start de UI
+            Settings.Load();
+
+            // start UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Window());
 
             // edit de powerpoints met ReplacePlaceholders() en sla het resultaat op
-            PresentationDocument pptx = PresentationDocument.Open(Path, true); // open pptx file
+            PresentationDocument pptx = PresentationDocument.Open(Settings.PPTXTemplatePre, true); // open pptx file. TODO: exception handling
             ReplacePlaceholders(pptx);
-            pptx.SaveAs(Path.Substring(0, 26) + "edited.pptx");
+            pptx.SaveAs("../../edited.pptx");
             pptx.Close();
         }
     }

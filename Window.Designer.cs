@@ -1,4 +1,5 @@
-﻿namespace PPTXcreator
+﻿
+namespace PPTXcreator
 {
     partial class Window
     {
@@ -41,6 +42,8 @@
             System.Windows.Forms.Label label14;
             System.Windows.Forms.Label label15;
             System.Windows.Forms.Label label11;
+            System.Windows.Forms.Label label7;
+            System.Windows.Forms.Label label10;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
@@ -59,33 +62,37 @@
             this.textBoxVoorgangerNextTitel = new System.Windows.Forms.TextBox();
             this.textBoxVoorgangerNuTitel = new System.Windows.Forms.TextBox();
             this.textBoxVoorgangerNuNaam = new System.Windows.Forms.TextBox();
+            this.tabCollecte = new System.Windows.Forms.TabPage();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.buttonQRSelect = new System.Windows.Forms.Button();
+            this.textBoxQRPath = new System.Windows.Forms.TextBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.textBoxCollecte3 = new System.Windows.Forms.TextBox();
+            this.textBoxCollecte1 = new System.Windows.Forms.TextBox();
             this.tabLiturgie = new System.Windows.Forms.TabPage();
+            this.buttonRowMoveDown = new System.Windows.Forms.Button();
+            this.buttonRowMoveUp = new System.Windows.Forms.Button();
+            this.buttonRowRemove = new System.Windows.Forms.Button();
+            this.buttonRowAdd = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.tabInstellingen = new System.Windows.Forms.TabPage();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.buttonOutputfolder = new System.Windows.Forms.Button();
-            this.textBoxOutputfolder = new System.Windows.Forms.TextBox();
-            this.tabCollecte = new System.Windows.Forms.TabPage();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.textBoxCollecte3 = new System.Windows.Forms.TextBox();
-            this.textBoxCollecte1 = new System.Windows.Forms.TextBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
             this.ContentType = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Content = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContentIdentifier = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.buttonRowAdd = new System.Windows.Forms.Button();
-            this.buttonRowRemove = new System.Windows.Forms.Button();
-            this.buttonRowMoveUp = new System.Windows.Forms.Button();
-            this.buttonRowMoveDown = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.tabInstellingen = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.button11 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.buttonOutputFolderSelect = new System.Windows.Forms.Button();
+            this.textBoxOutputFolder = new System.Windows.Forms.TextBox();
             label8 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
@@ -99,18 +106,21 @@
             label14 = new System.Windows.Forms.Label();
             label15 = new System.Windows.Forms.Label();
             label11 = new System.Windows.Forms.Label();
+            label7 = new System.Windows.Forms.Label();
+            label10 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabCollecte.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.tabLiturgie.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabInstellingen.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.tabCollecte.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // label8
@@ -214,6 +224,55 @@
             label13.Size = new System.Drawing.Size(0, 16);
             label13.TabIndex = 0;
             // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            label14.Location = new System.Drawing.Point(14, 63);
+            label14.Name = "label14";
+            label14.Size = new System.Drawing.Size(103, 16);
+            label14.TabIndex = 1;
+            label14.Text = "Derde collecte:";
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            label15.Location = new System.Drawing.Point(14, 35);
+            label15.Name = "label15";
+            label15.Size = new System.Drawing.Size(105, 16);
+            label15.TabIndex = 0;
+            label15.Text = "Eerste collecte:";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            label11.Location = new System.Drawing.Point(14, 35);
+            label11.Name = "label11";
+            label11.Size = new System.Drawing.Size(95, 16);
+            label11.TabIndex = 1;
+            label11.Text = "Bestandspad:";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            label7.Location = new System.Drawing.Point(14, 35);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(117, 16);
+            label7.TabIndex = 1;
+            label7.Text = "QR-script locatie:";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            label10.Location = new System.Drawing.Point(14, 35);
+            label10.Name = "label10";
+            label10.Size = new System.Drawing.Size(0, 16);
+            label10.TabIndex = 0;
+            // 
             // tabControl1
             // 
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -289,7 +348,7 @@
             this.groupBox3.Size = new System.Drawing.Size(527, 69);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Organisten";
+            this.groupBox3.Text = "Organist";
             // 
             // textBox2
             // 
@@ -298,6 +357,8 @@
             this.textBox2.Size = new System.Drawing.Size(175, 22);
             this.textBox2.TabIndex = 14;
             this.textBox2.Text = "naam";
+            this.textBox2.Click += new System.EventHandler(this.TextboxSelectOnEnter);
+            this.textBox2.Enter += new System.EventHandler(this.TextboxSelectOnEnter);
             // 
             // groupBox2
             // 
@@ -307,7 +368,7 @@
             this.groupBox2.Controls.Add(label6);
             this.groupBox2.Controls.Add(label5);
             this.groupBox2.Controls.Add(this.dateTimePickerNu);
-            this.groupBox2.Location = new System.Drawing.Point(6, 124);
+            this.groupBox2.Location = new System.Drawing.Point(6, 15);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(527, 97);
             this.groupBox2.TabIndex = 4;
@@ -351,7 +412,7 @@
             this.groupBox1.Controls.Add(label2);
             this.groupBox1.Controls.Add(label1);
             this.groupBox1.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(6, 15);
+            this.groupBox1.Location = new System.Drawing.Point(6, 124);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(527, 97);
             this.groupBox1.TabIndex = 3;
@@ -366,6 +427,8 @@
             this.textBoxVoorgangerNextPlaats.Size = new System.Drawing.Size(124, 22);
             this.textBoxVoorgangerNextPlaats.TabIndex = 11;
             this.textBoxVoorgangerNextPlaats.Text = "plaats";
+            this.textBoxVoorgangerNextPlaats.Click += new System.EventHandler(this.TextboxSelectOnEnter);
+            this.textBoxVoorgangerNextPlaats.Enter += new System.EventHandler(this.TextboxSelectOnEnter);
             // 
             // textBoxVoorgangerNuPlaats
             // 
@@ -375,6 +438,8 @@
             this.textBoxVoorgangerNuPlaats.Size = new System.Drawing.Size(124, 22);
             this.textBoxVoorgangerNuPlaats.TabIndex = 10;
             this.textBoxVoorgangerNuPlaats.Text = "plaats";
+            this.textBoxVoorgangerNuPlaats.Click += new System.EventHandler(this.TextboxSelectOnEnter);
+            this.textBoxVoorgangerNuPlaats.Enter += new System.EventHandler(this.TextboxSelectOnEnter);
             // 
             // textBoxVoorgangerNextNaam
             // 
@@ -385,14 +450,17 @@
             this.textBoxVoorgangerNextNaam.Size = new System.Drawing.Size(175, 22);
             this.textBoxVoorgangerNextNaam.TabIndex = 7;
             this.textBoxVoorgangerNextNaam.Text = "naam";
+            this.textBoxVoorgangerNextNaam.Click += new System.EventHandler(this.TextboxSelectOnEnter);
+            this.textBoxVoorgangerNextNaam.Enter += new System.EventHandler(this.TextboxSelectOnEnter);
             // 
             // textBoxVoorgangerNextTitel
             // 
             this.textBoxVoorgangerNextTitel.AutoCompleteCustomSource.AddRange(new string[] {
-            "ds. ",
-            "prof. ",
-            "prop. ",
-            "dr. "});
+            "ds.",
+            "prop.",
+            "prof. dr.",
+            "prof.",
+            "dr."});
             this.textBoxVoorgangerNextTitel.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.textBoxVoorgangerNextTitel.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBoxVoorgangerNextTitel.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
@@ -401,14 +469,17 @@
             this.textBoxVoorgangerNextTitel.Size = new System.Drawing.Size(41, 22);
             this.textBoxVoorgangerNextTitel.TabIndex = 6;
             this.textBoxVoorgangerNextTitel.Text = "titel";
+            this.textBoxVoorgangerNextTitel.Click += new System.EventHandler(this.TextboxSelectOnEnter);
+            this.textBoxVoorgangerNextTitel.Enter += new System.EventHandler(this.TextboxSelectOnEnter);
             // 
             // textBoxVoorgangerNuTitel
             // 
             this.textBoxVoorgangerNuTitel.AutoCompleteCustomSource.AddRange(new string[] {
-            "ds. ",
-            "prof. ",
-            "prop. ",
-            "dr. "});
+            "ds.",
+            "prop.",
+            "prof. dr.",
+            "prof.",
+            "dr."});
             this.textBoxVoorgangerNuTitel.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.textBoxVoorgangerNuTitel.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBoxVoorgangerNuTitel.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
@@ -417,6 +488,8 @@
             this.textBoxVoorgangerNuTitel.Size = new System.Drawing.Size(41, 22);
             this.textBoxVoorgangerNuTitel.TabIndex = 5;
             this.textBoxVoorgangerNuTitel.Text = "titel";
+            this.textBoxVoorgangerNuTitel.Click += new System.EventHandler(this.TextboxSelectOnEnter);
+            this.textBoxVoorgangerNuTitel.Enter += new System.EventHandler(this.TextboxSelectOnEnter);
             // 
             // textBoxVoorgangerNuNaam
             // 
@@ -427,6 +500,154 @@
             this.textBoxVoorgangerNuNaam.Size = new System.Drawing.Size(175, 22);
             this.textBoxVoorgangerNuNaam.TabIndex = 4;
             this.textBoxVoorgangerNuNaam.Text = "naam";
+            this.textBoxVoorgangerNuNaam.Click += new System.EventHandler(this.TextboxSelectOnEnter);
+            this.textBoxVoorgangerNuNaam.Enter += new System.EventHandler(this.TextboxSelectOnEnter);
+            // 
+            // tabCollecte
+            // 
+            this.tabCollecte.Controls.Add(this.button7);
+            this.tabCollecte.Controls.Add(this.button8);
+            this.tabCollecte.Controls.Add(this.button9);
+            this.tabCollecte.Controls.Add(this.groupBox6);
+            this.tabCollecte.Controls.Add(this.groupBox5);
+            this.tabCollecte.Location = new System.Drawing.Point(4, 25);
+            this.tabCollecte.Name = "tabCollecte";
+            this.tabCollecte.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCollecte.Size = new System.Drawing.Size(539, 357);
+            this.tabCollecte.TabIndex = 3;
+            this.tabCollecte.Text = "Collecte";
+            this.tabCollecte.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button7.Location = new System.Drawing.Point(6, 321);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(100, 30);
+            this.button7.TabIndex = 11;
+            this.button7.Text = "Instellingen";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // button8
+            // 
+            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button8.Location = new System.Drawing.Point(347, 321);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(90, 30);
+            this.button8.TabIndex = 10;
+            this.button8.Text = "Terug";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
+            // button9
+            // 
+            this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button9.Location = new System.Drawing.Point(443, 321);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(90, 30);
+            this.button9.TabIndex = 9;
+            this.button9.Text = "Verder";
+            this.button9.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Controls.Add(this.checkBox2);
+            this.groupBox6.Controls.Add(this.checkBox1);
+            this.groupBox6.Controls.Add(this.buttonQRSelect);
+            this.groupBox6.Controls.Add(this.textBoxQRPath);
+            this.groupBox6.Controls.Add(label11);
+            this.groupBox6.Location = new System.Drawing.Point(6, 124);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(527, 126);
+            this.groupBox6.TabIndex = 5;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "QR-code";
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(17, 90);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(195, 20);
+            this.checkBox2.TabIndex = 17;
+            this.checkBox2.Text = "Opslaan in de outputfolder";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Enabled = false;
+            this.checkBox1.Location = new System.Drawing.Point(17, 64);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(330, 20);
+            this.checkBox1.TabIndex = 16;
+            this.checkBox1.Text = "Bijsnijden en zwart-wit maken (QR-script vereist)";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // buttonQRSelect
+            // 
+            this.buttonQRSelect.Location = new System.Drawing.Point(479, 31);
+            this.buttonQRSelect.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonQRSelect.Name = "buttonQRSelect";
+            this.buttonQRSelect.Size = new System.Drawing.Size(29, 24);
+            this.buttonQRSelect.TabIndex = 15;
+            this.buttonQRSelect.Text = "...";
+            this.buttonQRSelect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonQRSelect.UseVisualStyleBackColor = true;
+            this.buttonQRSelect.Click += new System.EventHandler(this.ButtonSelectQR);
+            // 
+            // textBoxQRPath
+            // 
+            this.textBoxQRPath.Location = new System.Drawing.Point(132, 32);
+            this.textBoxQRPath.Name = "textBoxQRPath";
+            this.textBoxQRPath.ReadOnly = true;
+            this.textBoxQRPath.Size = new System.Drawing.Size(344, 22);
+            this.textBoxQRPath.TabIndex = 14;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Controls.Add(this.textBoxCollecte3);
+            this.groupBox5.Controls.Add(this.textBoxCollecte1);
+            this.groupBox5.Controls.Add(label14);
+            this.groupBox5.Controls.Add(label15);
+            this.groupBox5.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox5.Location = new System.Drawing.Point(6, 15);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(527, 97);
+            this.groupBox5.TabIndex = 4;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Collectedoelen";
+            // 
+            // textBoxCollecte3
+            // 
+            this.textBoxCollecte3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxCollecte3.AutoCompleteCustomSource.AddRange(new string[] {
+            "Gebouwonderhoud"});
+            this.textBoxCollecte3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.textBoxCollecte3.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.textBoxCollecte3.Location = new System.Drawing.Point(132, 60);
+            this.textBoxCollecte3.Name = "textBoxCollecte3";
+            this.textBoxCollecte3.Size = new System.Drawing.Size(185, 22);
+            this.textBoxCollecte3.TabIndex = 7;
+            this.textBoxCollecte3.Text = "doel 3";
+            this.textBoxCollecte3.Click += new System.EventHandler(this.TextboxSelectOnEnter);
+            this.textBoxCollecte3.Enter += new System.EventHandler(this.TextboxSelectOnEnter);
+            // 
+            // textBoxCollecte1
+            // 
+            this.textBoxCollecte1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxCollecte1.Location = new System.Drawing.Point(132, 32);
+            this.textBoxCollecte1.Name = "textBoxCollecte1";
+            this.textBoxCollecte1.Size = new System.Drawing.Size(185, 22);
+            this.textBoxCollecte1.TabIndex = 4;
+            this.textBoxCollecte1.Text = "doel 1";
+            this.textBoxCollecte1.Click += new System.EventHandler(this.TextboxSelectOnEnter);
+            this.textBoxCollecte1.Enter += new System.EventHandler(this.TextboxSelectOnEnter);
             // 
             // tabLiturgie
             // 
@@ -446,6 +667,50 @@
             this.tabLiturgie.TabIndex = 1;
             this.tabLiturgie.Text = "Liturgie";
             this.tabLiturgie.UseVisualStyleBackColor = true;
+            // 
+            // buttonRowMoveDown
+            // 
+            this.buttonRowMoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonRowMoveDown.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_keyboard_arrow_down_black_24dp;
+            this.buttonRowMoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonRowMoveDown.Location = new System.Drawing.Point(503, 180);
+            this.buttonRowMoveDown.Name = "buttonRowMoveDown";
+            this.buttonRowMoveDown.Size = new System.Drawing.Size(30, 30);
+            this.buttonRowMoveDown.TabIndex = 16;
+            this.buttonRowMoveDown.UseVisualStyleBackColor = true;
+            // 
+            // buttonRowMoveUp
+            // 
+            this.buttonRowMoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonRowMoveUp.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_keyboard_arrow_up_black_24dp;
+            this.buttonRowMoveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonRowMoveUp.Location = new System.Drawing.Point(503, 144);
+            this.buttonRowMoveUp.Name = "buttonRowMoveUp";
+            this.buttonRowMoveUp.Size = new System.Drawing.Size(30, 30);
+            this.buttonRowMoveUp.TabIndex = 15;
+            this.buttonRowMoveUp.UseVisualStyleBackColor = true;
+            // 
+            // buttonRowRemove
+            // 
+            this.buttonRowRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonRowRemove.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_remove_black_24dp;
+            this.buttonRowRemove.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonRowRemove.Location = new System.Drawing.Point(503, 108);
+            this.buttonRowRemove.Name = "buttonRowRemove";
+            this.buttonRowRemove.Size = new System.Drawing.Size(30, 30);
+            this.buttonRowRemove.TabIndex = 14;
+            this.buttonRowRemove.UseVisualStyleBackColor = true;
+            // 
+            // buttonRowAdd
+            // 
+            this.buttonRowAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonRowAdd.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_add_black_24dp;
+            this.buttonRowAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonRowAdd.Location = new System.Drawing.Point(503, 72);
+            this.buttonRowAdd.Name = "buttonRowAdd";
+            this.buttonRowAdd.Size = new System.Drawing.Size(30, 30);
+            this.buttonRowAdd.TabIndex = 13;
+            this.buttonRowAdd.UseVisualStyleBackColor = true;
             // 
             // button4
             // 
@@ -488,164 +753,16 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ContentType,
-            this.Content,
+            this.ContentIdentifier,
             this.ContentName});
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.ControlLight;
             this.dataGridView1.Location = new System.Drawing.Point(7, 72);
+            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 25;
             this.dataGridView1.Size = new System.Drawing.Size(490, 222);
             this.dataGridView1.TabIndex = 3;
-            // 
-            // tabInstellingen
-            // 
-            this.tabInstellingen.Controls.Add(this.groupBox4);
-            this.tabInstellingen.Location = new System.Drawing.Point(4, 25);
-            this.tabInstellingen.Name = "tabInstellingen";
-            this.tabInstellingen.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInstellingen.Size = new System.Drawing.Size(539, 357);
-            this.tabInstellingen.TabIndex = 2;
-            this.tabInstellingen.Text = "Instellingen";
-            this.tabInstellingen.UseVisualStyleBackColor = true;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.buttonOutputfolder);
-            this.groupBox4.Controls.Add(this.textBoxOutputfolder);
-            this.groupBox4.Controls.Add(label12);
-            this.groupBox4.Controls.Add(label13);
-            this.groupBox4.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(6, 15);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(527, 69);
-            this.groupBox4.TabIndex = 4;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Output";
-            // 
-            // buttonOutputfolder
-            // 
-            this.buttonOutputfolder.Location = new System.Drawing.Point(479, 31);
-            this.buttonOutputfolder.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonOutputfolder.Name = "buttonOutputfolder";
-            this.buttonOutputfolder.Size = new System.Drawing.Size(29, 24);
-            this.buttonOutputfolder.TabIndex = 5;
-            this.buttonOutputfolder.Text = "...";
-            this.buttonOutputfolder.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonOutputfolder.UseVisualStyleBackColor = true;
-            // 
-            // textBoxOutputfolder
-            // 
-            this.textBoxOutputfolder.Location = new System.Drawing.Point(132, 32);
-            this.textBoxOutputfolder.Name = "textBoxOutputfolder";
-            this.textBoxOutputfolder.ReadOnly = true;
-            this.textBoxOutputfolder.Size = new System.Drawing.Size(344, 22);
-            this.textBoxOutputfolder.TabIndex = 4;
-            this.textBoxOutputfolder.Text = "./presentaties";
-            // 
-            // tabCollecte
-            // 
-            this.tabCollecte.Controls.Add(this.button7);
-            this.tabCollecte.Controls.Add(this.button8);
-            this.tabCollecte.Controls.Add(this.button9);
-            this.tabCollecte.Controls.Add(this.groupBox6);
-            this.tabCollecte.Controls.Add(this.groupBox5);
-            this.tabCollecte.Location = new System.Drawing.Point(4, 25);
-            this.tabCollecte.Name = "tabCollecte";
-            this.tabCollecte.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCollecte.Size = new System.Drawing.Size(539, 357);
-            this.tabCollecte.TabIndex = 3;
-            this.tabCollecte.Text = "Collecte";
-            this.tabCollecte.UseVisualStyleBackColor = true;
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox5.Controls.Add(this.textBoxCollecte3);
-            this.groupBox5.Controls.Add(this.textBoxCollecte1);
-            this.groupBox5.Controls.Add(label14);
-            this.groupBox5.Controls.Add(label15);
-            this.groupBox5.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(6, 15);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(527, 97);
-            this.groupBox5.TabIndex = 4;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Collectedoelen";
-            // 
-            // textBoxCollecte3
-            // 
-            this.textBoxCollecte3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxCollecte3.Location = new System.Drawing.Point(132, 60);
-            this.textBoxCollecte3.Name = "textBoxCollecte3";
-            this.textBoxCollecte3.Size = new System.Drawing.Size(185, 22);
-            this.textBoxCollecte3.TabIndex = 7;
-            this.textBoxCollecte3.Text = "doel";
-            // 
-            // textBoxCollecte1
-            // 
-            this.textBoxCollecte1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxCollecte1.Location = new System.Drawing.Point(132, 32);
-            this.textBoxCollecte1.Name = "textBoxCollecte1";
-            this.textBoxCollecte1.Size = new System.Drawing.Size(185, 22);
-            this.textBoxCollecte1.TabIndex = 4;
-            this.textBoxCollecte1.Text = "doel";
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label14.Location = new System.Drawing.Point(14, 63);
-            label14.Name = "label14";
-            label14.Size = new System.Drawing.Size(103, 16);
-            label14.TabIndex = 1;
-            label14.Text = "Derde collecte:";
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label15.Location = new System.Drawing.Point(14, 35);
-            label15.Name = "label15";
-            label15.Size = new System.Drawing.Size(105, 16);
-            label15.TabIndex = 0;
-            label15.Text = "Eerste collecte:";
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox6.Controls.Add(this.checkBox1);
-            this.groupBox6.Controls.Add(this.button10);
-            this.groupBox6.Controls.Add(this.textBox3);
-            this.groupBox6.Controls.Add(label11);
-            this.groupBox6.Location = new System.Drawing.Point(6, 124);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(527, 99);
-            this.groupBox6.TabIndex = 5;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "QR-code";
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label11.Location = new System.Drawing.Point(14, 35);
-            label11.Name = "label11";
-            label11.Size = new System.Drawing.Size(95, 16);
-            label11.TabIndex = 1;
-            label11.Text = "Bestandspad:";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(132, 32);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(344, 22);
-            this.textBox3.TabIndex = 14;
             // 
             // ContentType
             // 
@@ -660,14 +777,14 @@
             this.ContentType.Name = "ContentType";
             this.ContentType.Width = 110;
             // 
-            // Content
+            // ContentIdentifier
             // 
-            this.Content.HeaderText = "Bijbelgedeelte of liednummer met verzen";
-            this.Content.MinimumWidth = 6;
-            this.Content.Name = "Content";
-            this.Content.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Content.ToolTipText = resources.GetString("Content.ToolTipText");
-            this.Content.Width = 160;
+            this.ContentIdentifier.HeaderText = "Bijbelgedeelte of liednummer met verzen";
+            this.ContentIdentifier.MinimumWidth = 6;
+            this.ContentIdentifier.Name = "ContentIdentifier";
+            this.ContentIdentifier.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ContentIdentifier.ToolTipText = resources.GetString("ContentIdentifier.ToolTipText");
+            this.ContentIdentifier.Width = 160;
             // 
             // ContentName
             // 
@@ -679,96 +796,86 @@
             this.ContentName.ToolTipText = "De naam van het lied (voor weerklank liederen of overige liederen). Voor psalmen " +
     "of schriftlezingen hoeft hier niets ingevuld te worden.";
             // 
-            // buttonRowAdd
+            // tabInstellingen
             // 
-            this.buttonRowAdd.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_add_black_24dp;
-            this.buttonRowAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowAdd.Location = new System.Drawing.Point(503, 72);
-            this.buttonRowAdd.Name = "buttonRowAdd";
-            this.buttonRowAdd.Size = new System.Drawing.Size(30, 30);
-            this.buttonRowAdd.TabIndex = 13;
-            this.buttonRowAdd.UseVisualStyleBackColor = true;
+            this.tabInstellingen.Controls.Add(this.groupBox7);
+            this.tabInstellingen.Controls.Add(this.groupBox4);
+            this.tabInstellingen.Location = new System.Drawing.Point(4, 25);
+            this.tabInstellingen.Name = "tabInstellingen";
+            this.tabInstellingen.Padding = new System.Windows.Forms.Padding(3);
+            this.tabInstellingen.Size = new System.Drawing.Size(539, 357);
+            this.tabInstellingen.TabIndex = 2;
+            this.tabInstellingen.Text = "Instellingen";
+            this.tabInstellingen.UseVisualStyleBackColor = true;
             // 
-            // buttonRowRemove
+            // groupBox7
             // 
-            this.buttonRowRemove.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_remove_black_24dp;
-            this.buttonRowRemove.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowRemove.Location = new System.Drawing.Point(503, 108);
-            this.buttonRowRemove.Name = "buttonRowRemove";
-            this.buttonRowRemove.Size = new System.Drawing.Size(30, 30);
-            this.buttonRowRemove.TabIndex = 14;
-            this.buttonRowRemove.UseVisualStyleBackColor = true;
+            this.groupBox7.Controls.Add(this.button11);
+            this.groupBox7.Controls.Add(this.textBox1);
+            this.groupBox7.Controls.Add(label7);
+            this.groupBox7.Controls.Add(label10);
+            this.groupBox7.Enabled = false;
+            this.groupBox7.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox7.Location = new System.Drawing.Point(6, 100);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(527, 69);
+            this.groupBox7.TabIndex = 6;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "QR-code";
             // 
-            // buttonRowMoveUp
+            // button11
             // 
-            this.buttonRowMoveUp.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_keyboard_arrow_up_black_24dp;
-            this.buttonRowMoveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowMoveUp.Location = new System.Drawing.Point(503, 144);
-            this.buttonRowMoveUp.Name = "buttonRowMoveUp";
-            this.buttonRowMoveUp.Size = new System.Drawing.Size(30, 30);
-            this.buttonRowMoveUp.TabIndex = 15;
-            this.buttonRowMoveUp.UseVisualStyleBackColor = true;
+            this.button11.Location = new System.Drawing.Point(479, 31);
+            this.button11.Margin = new System.Windows.Forms.Padding(0);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(29, 24);
+            this.button11.TabIndex = 5;
+            this.button11.Text = "...";
+            this.button11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button11.UseVisualStyleBackColor = true;
             // 
-            // buttonRowMoveDown
+            // textBox1
             // 
-            this.buttonRowMoveDown.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_keyboard_arrow_down_black_24dp;
-            this.buttonRowMoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowMoveDown.Location = new System.Drawing.Point(503, 180);
-            this.buttonRowMoveDown.Name = "buttonRowMoveDown";
-            this.buttonRowMoveDown.Size = new System.Drawing.Size(30, 30);
-            this.buttonRowMoveDown.TabIndex = 16;
-            this.buttonRowMoveDown.UseVisualStyleBackColor = true;
+            this.textBox1.Location = new System.Drawing.Point(132, 32);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(344, 22);
+            this.textBox1.TabIndex = 4;
             // 
-            // button7
+            // groupBox4
             // 
-            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button7.Location = new System.Drawing.Point(6, 321);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(100, 30);
-            this.button7.TabIndex = 11;
-            this.button7.Text = "Instellingen";
-            this.button7.UseVisualStyleBackColor = true;
+            this.groupBox4.Controls.Add(this.buttonOutputFolderSelect);
+            this.groupBox4.Controls.Add(this.textBoxOutputFolder);
+            this.groupBox4.Controls.Add(label12);
+            this.groupBox4.Controls.Add(label13);
+            this.groupBox4.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox4.Location = new System.Drawing.Point(6, 15);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(527, 69);
+            this.groupBox4.TabIndex = 4;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Output";
             // 
-            // button8
+            // buttonOutputFolderSelect
             // 
-            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button8.Location = new System.Drawing.Point(347, 321);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(90, 30);
-            this.button8.TabIndex = 10;
-            this.button8.Text = "Terug";
-            this.button8.UseVisualStyleBackColor = true;
+            this.buttonOutputFolderSelect.Location = new System.Drawing.Point(479, 31);
+            this.buttonOutputFolderSelect.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonOutputFolderSelect.Name = "buttonOutputFolderSelect";
+            this.buttonOutputFolderSelect.Size = new System.Drawing.Size(29, 24);
+            this.buttonOutputFolderSelect.TabIndex = 5;
+            this.buttonOutputFolderSelect.Text = "...";
+            this.buttonOutputFolderSelect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonOutputFolderSelect.UseVisualStyleBackColor = true;
+            this.buttonOutputFolderSelect.Click += new System.EventHandler(this.ButtonSelectOutputFolder);
             // 
-            // button9
+            // textBoxOutputFolder
             // 
-            this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button9.Location = new System.Drawing.Point(443, 321);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(90, 30);
-            this.button9.TabIndex = 9;
-            this.button9.Text = "Verder";
-            this.button9.UseVisualStyleBackColor = true;
-            // 
-            // button10
-            // 
-            this.button10.Location = new System.Drawing.Point(479, 31);
-            this.button10.Margin = new System.Windows.Forms.Padding(0);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(29, 24);
-            this.button10.TabIndex = 15;
-            this.button10.Text = "...";
-            this.button10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button10.UseVisualStyleBackColor = true;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(17, 64);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(210, 20);
-            this.checkBox1.TabIndex = 16;
-            this.checkBox1.Text = "Bijsnijden en zwart-wit maken";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.textBoxOutputFolder.Location = new System.Drawing.Point(132, 32);
+            this.textBoxOutputFolder.Name = "textBoxOutputFolder";
+            this.textBoxOutputFolder.ReadOnly = true;
+            this.textBoxOutputFolder.Size = new System.Drawing.Size(344, 22);
+            this.textBoxOutputFolder.TabIndex = 4;
+            this.textBoxOutputFolder.Text = Settings.OutputFolder;
             // 
             // Window
             // 
@@ -791,17 +898,19 @@
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabCollecte.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.tabLiturgie.ResumeLayout(false);
             this.tabLiturgie.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabInstellingen.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.tabCollecte.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -832,26 +941,30 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.TextBox textBoxOutputfolder;
-        private System.Windows.Forms.Button buttonOutputfolder;
+        private System.Windows.Forms.TextBox textBoxOutputFolder;
+        private System.Windows.Forms.Button buttonOutputFolderSelect;
         private System.Windows.Forms.TabPage tabCollecte;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBoxQRPath;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TextBox textBoxCollecte3;
         private System.Windows.Forms.TextBox textBoxCollecte1;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ContentType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Content;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ContentName;
         private System.Windows.Forms.Button buttonRowAdd;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button buttonQRSelect;
         private System.Windows.Forms.Button buttonRowMoveDown;
         private System.Windows.Forms.Button buttonRowMoveUp;
         private System.Windows.Forms.Button buttonRowRemove;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.DataGridViewComboBoxColumn ContentType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContentIdentifier;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContentName;
     }
 }
 

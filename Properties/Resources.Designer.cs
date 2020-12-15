@@ -63,16 +63,6 @@ namespace PPTXcreator.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap baseline_add_black_18dp {
-            get {
-                object obj = ResourceManager.GetObject("baseline_add_black_18dp", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap baseline_add_black_24dp {
             get {
                 object obj = ResourceManager.GetObject("baseline_add_black_24dp", resourceCulture);
