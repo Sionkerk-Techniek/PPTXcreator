@@ -29,33 +29,37 @@ namespace PPTXcreator
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Label label8;
-            System.Windows.Forms.Label label6;
-            System.Windows.Forms.Label label5;
-            System.Windows.Forms.Label label4;
-            System.Windows.Forms.Label label3;
-            System.Windows.Forms.Label label2;
-            System.Windows.Forms.Label label1;
-            System.Windows.Forms.Label label9;
-            System.Windows.Forms.Label label12;
+            System.Windows.Forms.Label labelOrganist;
+            System.Windows.Forms.Label labelDatumTijdNext;
+            System.Windows.Forms.Label labelDatumTijdNu;
+            System.Windows.Forms.Label labelVoorgangerUit2;
+            System.Windows.Forms.Label labelVoorgangerUit1;
+            System.Windows.Forms.Label labelVoorgangerNext;
+            System.Windows.Forms.Label labelVoorgangerNu;
+            System.Windows.Forms.Label labelLiturgie;
+            System.Windows.Forms.Label labelOutputFolder;
             System.Windows.Forms.Label label13;
-            System.Windows.Forms.Label label14;
-            System.Windows.Forms.Label label15;
-            System.Windows.Forms.Label label11;
-            System.Windows.Forms.Label label7;
+            System.Windows.Forms.Label labelCollecte3;
+            System.Windows.Forms.Label labelCollecte1;
+            System.Windows.Forms.Label labelQRPath;
+            System.Windows.Forms.Label labelQRSetting;
             System.Windows.Forms.Label label10;
+            System.Windows.Forms.GroupBox groupBoxOrganist;
+            System.Windows.Forms.GroupBox groupBoxDatumTijd;
+            System.Windows.Forms.GroupBox groupBoxVoorgangers;
+            System.Windows.Forms.GroupBox groupBoxQR;
+            System.Windows.Forms.GroupBox groupBoxCollecte;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window));
+            System.Windows.Forms.GroupBox groupBoxQRSetting;
+            System.Windows.Forms.GroupBox groupBoxOutput;
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.textBoxOrganist = new System.Windows.Forms.TextBox();
             this.dateTimePickerNext = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerNu = new System.Windows.Forms.DateTimePicker();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBoxVoorgangerNextPlaats = new System.Windows.Forms.TextBox();
             this.textBoxVoorgangerNuPlaats = new System.Windows.Forms.TextBox();
             this.textBoxVoorgangerNextNaam = new System.Windows.Forms.TextBox();
@@ -66,12 +70,10 @@ namespace PPTXcreator
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBoxQRsave = new System.Windows.Forms.CheckBox();
+            this.checkBoxQRedit = new System.Windows.Forms.CheckBox();
             this.buttonQRSelect = new System.Windows.Forms.Button();
             this.textBoxQRPath = new System.Windows.Forms.TextBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.textBoxCollecte3 = new System.Windows.Forms.TextBox();
             this.textBoxCollecte1 = new System.Windows.Forms.TextBox();
             this.tabLiturgie = new System.Windows.Forms.TabPage();
@@ -82,138 +84,143 @@ namespace PPTXcreator
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
             this.ContentType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.ContentIdentifier = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabInstellingen = new System.Windows.Forms.TabPage();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.button11 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.buttonQRsetting = new System.Windows.Forms.Button();
+            this.textBoxQRsetting = new System.Windows.Forms.TextBox();
             this.buttonOutputFolderSelect = new System.Windows.Forms.Button();
             this.textBoxOutputFolder = new System.Windows.Forms.TextBox();
-            label8 = new System.Windows.Forms.Label();
-            label6 = new System.Windows.Forms.Label();
-            label5 = new System.Windows.Forms.Label();
-            label4 = new System.Windows.Forms.Label();
-            label3 = new System.Windows.Forms.Label();
-            label2 = new System.Windows.Forms.Label();
-            label1 = new System.Windows.Forms.Label();
-            label9 = new System.Windows.Forms.Label();
-            label12 = new System.Windows.Forms.Label();
+            labelOrganist = new System.Windows.Forms.Label();
+            labelDatumTijdNext = new System.Windows.Forms.Label();
+            labelDatumTijdNu = new System.Windows.Forms.Label();
+            labelVoorgangerUit2 = new System.Windows.Forms.Label();
+            labelVoorgangerUit1 = new System.Windows.Forms.Label();
+            labelVoorgangerNext = new System.Windows.Forms.Label();
+            labelVoorgangerNu = new System.Windows.Forms.Label();
+            labelLiturgie = new System.Windows.Forms.Label();
+            labelOutputFolder = new System.Windows.Forms.Label();
             label13 = new System.Windows.Forms.Label();
-            label14 = new System.Windows.Forms.Label();
-            label15 = new System.Windows.Forms.Label();
-            label11 = new System.Windows.Forms.Label();
-            label7 = new System.Windows.Forms.Label();
+            labelCollecte3 = new System.Windows.Forms.Label();
+            labelCollecte1 = new System.Windows.Forms.Label();
+            labelQRPath = new System.Windows.Forms.Label();
+            labelQRSetting = new System.Windows.Forms.Label();
             label10 = new System.Windows.Forms.Label();
+            groupBoxOrganist = new System.Windows.Forms.GroupBox();
+            groupBoxDatumTijd = new System.Windows.Forms.GroupBox();
+            groupBoxVoorgangers = new System.Windows.Forms.GroupBox();
+            groupBoxQR = new System.Windows.Forms.GroupBox();
+            groupBoxCollecte = new System.Windows.Forms.GroupBox();
+            groupBoxQRSetting = new System.Windows.Forms.GroupBox();
+            groupBoxOutput = new System.Windows.Forms.GroupBox();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            groupBoxOrganist.SuspendLayout();
+            groupBoxDatumTijd.SuspendLayout();
+            groupBoxVoorgangers.SuspendLayout();
             this.tabCollecte.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox5.SuspendLayout();
+            groupBoxQR.SuspendLayout();
+            groupBoxCollecte.SuspendLayout();
             this.tabLiturgie.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.tabInstellingen.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            groupBoxQRSetting.SuspendLayout();
+            groupBoxOutput.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label8
+            // labelOrganist
             // 
-            label8.AutoSize = true;
-            label8.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label8.Location = new System.Drawing.Point(14, 35);
-            label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(86, 16);
-            label8.TabIndex = 12;
-            label8.Text = "Deze dienst:";
+            labelOrganist.AutoSize = true;
+            labelOrganist.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelOrganist.Location = new System.Drawing.Point(14, 35);
+            labelOrganist.Name = "labelOrganist";
+            labelOrganist.Size = new System.Drawing.Size(86, 16);
+            labelOrganist.TabIndex = 12;
+            labelOrganist.Text = "Deze dienst:";
             // 
-            // label6
+            // labelDatumTijdNext
             // 
-            label6.AutoSize = true;
-            label6.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label6.Location = new System.Drawing.Point(14, 63);
-            label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(113, 16);
-            label6.TabIndex = 12;
-            label6.Text = "Volgende dienst:";
+            labelDatumTijdNext.AutoSize = true;
+            labelDatumTijdNext.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelDatumTijdNext.Location = new System.Drawing.Point(14, 63);
+            labelDatumTijdNext.Name = "labelDatumTijdNext";
+            labelDatumTijdNext.Size = new System.Drawing.Size(113, 16);
+            labelDatumTijdNext.TabIndex = 12;
+            labelDatumTijdNext.Text = "Volgende dienst:";
             // 
-            // label5
+            // labelDatumTijdNu
             // 
-            label5.AutoSize = true;
-            label5.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label5.Location = new System.Drawing.Point(14, 35);
-            label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(86, 16);
-            label5.TabIndex = 1;
-            label5.Text = "Deze dienst:";
+            labelDatumTijdNu.AutoSize = true;
+            labelDatumTijdNu.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelDatumTijdNu.Location = new System.Drawing.Point(14, 35);
+            labelDatumTijdNu.Name = "labelDatumTijdNu";
+            labelDatumTijdNu.Size = new System.Drawing.Size(86, 16);
+            labelDatumTijdNu.TabIndex = 1;
+            labelDatumTijdNu.Text = "Deze dienst:";
             // 
-            // label4
+            // labelVoorgangerUit2
             // 
-            label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(356, 63);
-            label4.Margin = new System.Windows.Forms.Padding(0);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(23, 16);
-            label4.TabIndex = 9;
-            label4.Text = "uit";
+            labelVoorgangerUit2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            labelVoorgangerUit2.AutoSize = true;
+            labelVoorgangerUit2.Location = new System.Drawing.Point(356, 63);
+            labelVoorgangerUit2.Margin = new System.Windows.Forms.Padding(0);
+            labelVoorgangerUit2.Name = "labelVoorgangerUit2";
+            labelVoorgangerUit2.Size = new System.Drawing.Size(23, 16);
+            labelVoorgangerUit2.TabIndex = 9;
+            labelVoorgangerUit2.Text = "uit";
             // 
-            // label3
+            // labelVoorgangerUit1
             // 
-            label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(356, 35);
-            label3.Margin = new System.Windows.Forms.Padding(0);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(23, 16);
-            label3.TabIndex = 8;
-            label3.Text = "uit";
+            labelVoorgangerUit1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            labelVoorgangerUit1.AutoSize = true;
+            labelVoorgangerUit1.Location = new System.Drawing.Point(356, 35);
+            labelVoorgangerUit1.Margin = new System.Windows.Forms.Padding(0);
+            labelVoorgangerUit1.Name = "labelVoorgangerUit1";
+            labelVoorgangerUit1.Size = new System.Drawing.Size(23, 16);
+            labelVoorgangerUit1.TabIndex = 8;
+            labelVoorgangerUit1.Text = "uit";
             // 
-            // label2
+            // labelVoorgangerNext
             // 
-            label2.AutoSize = true;
-            label2.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label2.Location = new System.Drawing.Point(14, 63);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(113, 16);
-            label2.TabIndex = 1;
-            label2.Text = "Volgende dienst:";
+            labelVoorgangerNext.AutoSize = true;
+            labelVoorgangerNext.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelVoorgangerNext.Location = new System.Drawing.Point(14, 63);
+            labelVoorgangerNext.Name = "labelVoorgangerNext";
+            labelVoorgangerNext.Size = new System.Drawing.Size(113, 16);
+            labelVoorgangerNext.TabIndex = 1;
+            labelVoorgangerNext.Text = "Volgende dienst:";
             // 
-            // label1
+            // labelVoorgangerNu
             // 
-            label1.AutoSize = true;
-            label1.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label1.Location = new System.Drawing.Point(14, 35);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(86, 16);
-            label1.TabIndex = 0;
-            label1.Text = "Deze dienst:";
+            labelVoorgangerNu.AutoSize = true;
+            labelVoorgangerNu.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelVoorgangerNu.Location = new System.Drawing.Point(14, 35);
+            labelVoorgangerNu.Name = "labelVoorgangerNu";
+            labelVoorgangerNu.Size = new System.Drawing.Size(86, 16);
+            labelVoorgangerNu.TabIndex = 0;
+            labelVoorgangerNu.Text = "Deze dienst:";
             // 
-            // label9
+            // labelLiturgie
             // 
-            label9.AutoSize = true;
-            label9.Location = new System.Drawing.Point(9, 18);
-            label9.Name = "label9";
-            label9.Size = new System.Drawing.Size(471, 32);
-            label9.TabIndex = 2;
-            label9.Text = "Vul hier de liturgie in. Lege rijen in de tabel komen niet in de presentaties.\r\nS" +
+            labelLiturgie.AutoSize = true;
+            labelLiturgie.Location = new System.Drawing.Point(9, 18);
+            labelLiturgie.Name = "labelLiturgie";
+            labelLiturgie.Size = new System.Drawing.Size(471, 32);
+            labelLiturgie.TabIndex = 2;
+            labelLiturgie.Text = "Vul hier de liturgie in. Lege rijen in de tabel komen niet in de presentaties.\r\nS" +
     "paties voor en na een dubbele punt, komma of streepje zijn niet nodig.";
             // 
-            // label12
+            // labelOutputFolder
             // 
-            label12.AutoSize = true;
-            label12.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label12.Location = new System.Drawing.Point(14, 35);
-            label12.Name = "label12";
-            label12.Size = new System.Drawing.Size(95, 16);
-            label12.TabIndex = 1;
-            label12.Text = "Output folder:";
+            labelOutputFolder.AutoSize = true;
+            labelOutputFolder.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelOutputFolder.Location = new System.Drawing.Point(14, 35);
+            labelOutputFolder.Name = "labelOutputFolder";
+            labelOutputFolder.Size = new System.Drawing.Size(95, 16);
+            labelOutputFolder.TabIndex = 1;
+            labelOutputFolder.Text = "Output folder:";
             // 
             // label13
             // 
@@ -224,45 +231,45 @@ namespace PPTXcreator
             label13.Size = new System.Drawing.Size(0, 16);
             label13.TabIndex = 0;
             // 
-            // label14
+            // labelCollecte3
             // 
-            label14.AutoSize = true;
-            label14.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label14.Location = new System.Drawing.Point(14, 63);
-            label14.Name = "label14";
-            label14.Size = new System.Drawing.Size(103, 16);
-            label14.TabIndex = 1;
-            label14.Text = "Derde collecte:";
+            labelCollecte3.AutoSize = true;
+            labelCollecte3.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelCollecte3.Location = new System.Drawing.Point(14, 63);
+            labelCollecte3.Name = "labelCollecte3";
+            labelCollecte3.Size = new System.Drawing.Size(103, 16);
+            labelCollecte3.TabIndex = 1;
+            labelCollecte3.Text = "Derde collecte:";
             // 
-            // label15
+            // labelCollecte1
             // 
-            label15.AutoSize = true;
-            label15.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label15.Location = new System.Drawing.Point(14, 35);
-            label15.Name = "label15";
-            label15.Size = new System.Drawing.Size(105, 16);
-            label15.TabIndex = 0;
-            label15.Text = "Eerste collecte:";
+            labelCollecte1.AutoSize = true;
+            labelCollecte1.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelCollecte1.Location = new System.Drawing.Point(14, 35);
+            labelCollecte1.Name = "labelCollecte1";
+            labelCollecte1.Size = new System.Drawing.Size(105, 16);
+            labelCollecte1.TabIndex = 0;
+            labelCollecte1.Text = "Eerste collecte:";
             // 
-            // label11
+            // labelQRPath
             // 
-            label11.AutoSize = true;
-            label11.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label11.Location = new System.Drawing.Point(14, 35);
-            label11.Name = "label11";
-            label11.Size = new System.Drawing.Size(95, 16);
-            label11.TabIndex = 1;
-            label11.Text = "Bestandspad:";
+            labelQRPath.AutoSize = true;
+            labelQRPath.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelQRPath.Location = new System.Drawing.Point(14, 35);
+            labelQRPath.Name = "labelQRPath";
+            labelQRPath.Size = new System.Drawing.Size(95, 16);
+            labelQRPath.TabIndex = 1;
+            labelQRPath.Text = "Bestandspad:";
             // 
-            // label7
+            // labelQRSetting
             // 
-            label7.AutoSize = true;
-            label7.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label7.Location = new System.Drawing.Point(14, 35);
-            label7.Name = "label7";
-            label7.Size = new System.Drawing.Size(117, 16);
-            label7.TabIndex = 1;
-            label7.Text = "QR-script locatie:";
+            labelQRSetting.AutoSize = true;
+            labelQRSetting.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelQRSetting.Location = new System.Drawing.Point(14, 35);
+            labelQRSetting.Name = "labelQRSetting";
+            labelQRSetting.Size = new System.Drawing.Size(117, 16);
+            labelQRSetting.TabIndex = 1;
+            labelQRSetting.Text = "QR-script locatie:";
             // 
             // label10
             // 
@@ -295,9 +302,9 @@ namespace PPTXcreator
             this.tabGeneral.Controls.Add(this.button3);
             this.tabGeneral.Controls.Add(this.button2);
             this.tabGeneral.Controls.Add(this.button1);
-            this.tabGeneral.Controls.Add(this.groupBox3);
-            this.tabGeneral.Controls.Add(this.groupBox2);
-            this.tabGeneral.Controls.Add(this.groupBox1);
+            this.tabGeneral.Controls.Add(groupBoxOrganist);
+            this.tabGeneral.Controls.Add(groupBoxDatumTijd);
+            this.tabGeneral.Controls.Add(groupBoxVoorgangers);
             this.tabGeneral.Location = new System.Drawing.Point(4, 25);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
@@ -337,43 +344,43 @@ namespace PPTXcreator
             this.button1.Text = "Verder";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // groupBox3
+            // groupBoxOrganist
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            groupBoxOrganist.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.textBox2);
-            this.groupBox3.Controls.Add(label8);
-            this.groupBox3.Location = new System.Drawing.Point(6, 234);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(527, 69);
-            this.groupBox3.TabIndex = 5;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Organist";
+            groupBoxOrganist.Controls.Add(this.textBoxOrganist);
+            groupBoxOrganist.Controls.Add(labelOrganist);
+            groupBoxOrganist.Location = new System.Drawing.Point(6, 234);
+            groupBoxOrganist.Name = "groupBoxOrganist";
+            groupBoxOrganist.Size = new System.Drawing.Size(527, 69);
+            groupBoxOrganist.TabIndex = 5;
+            groupBoxOrganist.TabStop = false;
+            groupBoxOrganist.Text = "Organist";
             // 
-            // textBox2
+            // textBoxOrganist
             // 
-            this.textBox2.Location = new System.Drawing.Point(132, 32);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(175, 22);
-            this.textBox2.TabIndex = 14;
-            this.textBox2.Text = "naam";
-            this.textBox2.Click += new System.EventHandler(this.TextboxSelectOnEnter);
-            this.textBox2.Enter += new System.EventHandler(this.TextboxSelectOnEnter);
+            this.textBoxOrganist.Location = new System.Drawing.Point(132, 32);
+            this.textBoxOrganist.Name = "textBoxOrganist";
+            this.textBoxOrganist.Size = new System.Drawing.Size(175, 22);
+            this.textBoxOrganist.TabIndex = 14;
+            this.textBoxOrganist.Text = "naam";
+            this.textBoxOrganist.Click += new System.EventHandler(this.TextboxSelectOnEnter);
+            this.textBoxOrganist.Enter += new System.EventHandler(this.TextboxSelectOnEnter);
             // 
-            // groupBox2
+            // groupBoxDatumTijd
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            groupBoxDatumTijd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.dateTimePickerNext);
-            this.groupBox2.Controls.Add(label6);
-            this.groupBox2.Controls.Add(label5);
-            this.groupBox2.Controls.Add(this.dateTimePickerNu);
-            this.groupBox2.Location = new System.Drawing.Point(6, 15);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(527, 97);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Datum en tijd";
+            groupBoxDatumTijd.Controls.Add(this.dateTimePickerNext);
+            groupBoxDatumTijd.Controls.Add(labelDatumTijdNext);
+            groupBoxDatumTijd.Controls.Add(labelDatumTijdNu);
+            groupBoxDatumTijd.Controls.Add(this.dateTimePickerNu);
+            groupBoxDatumTijd.Location = new System.Drawing.Point(6, 15);
+            groupBoxDatumTijd.Name = "groupBoxDatumTijd";
+            groupBoxDatumTijd.Size = new System.Drawing.Size(527, 97);
+            groupBoxDatumTijd.TabIndex = 4;
+            groupBoxDatumTijd.TabStop = false;
+            groupBoxDatumTijd.Text = "Datum en tijd";
             // 
             // dateTimePickerNext
             // 
@@ -397,27 +404,27 @@ namespace PPTXcreator
             this.dateTimePickerNu.TabIndex = 2;
             this.dateTimePickerNu.Value = new System.DateTime(2021, 1, 3, 0, 0, 0, 0);
             // 
-            // groupBox1
+            // groupBoxVoorgangers
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            groupBoxVoorgangers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.textBoxVoorgangerNextPlaats);
-            this.groupBox1.Controls.Add(this.textBoxVoorgangerNuPlaats);
-            this.groupBox1.Controls.Add(label4);
-            this.groupBox1.Controls.Add(label3);
-            this.groupBox1.Controls.Add(this.textBoxVoorgangerNextNaam);
-            this.groupBox1.Controls.Add(this.textBoxVoorgangerNextTitel);
-            this.groupBox1.Controls.Add(this.textBoxVoorgangerNuTitel);
-            this.groupBox1.Controls.Add(this.textBoxVoorgangerNuNaam);
-            this.groupBox1.Controls.Add(label2);
-            this.groupBox1.Controls.Add(label1);
-            this.groupBox1.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(6, 124);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(527, 97);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Voorgangers";
+            groupBoxVoorgangers.Controls.Add(this.textBoxVoorgangerNextPlaats);
+            groupBoxVoorgangers.Controls.Add(this.textBoxVoorgangerNuPlaats);
+            groupBoxVoorgangers.Controls.Add(labelVoorgangerUit2);
+            groupBoxVoorgangers.Controls.Add(labelVoorgangerUit1);
+            groupBoxVoorgangers.Controls.Add(this.textBoxVoorgangerNextNaam);
+            groupBoxVoorgangers.Controls.Add(this.textBoxVoorgangerNextTitel);
+            groupBoxVoorgangers.Controls.Add(this.textBoxVoorgangerNuTitel);
+            groupBoxVoorgangers.Controls.Add(this.textBoxVoorgangerNuNaam);
+            groupBoxVoorgangers.Controls.Add(labelVoorgangerNext);
+            groupBoxVoorgangers.Controls.Add(labelVoorgangerNu);
+            groupBoxVoorgangers.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            groupBoxVoorgangers.Location = new System.Drawing.Point(6, 124);
+            groupBoxVoorgangers.Name = "groupBoxVoorgangers";
+            groupBoxVoorgangers.Size = new System.Drawing.Size(527, 97);
+            groupBoxVoorgangers.TabIndex = 3;
+            groupBoxVoorgangers.TabStop = false;
+            groupBoxVoorgangers.Text = "Voorgangers";
             // 
             // textBoxVoorgangerNextPlaats
             // 
@@ -457,9 +464,8 @@ namespace PPTXcreator
             // 
             this.textBoxVoorgangerNextTitel.AutoCompleteCustomSource.AddRange(new string[] {
             "ds.",
-            "prop.",
-            "prof. dr.",
             "prof.",
+            "prop.",
             "dr."});
             this.textBoxVoorgangerNextTitel.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.textBoxVoorgangerNextTitel.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
@@ -476,9 +482,8 @@ namespace PPTXcreator
             // 
             this.textBoxVoorgangerNuTitel.AutoCompleteCustomSource.AddRange(new string[] {
             "ds.",
-            "prop.",
-            "prof. dr.",
             "prof.",
+            "prop.",
             "dr."});
             this.textBoxVoorgangerNuTitel.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.textBoxVoorgangerNuTitel.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
@@ -508,8 +513,8 @@ namespace PPTXcreator
             this.tabCollecte.Controls.Add(this.button7);
             this.tabCollecte.Controls.Add(this.button8);
             this.tabCollecte.Controls.Add(this.button9);
-            this.tabCollecte.Controls.Add(this.groupBox6);
-            this.tabCollecte.Controls.Add(this.groupBox5);
+            this.tabCollecte.Controls.Add(groupBoxQR);
+            this.tabCollecte.Controls.Add(groupBoxCollecte);
             this.tabCollecte.Location = new System.Drawing.Point(4, 25);
             this.tabCollecte.Name = "tabCollecte";
             this.tabCollecte.Padding = new System.Windows.Forms.Padding(3);
@@ -548,42 +553,42 @@ namespace PPTXcreator
             this.button9.Text = "Verder";
             this.button9.UseVisualStyleBackColor = true;
             // 
-            // groupBox6
+            // groupBoxQR
             // 
-            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            groupBoxQR.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox6.Controls.Add(this.checkBox2);
-            this.groupBox6.Controls.Add(this.checkBox1);
-            this.groupBox6.Controls.Add(this.buttonQRSelect);
-            this.groupBox6.Controls.Add(this.textBoxQRPath);
-            this.groupBox6.Controls.Add(label11);
-            this.groupBox6.Location = new System.Drawing.Point(6, 124);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(527, 126);
-            this.groupBox6.TabIndex = 5;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "QR-code";
+            groupBoxQR.Controls.Add(this.checkBoxQRsave);
+            groupBoxQR.Controls.Add(this.checkBoxQRedit);
+            groupBoxQR.Controls.Add(this.buttonQRSelect);
+            groupBoxQR.Controls.Add(this.textBoxQRPath);
+            groupBoxQR.Controls.Add(labelQRPath);
+            groupBoxQR.Location = new System.Drawing.Point(6, 124);
+            groupBoxQR.Name = "groupBoxQR";
+            groupBoxQR.Size = new System.Drawing.Size(527, 126);
+            groupBoxQR.TabIndex = 5;
+            groupBoxQR.TabStop = false;
+            groupBoxQR.Text = "QR-code";
             // 
-            // checkBox2
+            // checkBoxQRsave
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(17, 90);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(195, 20);
-            this.checkBox2.TabIndex = 17;
-            this.checkBox2.Text = "Opslaan in de outputfolder";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBoxQRsave.AutoSize = true;
+            this.checkBoxQRsave.Location = new System.Drawing.Point(17, 90);
+            this.checkBoxQRsave.Name = "checkBoxQRsave";
+            this.checkBoxQRsave.Size = new System.Drawing.Size(195, 20);
+            this.checkBoxQRsave.TabIndex = 17;
+            this.checkBoxQRsave.Text = "Opslaan in de outputfolder";
+            this.checkBoxQRsave.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // checkBoxQRedit
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(17, 64);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(330, 20);
-            this.checkBox1.TabIndex = 16;
-            this.checkBox1.Text = "Bijsnijden en zwart-wit maken (QR-script vereist)";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBoxQRedit.AutoSize = true;
+            this.checkBoxQRedit.Enabled = false;
+            this.checkBoxQRedit.Location = new System.Drawing.Point(17, 64);
+            this.checkBoxQRedit.Name = "checkBoxQRedit";
+            this.checkBoxQRedit.Size = new System.Drawing.Size(330, 20);
+            this.checkBoxQRedit.TabIndex = 16;
+            this.checkBoxQRedit.Text = "Bijsnijden en zwart-wit maken (QR-script vereist)";
+            this.checkBoxQRedit.UseVisualStyleBackColor = true;
             // 
             // buttonQRSelect
             // 
@@ -605,21 +610,21 @@ namespace PPTXcreator
             this.textBoxQRPath.Size = new System.Drawing.Size(344, 22);
             this.textBoxQRPath.TabIndex = 14;
             // 
-            // groupBox5
+            // groupBoxCollecte
             // 
-            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            groupBoxCollecte.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox5.Controls.Add(this.textBoxCollecte3);
-            this.groupBox5.Controls.Add(this.textBoxCollecte1);
-            this.groupBox5.Controls.Add(label14);
-            this.groupBox5.Controls.Add(label15);
-            this.groupBox5.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(6, 15);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(527, 97);
-            this.groupBox5.TabIndex = 4;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Collectedoelen";
+            groupBoxCollecte.Controls.Add(this.textBoxCollecte3);
+            groupBoxCollecte.Controls.Add(this.textBoxCollecte1);
+            groupBoxCollecte.Controls.Add(labelCollecte3);
+            groupBoxCollecte.Controls.Add(labelCollecte1);
+            groupBoxCollecte.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            groupBoxCollecte.Location = new System.Drawing.Point(6, 15);
+            groupBoxCollecte.Name = "groupBoxCollecte";
+            groupBoxCollecte.Size = new System.Drawing.Size(527, 97);
+            groupBoxCollecte.TabIndex = 4;
+            groupBoxCollecte.TabStop = false;
+            groupBoxCollecte.Text = "Collectedoelen";
             // 
             // textBoxCollecte3
             // 
@@ -658,8 +663,8 @@ namespace PPTXcreator
             this.tabLiturgie.Controls.Add(this.button4);
             this.tabLiturgie.Controls.Add(this.button5);
             this.tabLiturgie.Controls.Add(this.button6);
-            this.tabLiturgie.Controls.Add(this.dataGridView1);
-            this.tabLiturgie.Controls.Add(label9);
+            this.tabLiturgie.Controls.Add(this.dataGridView);
+            this.tabLiturgie.Controls.Add(labelLiturgie);
             this.tabLiturgie.Location = new System.Drawing.Point(4, 25);
             this.tabLiturgie.Name = "tabLiturgie";
             this.tabLiturgie.Padding = new System.Windows.Forms.Padding(3);
@@ -742,27 +747,27 @@ namespace PPTXcreator
             this.button6.Text = "Verder";
             this.button6.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // dataGridView
             // 
-            this.dataGridView1.AllowDrop = true;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dataGridView.AllowDrop = true;
+            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.Silver;
-            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridView.BackgroundColor = System.Drawing.Color.Silver;
+            this.dataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ContentType,
             this.ContentIdentifier,
             this.ContentName});
-            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dataGridView1.GridColor = System.Drawing.SystemColors.ControlLight;
-            this.dataGridView1.Location = new System.Drawing.Point(7, 72);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(490, 222);
-            this.dataGridView1.TabIndex = 3;
+            this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.dataGridView.GridColor = System.Drawing.SystemColors.ControlLight;
+            this.dataGridView.Location = new System.Drawing.Point(7, 72);
+            this.dataGridView.MultiSelect = false;
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.RowHeadersWidth = 25;
+            this.dataGridView.Size = new System.Drawing.Size(490, 222);
+            this.dataGridView.TabIndex = 3;
             // 
             // ContentType
             // 
@@ -798,8 +803,8 @@ namespace PPTXcreator
             // 
             // tabInstellingen
             // 
-            this.tabInstellingen.Controls.Add(this.groupBox7);
-            this.tabInstellingen.Controls.Add(this.groupBox4);
+            this.tabInstellingen.Controls.Add(groupBoxQRSetting);
+            this.tabInstellingen.Controls.Add(groupBoxOutput);
             this.tabInstellingen.Location = new System.Drawing.Point(4, 25);
             this.tabInstellingen.Name = "tabInstellingen";
             this.tabInstellingen.Padding = new System.Windows.Forms.Padding(3);
@@ -808,53 +813,53 @@ namespace PPTXcreator
             this.tabInstellingen.Text = "Instellingen";
             this.tabInstellingen.UseVisualStyleBackColor = true;
             // 
-            // groupBox7
+            // groupBoxQRSetting
             // 
-            this.groupBox7.Controls.Add(this.button11);
-            this.groupBox7.Controls.Add(this.textBox1);
-            this.groupBox7.Controls.Add(label7);
-            this.groupBox7.Controls.Add(label10);
-            this.groupBox7.Enabled = false;
-            this.groupBox7.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox7.Location = new System.Drawing.Point(6, 100);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(527, 69);
-            this.groupBox7.TabIndex = 6;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "QR-code";
+            groupBoxQRSetting.Controls.Add(this.buttonQRsetting);
+            groupBoxQRSetting.Controls.Add(this.textBoxQRsetting);
+            groupBoxQRSetting.Controls.Add(labelQRSetting);
+            groupBoxQRSetting.Controls.Add(label10);
+            groupBoxQRSetting.Enabled = false;
+            groupBoxQRSetting.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            groupBoxQRSetting.Location = new System.Drawing.Point(6, 100);
+            groupBoxQRSetting.Name = "groupBoxQRSetting";
+            groupBoxQRSetting.Size = new System.Drawing.Size(527, 69);
+            groupBoxQRSetting.TabIndex = 6;
+            groupBoxQRSetting.TabStop = false;
+            groupBoxQRSetting.Text = "QR-code";
             // 
-            // button11
+            // buttonQRsetting
             // 
-            this.button11.Location = new System.Drawing.Point(479, 31);
-            this.button11.Margin = new System.Windows.Forms.Padding(0);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(29, 24);
-            this.button11.TabIndex = 5;
-            this.button11.Text = "...";
-            this.button11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button11.UseVisualStyleBackColor = true;
+            this.buttonQRsetting.Location = new System.Drawing.Point(479, 31);
+            this.buttonQRsetting.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonQRsetting.Name = "buttonQRsetting";
+            this.buttonQRsetting.Size = new System.Drawing.Size(29, 24);
+            this.buttonQRsetting.TabIndex = 5;
+            this.buttonQRsetting.Text = "...";
+            this.buttonQRsetting.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonQRsetting.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // textBoxQRsetting
             // 
-            this.textBox1.Location = new System.Drawing.Point(132, 32);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(344, 22);
-            this.textBox1.TabIndex = 4;
+            this.textBoxQRsetting.Location = new System.Drawing.Point(132, 32);
+            this.textBoxQRsetting.Name = "textBoxQRsetting";
+            this.textBoxQRsetting.ReadOnly = true;
+            this.textBoxQRsetting.Size = new System.Drawing.Size(344, 22);
+            this.textBoxQRsetting.TabIndex = 4;
             // 
-            // groupBox4
+            // groupBoxOutput
             // 
-            this.groupBox4.Controls.Add(this.buttonOutputFolderSelect);
-            this.groupBox4.Controls.Add(this.textBoxOutputFolder);
-            this.groupBox4.Controls.Add(label12);
-            this.groupBox4.Controls.Add(label13);
-            this.groupBox4.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(6, 15);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(527, 69);
-            this.groupBox4.TabIndex = 4;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Output";
+            groupBoxOutput.Controls.Add(this.buttonOutputFolderSelect);
+            groupBoxOutput.Controls.Add(this.textBoxOutputFolder);
+            groupBoxOutput.Controls.Add(labelOutputFolder);
+            groupBoxOutput.Controls.Add(label13);
+            groupBoxOutput.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            groupBoxOutput.Location = new System.Drawing.Point(6, 15);
+            groupBoxOutput.Name = "groupBoxOutput";
+            groupBoxOutput.Size = new System.Drawing.Size(527, 69);
+            groupBoxOutput.TabIndex = 4;
+            groupBoxOutput.TabStop = false;
+            groupBoxOutput.Text = "Output";
             // 
             // buttonOutputFolderSelect
             // 
@@ -875,7 +880,7 @@ namespace PPTXcreator
             this.textBoxOutputFolder.ReadOnly = true;
             this.textBoxOutputFolder.Size = new System.Drawing.Size(344, 22);
             this.textBoxOutputFolder.TabIndex = 4;
-            this.textBoxOutputFolder.Text = Settings.OutputFolder;
+            this.textBoxOutputFolder.Text = "./presentaties";
             // 
             // Window
             // 
@@ -892,25 +897,25 @@ namespace PPTXcreator
             this.Text = "PPTX creator";
             this.tabControl1.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            groupBoxOrganist.ResumeLayout(false);
+            groupBoxOrganist.PerformLayout();
+            groupBoxDatumTijd.ResumeLayout(false);
+            groupBoxDatumTijd.PerformLayout();
+            groupBoxVoorgangers.ResumeLayout(false);
+            groupBoxVoorgangers.PerformLayout();
             this.tabCollecte.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            groupBoxQR.ResumeLayout(false);
+            groupBoxQR.PerformLayout();
+            groupBoxCollecte.ResumeLayout(false);
+            groupBoxCollecte.PerformLayout();
             this.tabLiturgie.ResumeLayout(false);
             this.tabLiturgie.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.tabInstellingen.ResumeLayout(false);
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            groupBoxQRSetting.ResumeLayout(false);
+            groupBoxQRSetting.PerformLayout();
+            groupBoxOutput.ResumeLayout(false);
+            groupBoxOutput.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -921,47 +926,40 @@ namespace PPTXcreator
         private System.Windows.Forms.TabPage tabGeneral;
         private System.Windows.Forms.TabPage tabLiturgie;
         private System.Windows.Forms.DateTimePicker dateTimePickerNu;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBoxVoorgangerNuNaam;
         private System.Windows.Forms.TextBox textBoxVoorgangerNuTitel;
         private System.Windows.Forms.TextBox textBoxVoorgangerNextTitel;
         private System.Windows.Forms.TextBox textBoxVoorgangerNextNaam;
         private System.Windows.Forms.TextBox textBoxVoorgangerNextPlaats;
         private System.Windows.Forms.TextBox textBoxVoorgangerNuPlaats;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DateTimePicker dateTimePickerNext;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBoxOrganist;
         private System.Windows.Forms.TabPage tabInstellingen;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox textBoxOutputFolder;
         private System.Windows.Forms.Button buttonOutputFolderSelect;
         private System.Windows.Forms.TabPage tabCollecte;
-        private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.TextBox textBoxQRPath;
-        private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TextBox textBoxCollecte3;
         private System.Windows.Forms.TextBox textBoxCollecte1;
         private System.Windows.Forms.Button buttonRowAdd;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBoxQRedit;
         private System.Windows.Forms.Button buttonQRSelect;
         private System.Windows.Forms.Button buttonRowMoveDown;
         private System.Windows.Forms.Button buttonRowMoveUp;
         private System.Windows.Forms.Button buttonRowRemove;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.CheckBox checkBoxQRsave;
+        private System.Windows.Forms.Button buttonQRsetting;
+        private System.Windows.Forms.TextBox textBoxQRsetting;
         private System.Windows.Forms.DataGridViewComboBoxColumn ContentType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ContentIdentifier;
         private System.Windows.Forms.DataGridViewTextBoxColumn ContentName;

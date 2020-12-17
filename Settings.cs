@@ -13,14 +13,15 @@ namespace PPTXcreator
         private const string SettingsPath = "./settings.cfg";
 
         // Settings that can be defined in settings.cfg
-        public static string OutputFolder = "./presentaties";                       // Folder the output will be saved to
-        public static string InfoJSON;                                              // File which holds all known information for future services
-        public static string LastFutureService;                                     // Holds the last used datetime for 'the next service'
-        public static string PPTXTemplatePre = "./template_voordienst.pptx";        // Powerpoint templates
-        public static string PPTXTemplateDuring = "./template_tijdensdienst.pptx";  // TODO: use only one collection of all unique slides to build pptxs from
-        public static string PPTXTemplateAfter = "./template_nadienst.pptx";
-        public static string Collecte2 = "Algemeen kerkenwerk";                     // Text used as 2e collecte
-        public static bool CheckForUpdates = true;                                  // If true, the program will check for new releases on GitHub
+        public static string OutputFolder = "./presentaties";                           // Folder the output will be saved to
+        public static string ServicesXML = "../../../PPTXcreatorfiles/services.xml";    // File which holds all known information for future services
+        public static string OrganistXML;
+        public static string LastFutureService;                                         // Holds the last used datetime for 'the next service'
+        public static string PPTXTemplatePre = "./template_voordienst.pptx";            // Powerpoint templates
+        public static string PPTXTemplateDuring = "./template_tijdensdienst.pptx";      // TODO: use only one collection of all unique slides to build pptxs from
+        public static string PPTXTemplateAfter = "./template_nadienst.pptx";            
+        public static string Collecte2 = "Algemeen kerkenwerk";                         // Text used as 2e collecte
+        public static bool CheckForUpdates = true;                                      // If true, the program will check for new releases on GitHub
 
 
         /// <summary>
@@ -46,8 +47,8 @@ namespace PPTXcreator
                     case "OUTPUT_FOLDER":
                         OutputFolder = value;
                         break;
-                    case "KERKBODE_JSON":
-                        InfoJSON = value;
+                    case "KERKBODE_XML":
+                        ServicesXML = value;
                         break;
                     case "PPTX_TEMPLATE_VOOR":
                         PPTXTemplatePre = value;
@@ -77,7 +78,7 @@ namespace PPTXcreator
         /// <summary>
         /// Change the settingID 'settingID', and write to the file with <see cref="WriteSetting"/>
         /// </summary>
-        /// <param name="settingID">Any setting identifier. Valid IDs are: OUTPUT_FOLDER, KERKBODE_JSON,
+        /// <param name="settingID">Any setting identifier. Valid IDs are: OUTPUT_FOLDER, KERKBODE_XML,
         /// PPTX_TEMPLATE_VOOR, PPTX_TEMPLATE_TIJDENS, PPTX_TEMPLATE_NA, VOLGENDE_DIENST, CHECK_UPDATES_ON_STARTUP</param>
         /// <param name="value">The new value of the setting to be saved</param>
         public static void ChangeSetting(string settingID, string value)

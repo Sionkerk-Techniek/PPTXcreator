@@ -25,7 +25,7 @@ namespace PPTXcreator
         private void TextboxSelectOnEnter(object sender, EventArgs e)
         {
             TextBox box = (TextBox)sender;
-            box.SelectAll();
+            box.SelectAll(); // TODO: don't select when already focused on the box
         }
 
         /// <summary>
@@ -63,8 +63,8 @@ namespace PPTXcreator
         }
 
         /// <summary>
-        /// Selects a directory and sets this.textBoxOutputFolder.Text
-        /// and Outputfolder to the path
+        /// Selects a directory and sets <see cref="textBoxOutputFolder"/>.Text
+        /// and <see cref="Settings.OutputFolder"/> to the path
         /// </summary>
         private void ButtonSelectOutputFolder(object sender, EventArgs e)
         {
@@ -77,7 +77,7 @@ namespace PPTXcreator
             {
                 if (Directory.Exists(folderDialog.SelectedPath))
                 {
-                    this.textBoxOutputFolder.Text = folderDialog.SelectedPath;
+                    textBoxOutputFolder.Text = folderDialog.SelectedPath;
                     Settings.OutputFolder = folderDialog.SelectedPath;
                     Settings.ChangeSetting("OUTPUT_FOLDER", folderDialog.SelectedPath);
                 }

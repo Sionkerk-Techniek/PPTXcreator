@@ -76,17 +76,19 @@ namespace PPTXcreator
         public static void Main()
         {
             Settings.Load();
+            Service service = Service.GetService(Settings.ServicesXML, Settings.OrganistXML, "2020-12-20 9:30");
+            // TODO: set UI content to service properties
 
             // start UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Window());
 
-            // edit de powerpoints met ReplacePlaceholders() en sla het resultaat op
+            /*// edit de powerpoints met ReplacePlaceholders() en sla het resultaat op
             PresentationDocument pptx = PresentationDocument.Open(Settings.PPTXTemplatePre, true); // open pptx file. TODO: exception handling
             ReplacePlaceholders(pptx);
             pptx.SaveAs("../../edited.pptx");
-            pptx.Close();
+            pptx.Close();*/
         }
     }
 }
