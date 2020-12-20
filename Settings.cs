@@ -9,15 +9,17 @@ namespace PPTXcreator
 {
     static class Settings
     {
+        // TODO: replace with a dictionary, and properties that point to a dictionary kvp
         // Where the settings file is located
         private const string SettingsPath = "./settings.cfg";
 
         // Settings that can be defined in settings.cfg
-        public static string OutputFolder = "./presentaties";                           // Folder the output will be saved to
+        public static string OutputFolder = "../../../PPTXcreatorfiles/output.pptx";    // Folder the output will be saved to
         public static string ServicesXML = "../../../PPTXcreatorfiles/services.xml";    // File which holds all known information for future services
         public static string OrganistXML;
+        public static string QRImage = "../../../PPTXcreatorfiles/QR.png";
         public static string LastFutureService;                                         // Holds the last used datetime for 'the next service'
-        public static string PPTXTemplatePre = "./template_voordienst.pptx";            // Powerpoint templates
+        public static string PPTXTemplatePre = "../../../PPTXcreatorfiles/template_voor-dienst-v2.pptx";    // Powerpoint templates
         public static string PPTXTemplateDuring = "./template_tijdensdienst.pptx";      // TODO: use only one collection of all unique slides to build pptxs from
         public static string PPTXTemplateAfter = "./template_nadienst.pptx";            
         public static string Collecte2 = "Algemeen kerkenwerk";                         // Text used as 2e collecte

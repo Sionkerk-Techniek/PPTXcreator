@@ -39,36 +39,6 @@ namespace PPTXcreator
             { "#COLLECTE_2", "doel 2" },
         };
 
-
-        /// <summary>
-        /// Replaces all instances of keys in TemplateContents with their respective values
-        /// </summary>
-        /// <param name="document">The PresentationDocument object in which to replace the placeholders</param>
-        private static void ReplacePlaceholders(PresentationDocument document)
-        {
-            PresentationPart part = document.PresentationPart;
-
-            // Loop over slides
-            foreach (SlidePart slide in part.SlideParts)
-            {
-                // Loop over text in slides
-                foreach (Drawing.Text text in slide.Slide.Descendants<Drawing.Text>())
-                {
-                    StringBuilder sb = new StringBuilder(text.Text);
-
-                    // loop over replacable keywords
-                    foreach (KeyValuePair<string, string> kvp in TemplateContents)
-                    {
-                        sb.Replace(kvp.Key, kvp.Value);
-                    }
-                    
-                    text.Text = sb.ToString();
-                    
-                }
-            }
-        }
-
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -78,6 +48,12 @@ namespace PPTXcreator
             Settings.Load();
             Service service = Service.GetService(Settings.ServicesXML, Settings.OrganistXML, "2020-12-20 9:30");
             // TODO: set UI content to service properties
+
+            Console.WriteLine(Settings.OutputFolder + "test.pptx");
+            Console.WriteLine(Settings.OutputFolder);
+            PowerPoint pptx = new PowerPoint(Settings.PPTXTemplatePre, "test.pptx");// + "test.pptx");
+            Console.WriteLine(Settings.QRImage);
+            pptx.ReplaceImage(Settings.QRImage);
 
             // start UI
             Application.EnableVisualStyles();

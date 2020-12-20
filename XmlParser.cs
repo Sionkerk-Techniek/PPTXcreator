@@ -78,11 +78,7 @@ namespace PPTXcreator
 
                 (DsName, DsPlace) = GetDsAttributes(serviceNode.SelectSingleNode("voorganger"));
                 (NextDsName, NextDsPlace) = GetDsAttributes(nextServiceNode.SelectSingleNode("voorganger"));
-
-                Time = DateTime.ParseExact(serviceNode.SelectSingleNode("datetime").InnerText,
-                    "yyyy-MM-dd H:mm", CultureInfo.InvariantCulture);
-                NextTime = DateTime.ParseExact(nextServiceNode.SelectSingleNode("datetime").InnerText,
-                    "yyyy-MM-dd H:mm", CultureInfo.InvariantCulture);
+                (Time, NextTime) = GetServiceTimes(serviceNode, nextServiceNode);
 
                 Collecte_1 = serviceNode.SelectSingleNode("collecte_1").InnerText;
                 Collecte_3 = serviceNode.SelectSingleNode("collecte_3").InnerText;
@@ -113,6 +109,15 @@ namespace PPTXcreator
             string ds = dsInfo.GetNamedItem("naam").Value;
             string dsPlace = dsInfo.GetNamedItem("plaats").Value;
             return (ds, dsPlace);
+        }
+
+        private (DateTime, DateTime) GetServiceTimes(XmlNode serviceNode, XmlNode nextServiceNode)
+        {
+            DateTime time = DateTime.ParseExact(serviceNode.SelectSingleNode("datetime").InnerText, 
+                "yyyy-MM-dd H:mm", CultureInfo.InvariantCulture);
+            DateTime nextTime = DateTime.ParseExact(nextServiceNode.SelectSingleNode("datetime").InnerText,
+                "yyyy-MM-dd H:mm", CultureInfo.InvariantCulture);
+            return (time, nextTime);
         }
 
         /// <summary>
