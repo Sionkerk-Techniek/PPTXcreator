@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq; // for ToList()
 using System.IO;
 using System.Windows.Forms;
-
 
 namespace PPTXcreator
 {
@@ -12,20 +12,75 @@ namespace PPTXcreator
         // Where the settings file is located
         private const string SettingsPath = "./settings.cfg";
 
-        // Settings that can be defined in settings.cfg
-        public static string OutputFolder = "./presentaties";                           // Folder the output will be saved to
-        public static string ServicesXML = "../../../PPTXcreatorfiles/services.xml";    // File which holds all known information for future services
-        public static string OrganistXML;
-        public static string LastFutureService;                                         // Holds the last used datetime for 'the next service'
-        public static string PPTXTemplatePre = "./template_voordienst.pptx";            // Powerpoint templates
-        public static string PPTXTemplateDuring = "./template_tijdensdienst.pptx";      // TODO: use only one collection of all unique slides to build pptxs from
-        public static string PPTXTemplateAfter = "./template_nadienst.pptx";            
-        public static string Collecte2 = "Algemeen kerkenwerk";                         // Text used as 2e collecte
-        public static bool CheckForUpdates = true;                                      // If true, the program will check for new releases on GitHub
+        private static Dictionary<string, string> SettingsDictionary = new Dictionary<string, string>
+        {
+            { "Template voor dienst", "../../../PPTXcreatorfiles/template_voor-dienst-v2.pptx" },
+            { "Template tijdens dienst", "../../../PPTXcreatorfiles/template_tijdens-dienst-v2.pptx" },
+            { "Template na dienst", "../../../PPTXcreatorfiles/template_na-dienst-v2.pptx" },
+            { "QR afbeelding", "../../../PPTXcreatorfiles/QR.png" },
+            { "Kerkdiensten Xml", "../../../PPTXcreatorfiles/services.xml" },
+            { "Organisten Xml", "../../../PPTXcreatorfiles/organisten.xml" },
+            { "Output folder", "" },
+            { "Volgende dienst", "" },
+            { "Tweede colllectedoel", "Algemeen kerkenwerk" },
+            { "Check voor updates", "True" }
+        };
 
+        // These properties effectively translate the keys to english
+        // and provide easier access to the values
+        public static string TemplatePathBefore
+        {
+            get => SettingsDictionary["Template voor dienst"];
+            set => SettingsDictionary["Template voor dienst"] = value;
+        }
+        public static string TemplatePathDuring
+        {
+            get => SettingsDictionary["Template tijdens dienst"];
+            set => SettingsDictionary["Template tijdens dienst"] = value;
+        }
+        public static string TemplatePathAfter
+        {
+            get => SettingsDictionary["Template na dienst"];
+            set => SettingsDictionary["Template tijdens dienst"] = value;
+        }
+        public static string ImagePath
+        {
+            get => SettingsDictionary["QR afbeelding"];
+            set => SettingsDictionary["QR afbeelding"] = value;
+        }
+        public static string ServicesXml
+        {
+            get => SettingsDictionary["Kerkdiensten Xml"];
+            set => SettingsDictionary["Template tijdens dienst"] = value;
+        }
+        public static string OrganistXml
+        {
+            get => SettingsDictionary["Organisten Xml"];
+            set => SettingsDictionary["Organisten Xml"] = value;
+        }
+        public static string OutputFolderPath
+        {
+            get => SettingsDictionary["Output folder"];
+            set => SettingsDictionary["Output folder"] = value;
+        }
+        public static string LastFutureService
+        {
+            get => SettingsDictionary["Volgende dienst"];
+            set => SettingsDictionary["Volgende dienst"] = value;
+        }
+        public static string Collection_2
+        {
+            get => SettingsDictionary["Tweede collectedoel"];
+            set => SettingsDictionary["Tweede collectedoel"] = value;
+        }
+        public static bool CheckForUpdates
+        {
+            get => bool.Parse(SettingsDictionary["Check voor updates"]);
+            set => SettingsDictionary["Check voor updates"] = value.ToString();
+        }
 
         /// <summary>
-        /// Load settings from the file located at SettingsPath
+        /// Load settings from the file located at <see cref="SettingsPath"/>
         /// </summary>
         public static void Load()
         {
@@ -35,106 +90,68 @@ namespace PPTXcreator
             // Loop over every line in the settings file
             foreach (string line in File.ReadAllLines(SettingsPath))
             {
-                // Skip empty lines
-                if (string.IsNullOrWhiteSpace(line)) continue;
-
+                // Skip lines without key-value pair
+                if (!line.Contains("=")) continue;
+                Console.WriteLine($"Read setting: {line}");
                 // Split every line in a settingID and a value (separated by '=')
-                ParseSetting(line, out string settingID, out string value);
+                (string settingID, string value) = ParseSetting(line);
 
                 // Change the respective settingID to the new value
-                switch (settingID)
+                if (SettingsDictionary.ContainsKey(settingID) && !string.IsNullOrWhiteSpace(value))
                 {
-                    case "OUTPUT_FOLDER":
-                        OutputFolder = value;
-                        break;
-                    case "KERKBODE_XML":
-                        ServicesXML = value;
-                        break;
-                    case "PPTX_TEMPLATE_VOOR":
-                        PPTXTemplatePre = value;
-                        break;
-                    case "PPTX_TEMPLATE_TIJDENS":
-                        PPTXTemplateDuring = value;
-                        break;
-                    case "PPTX_TEMPLATE_NA":
-                        PPTXTemplateAfter = value;
-                        break;
-                    case "VOLGENDE_DIENST":
-                        LastFutureService = value;
-                        break;
-                    case "CHECK_UPDATES_ON_STARTUP":
-                        // Try to parse the value as a boolean, and set to the default 'true' if conversion failed
-                        bool parseSuccess = bool.TryParse(value, out CheckForUpdates);
-                        if (!parseSuccess) CheckForUpdates = true;
-                        break;
-                    default:
-                        Console.WriteLine($"Unknown settingID: {settingID}");
-                        break;
+                    SettingsDictionary[settingID] = value;
                 }
             }
         }
-
 
         /// <summary>
-        /// Change the settingID 'settingID', and write to the file with <see cref="WriteSetting"/>
+        /// Save all settings to the file located at <see cref="SettingsPath"/>
         /// </summary>
-        /// <param name="settingID">Any setting identifier. Valid IDs are: OUTPUT_FOLDER, KERKBODE_XML,
-        /// PPTX_TEMPLATE_VOOR, PPTX_TEMPLATE_TIJDENS, PPTX_TEMPLATE_NA, VOLGENDE_DIENST, CHECK_UPDATES_ON_STARTUP</param>
-        /// <param name="value">The new value of the setting to be saved</param>
-        public static void ChangeSetting(string settingID, string value)
+        public static void Save()
         {
-            if (!FileAvailable()) return;
+            // Check if the file exists before writing to it
+            if (!File.Exists(SettingsPath)) return;
 
-            // Loop over the lines in the settings file and keep track of the line number
-            string[] settingLines = File.ReadAllLines(SettingsPath);
-            for (int lineNumber = 0; lineNumber < settingLines.Length; lineNumber++)
+            // Copy the dictionary and read the settings file
+            Dictionary<string, string> settingsDictionary = SettingsDictionary;
+            List<string> settingsLines = File.ReadAllLines(SettingsPath).ToList();
+
+            // Overwrite every setting in settingsLines with the value in the dictionary
+            for (int i = 0; i < settingsLines.Count; i++)
             {
-                string line = settingLines[lineNumber];
-                if (string.IsNullOrWhiteSpace(line)) continue;
-
-                // Split every line in a settingID and a value (separated by '='). Discard the value.
-                ParseSetting(line, out string fileSettingID, out _);
-
-                // If the settingID is found, replace the line with a new value and end this function
-                if (fileSettingID == settingID)
+                string line = settingsLines[i];
+                if (line.StartsWith("#") || !line.Contains("=")) continue;
+                
+                (string settingID, _) = ParseSetting(line);
+                if (settingsDictionary.ContainsKey(settingID))
                 {
-                    WriteSetting(settingLines, lineNumber, $"{settingID} = {value}");
-                    return;
+                    settingsLines[i] = $"{settingID} = {settingsDictionary[settingID]}";
+                    settingsDictionary.Remove(settingID);
                 }
             }
 
-            // If the setting hasn't been found, append to the file by resizing settingLines
-            Array.Resize(ref settingLines, settingLines.Length + 1);
-            WriteSetting(settingLines, settingLines.Length - 1, $"{settingID} = {value}");
+            // Append all other settings which weren't in the file before
+            foreach (KeyValuePair<string, string> keyValuePair in settingsDictionary)
+            {
+                settingsLines.Add($"{keyValuePair.Key} = {keyValuePair.Value}");
+            }
+            
+            // Write the settings to file
+            File.WriteAllLines(SettingsPath, settingsLines);
         }
-
 
         /// <summary>
         /// Parses a string by splitting at the first equals sign and stripping leading/trailing whitespace
         /// </summary>
         /// <param name="settingLine">The inputline to be parsed</param>
-        /// <param name="settingID">The output settingID</param>
-        /// <param name="value">The output value of the settingID</param>
-        private static void ParseSetting(string settingLine, out string settingID, out string value)
+        /// <returns>The settingID and the value</returns>
+        private static (string, string) ParseSetting(string settingLine)
         {
             string[] lineElements = settingLine.Split("=".ToCharArray(), 2, StringSplitOptions.None);
-            settingID = lineElements[0].Trim().ToUpper();
-            value = lineElements[1].Trim();
+            string settingID = lineElements[0].Trim();
+            string value = lineElements[1].Trim();
+            return (settingID, value);
         }
-
-
-        /// <summary>
-        /// Changes a single element in an array of settings and writes the array to the file at SettingsPath
-        /// </summary>
-        /// <param name="settingsArray">The settings to be written</param>
-        /// <param name="lineNumber">The index of the element that should be changed</param>
-        /// <param name="setting">The setting that should go in settingsArray[lineNumber]</param>
-        private static void WriteSetting(string[] settingsArray, int lineNumber, string setting)
-        {
-            settingsArray[lineNumber] = setting;
-            File.WriteAllLines(SettingsPath, settingsArray); // TODO: check for write permission maybe
-        }
-
 
         /// <summary>
         /// Check whether the settings file exists at SettingsPath.

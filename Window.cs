@@ -78,8 +78,7 @@ namespace PPTXcreator
                 if (Directory.Exists(folderDialog.SelectedPath))
                 {
                     textBoxOutputFolder.Text = folderDialog.SelectedPath;
-                    Settings.OutputFolder = folderDialog.SelectedPath;
-                    Settings.ChangeSetting("OUTPUT_FOLDER", folderDialog.SelectedPath);
+                    Settings.OutputFolderPath = folderDialog.SelectedPath;
                 }
                 else
                 {
