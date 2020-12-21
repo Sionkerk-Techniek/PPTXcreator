@@ -46,20 +46,21 @@ namespace PPTXcreator
         public static void Main()
         {
             Settings.Load();
-            Service service = Service.GetService(Settings.ServicesXML, Settings.OrganistXML, "2020-12-20 9:30");
+            Service service = Service.GetService(Settings.ServicesXml, Settings.OrganistXml, "2020-12-20 9:30");
             // TODO: set UI content to service properties
 
-            Console.WriteLine(Settings.OutputFolder + "test.pptx");
-            Console.WriteLine(Settings.OutputFolder);
-            PowerPoint pptx = new PowerPoint(Settings.PPTXTemplatePre, "test.pptx");// + "test.pptx");
-            Console.WriteLine(Settings.QRImage);
-            pptx.ReplaceImage(Settings.QRImage);
+            Console.WriteLine(Settings.OutputFolderPath + "test.pptx");
+            Console.WriteLine(Settings.OutputFolderPath);
+            PowerPoint pptx = new PowerPoint(Settings.TemplatePathBefore, "test.pptx");// + "test.pptx");
+            Console.WriteLine(Settings.ImagePath);
+            pptx.ReplaceImage(Settings.ImagePath);
 
             // start UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Window());
 
+            Settings.Save();
             /*// edit de powerpoints met ReplacePlaceholders() en sla het resultaat op
             PresentationDocument pptx = PresentationDocument.Open(Settings.PPTXTemplatePre, true); // open pptx file. TODO: exception handling
             ReplacePlaceholders(pptx);

@@ -18,7 +18,7 @@ namespace PPTXcreator
         /// <returns>The relevant <see cref="XmlNode"/> if the service was found, null otherwise</returns>
         public static XmlNode GetNode(string filePath, string dateTimeString, string xpath)
         {
-            if (filePath is null) return null;
+            if (filePath is null || !File.Exists(filePath)) return null;
             // Load the XML file and get the node containing all services
             XmlNode root = Load(filePath, xpath);
 
@@ -61,8 +61,8 @@ namespace PPTXcreator
         public string NextDsName { get; }
         public string DsPlace { get; }
         public string NextDsPlace { get; }
-        public string Collecte_1 { get; }
-        public string Collecte_3 { get; }
+        public string Collection_1 { get; }
+        public string Collection_3 { get; }
         public string Organist { get; }
 
         /// <summary>
@@ -80,8 +80,8 @@ namespace PPTXcreator
                 (NextDsName, NextDsPlace) = GetDsAttributes(nextServiceNode.SelectSingleNode("voorganger"));
                 (Time, NextTime) = GetServiceTimes(serviceNode, nextServiceNode);
 
-                Collecte_1 = serviceNode.SelectSingleNode("collecte_1").InnerText;
-                Collecte_3 = serviceNode.SelectSingleNode("collecte_3").InnerText;
+                Collection_1 = serviceNode.SelectSingleNode("collecte_1").InnerText;
+                Collection_3 = serviceNode.SelectSingleNode("collecte_3").InnerText;
             }
             if (!(organistNode is null))
             {

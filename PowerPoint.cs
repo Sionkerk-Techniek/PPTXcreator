@@ -23,8 +23,6 @@ namespace PPTXcreator
         /// </summary>
         public PowerPoint(string openPath, string savePath)
         {
-            Console.WriteLine(Path.GetFullPath(savePath).ToString());
-            Console.WriteLine(Assembly.GetExecutingAssembly().Location);
             PresentationDocument document = PresentationDocument.Open(openPath, true);
             Document = (PresentationDocument)document.Clone(savePath, true);
         }
@@ -67,8 +65,7 @@ namespace PPTXcreator
                 // Loop over all ImageParts in the slide
                 foreach (ImagePart image in slide.ImageParts)
                 {
-                    // Write all URIs to logfile so they can be easily known by the user
-                    // Console.WriteLine(image.Uri.ToString());
+                    // TODO: write all URIs to logfile so they can be easily known by the user
 
                     // Check if the image's URI is equal to a known URI
                     if (image.Uri.ToString() == "/ppt/media/image44.png")
