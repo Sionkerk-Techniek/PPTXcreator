@@ -37,7 +37,7 @@ namespace PPTXcreator
             {
                 if (File.Exists(fileDialog.FileName))
                 {
-                    this.textBoxQRPath.Text = fileDialog.FileName;
+                    this.textBoxQRPath.Text = Settings.GetPath(fileDialog.FileName);
                     Settings.ImagePath = fileDialog.FileName;
                 }
                 else
@@ -67,7 +67,7 @@ namespace PPTXcreator
             {
                 if (Directory.Exists(folderDialog.SelectedPath))
                 {
-                    textBoxOutputFolder.Text = folderDialog.SelectedPath;
+                    textBoxOutputFolder.Text = Settings.GetPath(folderDialog.SelectedPath);
                     Settings.OutputFolderPath = folderDialog.SelectedPath;
                 }
                 else
@@ -94,7 +94,7 @@ namespace PPTXcreator
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                textBoxTemplatePre.Text = fileDialog.FileName;
+                textBoxTemplatePre.Text = Settings.GetPath(fileDialog.FileName);
                 Settings.TemplatePathBefore = fileDialog.FileName;
             }
         }
@@ -111,7 +111,7 @@ namespace PPTXcreator
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                textBoxTemplateDuring.Text = fileDialog.FileName;
+                textBoxTemplateDuring.Text = Settings.GetPath(fileDialog.FileName);
                 Settings.TemplatePathDuring = fileDialog.FileName;
             }
         }
@@ -128,7 +128,7 @@ namespace PPTXcreator
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                textBoxTemplateAfter.Text = fileDialog.FileName;
+                textBoxTemplateAfter.Text = Settings.GetPath(fileDialog.FileName);
                 Settings.TemplatePathAfter = fileDialog.FileName;
             }
         }
@@ -145,7 +145,7 @@ namespace PPTXcreator
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                textBoxXmlServices.Text = fileDialog.FileName;
+                textBoxXmlServices.Text = Settings.GetPath(fileDialog.FileName);
                 Settings.ServicesXml = fileDialog.FileName;
             }
         }
@@ -162,7 +162,7 @@ namespace PPTXcreator
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                textBoxXmlOrganist.Text = fileDialog.FileName;
+                textBoxXmlOrganist.Text = Settings.GetPath(fileDialog.FileName);
                 Settings.OrganistXml = fileDialog.FileName;
             }
         }

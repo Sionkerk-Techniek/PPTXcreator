@@ -588,7 +588,7 @@ namespace PPTXcreator
             this.textBoxOutputFolder.ReadOnly = true;
             this.textBoxOutputFolder.Size = new System.Drawing.Size(344, 22);
             this.textBoxOutputFolder.TabIndex = 4;
-            this.textBoxOutputFolder.Text = "./output";
+            this.textBoxOutputFolder.Text = Settings.OutputFolderPath;
             // 
             // groupBoxTemplates
             // 
@@ -627,7 +627,7 @@ namespace PPTXcreator
             this.textBoxTemplateAfter.ReadOnly = true;
             this.textBoxTemplateAfter.Size = new System.Drawing.Size(344, 22);
             this.textBoxTemplateAfter.TabIndex = 23;
-            this.textBoxTemplateAfter.Text = "./template_na_dienst.pptx";
+            this.textBoxTemplateAfter.Text = Settings.TemplatePathAfter;
             // 
             // labelTemplateAfter
             // 
@@ -658,7 +658,7 @@ namespace PPTXcreator
             this.textBoxTemplateDuring.ReadOnly = true;
             this.textBoxTemplateDuring.Size = new System.Drawing.Size(344, 22);
             this.textBoxTemplateDuring.TabIndex = 20;
-            this.textBoxTemplateDuring.Text = "./template_tijdens_dienst.pptx";
+            this.textBoxTemplateDuring.Text = Settings.TemplatePathDuring;
             // 
             // labelTemplateDuring
             // 
@@ -689,7 +689,7 @@ namespace PPTXcreator
             this.textBoxTemplatePre.ReadOnly = true;
             this.textBoxTemplatePre.Size = new System.Drawing.Size(344, 22);
             this.textBoxTemplatePre.TabIndex = 17;
-            this.textBoxTemplatePre.Text = "./template_voor_dienst.pptx";
+            this.textBoxTemplatePre.Text = Settings.TemplatePathBefore;
             // 
             // labelTemplatePre
             // 
@@ -735,7 +735,7 @@ namespace PPTXcreator
             this.textBoxXmlOrganist.ReadOnly = true;
             this.textBoxXmlOrganist.Size = new System.Drawing.Size(344, 22);
             this.textBoxXmlOrganist.TabIndex = 23;
-            this.textBoxXmlOrganist.Text = "./organisten.xml";
+            this.textBoxXmlOrganist.Text = Settings.OrganistXml;
             // 
             // labelXmlOrganist
             // 
@@ -766,7 +766,7 @@ namespace PPTXcreator
             this.textBoxXmlServices.ReadOnly = true;
             this.textBoxXmlServices.Size = new System.Drawing.Size(344, 22);
             this.textBoxXmlServices.TabIndex = 20;
-            this.textBoxXmlServices.Text = "./diensten_december.xml";
+            this.textBoxXmlServices.Text = Settings.ServicesXml;
             // 
             // labelXmlServices
             // 
