@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Xml;
+using System.Windows.Forms;
 
 namespace PPTXcreator
 {
@@ -21,6 +22,7 @@ namespace PPTXcreator
             if (filePath is null || !File.Exists(filePath)) return null;
             // Load the XML file and get the node containing all services
             XmlNode root = Load(filePath, xpath);
+            if (!CheckNodeNotNull(root, filePath, xpath)) return null;
 
             // Iterate over all child nodes to find the node with the right datetime value
             foreach (XmlNode node in root.ChildNodes)
@@ -49,6 +51,27 @@ namespace PPTXcreator
             catch (IOException)
             {
                 return null;
+            }
+            catch (XmlException)
+            {
+                return null;
+            }
+        }
+
+        private static bool CheckNodeNotNull(XmlNode node, string filePath, string xpath)
+        {
+            if (node is null)
+            {
+                MessageBox.Show("Het geselecteerde XML-bestand heeft niet de juiste interne structuur: "
+                    + $"'{xpath}' is niet gevonden in het bestand '{filePath}'.",
+                    "Er is een fout opgetreden",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
     }

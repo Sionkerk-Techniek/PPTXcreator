@@ -27,7 +27,7 @@ namespace PPTXcreator
             // Create an OpenFileDialog object which can open .jpeg and .png files
             OpenFileDialog fileDialog = new OpenFileDialog
             {
-                Filter = "JPEG (*.jpeg)|*.jpeg|PNG (*.png)|*.png|Overig (*.*)|*.*",
+                Filter = "JPEG (*.jpeg)|*.jpeg|PNG (*.png)|*.png|Alle bestanden (*.*)|*.*",
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer),
                 Title = "Selecteer de QR-code",
                 RestoreDirectory = true
@@ -79,6 +79,91 @@ namespace PPTXcreator
                         MessageBoxIcon.Warning
                     );
                 }
+            }
+        }
+
+        private void ButtonSelectTemplateBefore(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Filter = "PowerPoint (*.pptx)|*.pptx|Alle bestanden (*.*)|*.*",
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                Title = "Selecteer de 'voor de dienst' template",
+                RestoreDirectory = true,
+            };
+
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxTemplatePre.Text = fileDialog.FileName;
+                Settings.TemplatePathBefore = fileDialog.FileName;
+            }
+        }
+
+        private void ButtonSelectTemplateDuring(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Filter = "PowerPoint (*.pptx)|*.pptx|Alle bestanden (*.*)|*.*",
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                Title = "Selecteer de 'tijdens de dienst' template",
+                RestoreDirectory = true,
+            };
+
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxTemplateDuring.Text = fileDialog.FileName;
+                Settings.TemplatePathDuring = fileDialog.FileName;
+            }
+        }
+
+        private void ButtonSelectTemplateAfter(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Filter = "PowerPoint (*.pptx)|*.pptx|Alle bestanden (*.*)|*.*",
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                Title = "Selecteer de 'na de dienst' template",
+                RestoreDirectory = true,
+            };
+
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxTemplateAfter.Text = fileDialog.FileName;
+                Settings.TemplatePathAfter = fileDialog.FileName;
+            }
+        }
+
+        private void ButtonSelectXmlServices(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Filter = "XML (*.xml)|*.xml|Alle bestanden (*.*)|*.*",
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                Title = "Selecteer het XML-bestand met diensten",
+                RestoreDirectory = true,
+            };
+
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxXmlServices.Text = fileDialog.FileName;
+                Settings.ServicesXml = fileDialog.FileName;
+            }
+        }
+
+        private void ButtonSelectXmlOrganists(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Filter = "XML (*.xml)|*.xml|Alle bestanden (*.*)|*.*",
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                Title = "Selecteer het XML-bestand met organisten",
+                RestoreDirectory = true,
+            };
+
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxXmlOrganist.Text = fileDialog.FileName;
+                Settings.OrganistXml = fileDialog.FileName;
             }
         }
 

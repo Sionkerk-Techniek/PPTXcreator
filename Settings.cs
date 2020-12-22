@@ -28,6 +28,7 @@ namespace PPTXcreator
 
         // These properties effectively translate the keys to english
         // and provide easier access to the values
+        // TODO: show these values on startup in the textfields
         public static string TemplatePathBefore
         {
             get => SettingsDictionary["Template voor dienst"];
@@ -41,7 +42,7 @@ namespace PPTXcreator
         public static string TemplatePathAfter
         {
             get => SettingsDictionary["Template na dienst"];
-            set => SettingsDictionary["Template tijdens dienst"] = value;
+            set => SettingsDictionary["Template na dienst"] = value;
         }
         public static string ImagePath
         {
@@ -51,7 +52,7 @@ namespace PPTXcreator
         public static string ServicesXml
         {
             get => SettingsDictionary["Kerkdiensten Xml"];
-            set => SettingsDictionary["Template tijdens dienst"] = value;
+            set => SettingsDictionary["Kerkdiensten Xml"] = value;
         }
         public static string OrganistXml
         {
