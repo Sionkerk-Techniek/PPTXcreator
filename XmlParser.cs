@@ -55,6 +55,7 @@ namespace PPTXcreator
 
     public class Service
     {
+        // TODO: create method which updates properties when Time or NextTime change
         public DateTime Time { get; }
         public DateTime NextTime { get; }
         public string DsName { get; }
@@ -121,6 +122,18 @@ namespace PPTXcreator
         }
 
         /// <summary>
+        /// Takes the title and name as a single string and splits it
+        /// </summary>
+        public static (string, string) SplitName(string dsTitleName)
+        {
+            if (string.IsNullOrWhiteSpace(dsTitleName)) return ("titel", "naam");
+            else if (!dsTitleName.Contains(" ")) return ("titel", "naam");
+
+            string[] titleName = dsTitleName.Split(" ".ToCharArray(), 2);
+            return (titleName[0], titleName[1]);
+        }
+
+        /// <summary>
         /// Returns the time in 'H:mm' notation
         /// </summary>
         public static string GetTime(DateTime timeProperty)
@@ -143,9 +156,11 @@ namespace PPTXcreator
         {
             // Dictionary to avoid not having the nl-NL resource when using System.Globalization
             Dictionary<int, string> monthNames = new Dictionary<int, string>()
-            {   { 1, "januari" }, { 2, "februari" }, { 3, "maart" }, { 4, "april" },
+            {
+                { 1, "januari" }, { 2, "februari" }, { 3, "maart" }, { 4, "april" },
                 { 5, "mei" }, { 6, "juni" }, { 7, "juli" }, { 8, "augustus"},
-                { 9, "september" }, { 10, "oktober" }, { 11, "november" }, { 12, "december" } };
+                { 9, "september" }, { 10, "oktober" }, { 11, "november" }, { 12, "december" }
+            };
 
             return $"{timeProperty.Day} {monthNames[Time.Month]}";
         }

@@ -7,25 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Globalization;
 
 namespace PPTXcreator
 {
     public partial class Window : Form
     {
-        public string QRFile;
-
         public Window()
         {
             InitializeComponent();
-        }
-
-        /// <summary>
-        /// Selects the content of the textbox for quick editing
-        /// </summary>
-        private void TextboxSelectOnEnter(object sender, EventArgs e)
-        {
-            TextBox box = (TextBox)sender;
-            box.SelectAll(); // TODO: don't select when already focused on the box
         }
 
         /// <summary>
@@ -48,7 +38,7 @@ namespace PPTXcreator
                 if (File.Exists(fileDialog.FileName))
                 {
                     this.textBoxQRPath.Text = fileDialog.FileName;
-                    QRFile = fileDialog.FileName;
+                    Settings.ImagePath = fileDialog.FileName;
                 }
                 else
                 {
@@ -89,6 +79,45 @@ namespace PPTXcreator
                         MessageBoxIcon.Warning
                     );
                 }
+            }
+        }
+
+        private void DateTimePickerNu_Leave(object sender, EventArgs e)
+        {
+            string dateTimeString = dateTimePickerNu.Value.ToString("yyyy-MM-dd H:mm", CultureInfo.InvariantCulture);
+            if (Settings.AutoPopulate)
+            {
+                Service currentService = Service.GetService(Settings.ServicesXml, Settings.OrganistXml, dateTimeString);
+                UpdateForm(currentService);
+            }
+        }
+
+        private void UpdateForm(Service service)
+        {
+            (string dsNowTitle, string dsNowName) = Service.SplitName(service.DsName);
+            (string dsNextTitle, string dsNextName) = Service.SplitName(service.NextDsName);
+
+            if (service.Time != DateTime.MinValue)
+            {
+                textBoxVoorgangerNuTitel.Text = dsNowTitle;
+                textBoxVoorgangerNuNaam.Text = dsNowName;
+                textBoxVoorgangerNuPlaats.Text = service.DsPlace;
+
+                textBoxCollecte1.Text = service.Collection_1;
+                textBoxCollecte3.Text = service.Collection_3;
+            }
+
+            if (service.NextTime != DateTime.MinValue)
+            {
+                dateTimePickerNext.Value = service.NextTime;
+                textBoxVoorgangerNextTitel.Text = dsNextTitle;
+                textBoxVoorgangerNextNaam.Text = dsNextName;
+                textBoxVoorgangerNextPlaats.Text = service.NextDsPlace;
+            }
+
+            if (!string.IsNullOrWhiteSpace(service.Organist))
+            {
+                textBoxOrganist.Text = service.Organist;
             }
         }
     }
