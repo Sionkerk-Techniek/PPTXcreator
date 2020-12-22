@@ -20,14 +20,15 @@ namespace PPTXcreator
             { "QR afbeelding", "../../../PPTXcreatorfiles/QR.png" },
             { "Kerkdiensten Xml", "../../../PPTXcreatorfiles/services.xml" },
             { "Organisten Xml", "../../../PPTXcreatorfiles/organisten.xml" },
-            { "Output folder", "" },
+            { "Output folder", "./output" },
             { "Volgende dienst", "" },
-            { "Tweede colllectedoel", "Algemeen kerkenwerk" },
-            { "Check voor updates", "True" }
+            { "Check voor updates", "True" },
+            { "Automatisch aanvullen", "True" }
         };
 
         // These properties effectively translate the keys to english
         // and provide easier access to the values
+        // TODO: show these values on startup in the textfields
         public static string TemplatePathBefore
         {
             get => SettingsDictionary["Template voor dienst"];
@@ -41,7 +42,7 @@ namespace PPTXcreator
         public static string TemplatePathAfter
         {
             get => SettingsDictionary["Template na dienst"];
-            set => SettingsDictionary["Template tijdens dienst"] = value;
+            set => SettingsDictionary["Template na dienst"] = value;
         }
         public static string ImagePath
         {
@@ -51,7 +52,7 @@ namespace PPTXcreator
         public static string ServicesXml
         {
             get => SettingsDictionary["Kerkdiensten Xml"];
-            set => SettingsDictionary["Template tijdens dienst"] = value;
+            set => SettingsDictionary["Kerkdiensten Xml"] = value;
         }
         public static string OrganistXml
         {
@@ -68,15 +69,15 @@ namespace PPTXcreator
             get => SettingsDictionary["Volgende dienst"];
             set => SettingsDictionary["Volgende dienst"] = value;
         }
-        public static string Collection_2
-        {
-            get => SettingsDictionary["Tweede collectedoel"];
-            set => SettingsDictionary["Tweede collectedoel"] = value;
-        }
         public static bool CheckForUpdates
         {
             get => bool.Parse(SettingsDictionary["Check voor updates"]);
             set => SettingsDictionary["Check voor updates"] = value.ToString();
+        }
+        public static bool AutoPopulate
+        {
+            get => bool.Parse(SettingsDictionary["Automatisch aanvullen"]);
+            set => SettingsDictionary["Automatisch aanvullen"] = value.ToString();
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace PPTXcreator
             {
                 // Skip lines without key-value pair
                 if (!line.Contains("=")) continue;
-                Console.WriteLine($"Read setting: {line}");
+                
                 // Split every line in a settingID and a value (separated by '=')
                 (string settingID, string value) = ParseSetting(line);
 
@@ -171,7 +172,6 @@ namespace PPTXcreator
                 return true;
             }
         }
-
 
         /// <summary>
         /// Ask the user if a new settings file at should be created at SettingsPath.
