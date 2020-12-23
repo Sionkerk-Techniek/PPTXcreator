@@ -627,7 +627,7 @@ namespace PPTXcreator
             this.textBoxTemplateAfter.ReadOnly = true;
             this.textBoxTemplateAfter.Size = new System.Drawing.Size(344, 22);
             this.textBoxTemplateAfter.TabIndex = 23;
-            this.textBoxTemplateAfter.Text = "./template_na_dienst.pptx";
+            this.textBoxTemplateAfter.Text = "../../../PPTXcreatorfiles/template_na-dienst-v2.pptx";
             // 
             // labelTemplateAfter
             // 
@@ -658,7 +658,7 @@ namespace PPTXcreator
             this.textBoxTemplateDuring.ReadOnly = true;
             this.textBoxTemplateDuring.Size = new System.Drawing.Size(344, 22);
             this.textBoxTemplateDuring.TabIndex = 20;
-            this.textBoxTemplateDuring.Text = "./template_tijdens_dienst.pptx";
+            this.textBoxTemplateDuring.Text = "../../../PPTXcreatorfiles/template_tijdens-dienst-v2.pptx";
             // 
             // labelTemplateDuring
             // 
@@ -689,7 +689,7 @@ namespace PPTXcreator
             this.textBoxTemplatePre.ReadOnly = true;
             this.textBoxTemplatePre.Size = new System.Drawing.Size(344, 22);
             this.textBoxTemplatePre.TabIndex = 17;
-            this.textBoxTemplatePre.Text = "./template_voor_dienst.pptx";
+            this.textBoxTemplatePre.Text = "../../../PPTXcreatorfiles/template_voor-dienst-v2.pptx";
             // 
             // labelTemplatePre
             // 
@@ -735,7 +735,7 @@ namespace PPTXcreator
             this.textBoxXmlOrganist.ReadOnly = true;
             this.textBoxXmlOrganist.Size = new System.Drawing.Size(344, 22);
             this.textBoxXmlOrganist.TabIndex = 23;
-            this.textBoxXmlOrganist.Text = "./organisten.xml";
+            this.textBoxXmlOrganist.Text = "../../../PPTXcreatorfiles/organisten.xml";
             // 
             // labelXmlOrganist
             // 
@@ -766,7 +766,7 @@ namespace PPTXcreator
             this.textBoxXmlServices.ReadOnly = true;
             this.textBoxXmlServices.Size = new System.Drawing.Size(344, 22);
             this.textBoxXmlServices.TabIndex = 20;
-            this.textBoxXmlServices.Text = "./diensten_december.xml";
+            this.textBoxXmlServices.Text = "../../../PPTXcreatorfiles/services.xml";
             // 
             // labelXmlServices
             // 
@@ -916,6 +916,7 @@ namespace PPTXcreator
             this.buttonRowMoveDown.Size = new System.Drawing.Size(30, 30);
             this.buttonRowMoveDown.TabIndex = 16;
             this.buttonRowMoveDown.UseVisualStyleBackColor = true;
+            this.buttonRowMoveDown.Click += new System.EventHandler(this.ButtonMoveDownDatagridviewRow);
             // 
             // buttonRowMoveUp
             // 
@@ -927,6 +928,7 @@ namespace PPTXcreator
             this.buttonRowMoveUp.Size = new System.Drawing.Size(30, 30);
             this.buttonRowMoveUp.TabIndex = 15;
             this.buttonRowMoveUp.UseVisualStyleBackColor = true;
+            this.buttonRowMoveUp.Click += new System.EventHandler(this.ButtonMoveUpDatagridviewRow);
             // 
             // buttonRowRemove
             // 
@@ -938,6 +940,7 @@ namespace PPTXcreator
             this.buttonRowRemove.Size = new System.Drawing.Size(30, 30);
             this.buttonRowRemove.TabIndex = 14;
             this.buttonRowRemove.UseVisualStyleBackColor = true;
+            this.buttonRowRemove.Click += new System.EventHandler(this.ButtonRemoveDatagridviewRow);
             // 
             // buttonRowAdd
             // 
@@ -949,6 +952,7 @@ namespace PPTXcreator
             this.buttonRowAdd.Size = new System.Drawing.Size(30, 30);
             this.buttonRowAdd.TabIndex = 13;
             this.buttonRowAdd.UseVisualStyleBackColor = true;
+            this.buttonRowAdd.Click += new System.EventHandler(this.ButtonAddDatagridviewRow);
             // 
             // button4
             // 

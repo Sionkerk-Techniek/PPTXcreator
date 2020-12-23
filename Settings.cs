@@ -4,13 +4,14 @@ using System.Text;
 using System.Linq; // for ToList()
 using System.IO;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace PPTXcreator
 {
     static class Settings
     {
         // Where the settings file is located
-        private const string SettingsPath = "./settings.cfg";
+        private const string SettingsPath = "settings.cfg";
 
         private static Dictionary<string, string> SettingsDictionary = new Dictionary<string, string>
         {
@@ -32,42 +33,42 @@ namespace PPTXcreator
         public static string TemplatePathBefore
         {
             get => SettingsDictionary["Template voor dienst"];
-            set => SettingsDictionary["Template voor dienst"] = value;
+            set => SettingsDictionary["Template voor dienst"] = GetPath(value);
         }
         public static string TemplatePathDuring
         {
             get => SettingsDictionary["Template tijdens dienst"];
-            set => SettingsDictionary["Template tijdens dienst"] = value;
+            set => SettingsDictionary["Template tijdens dienst"] = GetPath(value);
         }
         public static string TemplatePathAfter
         {
             get => SettingsDictionary["Template na dienst"];
-            set => SettingsDictionary["Template na dienst"] = value;
+            set => SettingsDictionary["Template na dienst"] = GetPath(value);
         }
         public static string ImagePath
         {
             get => SettingsDictionary["QR afbeelding"];
-            set => SettingsDictionary["QR afbeelding"] = value;
+            set => SettingsDictionary["QR afbeelding"] = GetPath(value);
         }
         public static string ServicesXml
         {
             get => SettingsDictionary["Kerkdiensten Xml"];
-            set => SettingsDictionary["Kerkdiensten Xml"] = value;
+            set => SettingsDictionary["Kerkdiensten Xml"] = GetPath(value);
         }
         public static string OrganistXml
         {
             get => SettingsDictionary["Organisten Xml"];
-            set => SettingsDictionary["Organisten Xml"] = value;
+            set => SettingsDictionary["Organisten Xml"] = GetPath(value);
         }
         public static string OutputFolderPath
         {
             get => SettingsDictionary["Output folder"];
-            set => SettingsDictionary["Output folder"] = value;
+            set => SettingsDictionary["Output folder"] = GetPath(value);
         }
         public static string LastFutureService
         {
             get => SettingsDictionary["Volgende dienst"];
-            set => SettingsDictionary["Volgende dienst"] = value;
+            set => SettingsDictionary["Volgende dienst"] = GetPath(value);
         }
         public static bool CheckForUpdates
         {
@@ -204,6 +205,29 @@ namespace PPTXcreator
                 );
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Creates a relative path from the executing assembly to the file at
+        /// <paramref name="path"/> if the file is in the same directory as or
+        /// in a subdirectory of the assembly, or an absolute path otherwise
+        /// </summary>
+        public static string GetPath(string path)
+        {
+            Uri uri = new Uri(path);
+            Uri assembly = new Uri(Assembly.GetExecutingAssembly().Location);
+            if (assembly.IsBaseOf(uri))
+            {
+                uri = assembly.MakeRelativeUri(uri);
+            }
+
+            string uriString = uri.ToString();
+            if (uriString.StartsWith("file:///"))
+            {
+                uriString = uriString.Substring(8);
+            }
+
+            return uriString;
         }
     }
 }
