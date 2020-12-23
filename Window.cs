@@ -18,6 +18,16 @@ namespace PPTXcreator
             InitializeComponent();
         }
 
+        private void ShowWarning(string message)
+        {
+            MessageBox.Show(
+                message,
+                "Er is een fout opgetreden",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
+        }
+
         /// <summary>
         /// Selects a file and sets this.textBoxQRPath.Text and
         /// QRFile to the path
@@ -42,12 +52,7 @@ namespace PPTXcreator
                 }
                 else
                 {
-                    MessageBox.Show(
-                        "Het geselecteerde bestand kan niet worden gevonden",
-                        "Er is een fout opgetreden",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
+                    ShowWarning("Het geselecteerde bestand kan niet worden gevonden");
                 }
             }
         }
@@ -72,12 +77,7 @@ namespace PPTXcreator
                 }
                 else
                 {
-                    MessageBox.Show(
-                        "De geselecteerde folder kan niet worden gevonden",
-                        "Er is een fout opgetreden",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
+                    ShowWarning("De geselecteerde folder kan niet worden gevonden");
                 }
             }
         }
@@ -169,10 +169,14 @@ namespace PPTXcreator
 
         private void DateTimePickerNu_Leave(object sender, EventArgs e)
         {
-            string dateTimeString = dateTimePickerNu.Value.ToString("yyyy-MM-dd H:mm", CultureInfo.InvariantCulture);
+            string dateTimeString = dateTimePickerNu.Value.ToString("yyyy-MM-dd H:mm",
+                CultureInfo.InvariantCulture);
+
             if (Settings.AutoPopulate)
             {
-                Service currentService = Service.GetService(Settings.ServicesXml, Settings.OrganistXml, dateTimeString);
+                Service currentService = Service.GetService(Settings.ServicesXml,
+                    Settings.OrganistXml, dateTimeString);
+
                 UpdateForm(currentService);
             }
         }
@@ -204,6 +208,74 @@ namespace PPTXcreator
             {
                 textBoxOrganist.Text = service.Organist;
             }
+        }
+
+        private void ButtonAddDatagridviewRow(object sender, EventArgs e)
+        {
+            dataGridView.Rows.Add();
+        }
+
+        private void ButtonRemoveDatagridviewRow(object sender, EventArgs e)
+        {
+            if (dataGridView.SelectedRows.Count == 1)
+            {
+                try
+                {
+                    dataGridView.Rows.Remove(dataGridView.SelectedRows[0]);
+                }
+                catch (InvalidOperationException exception)
+                {
+                    ShowWarning("De rij kan niet worden verwijderd." +
+                        $"De volgende foutmelding werd gegeven: {exception.Message}");
+                }
+            }
+            else if (dataGridView.CurrentCell != null)
+            {
+                try
+                {
+                    dataGridView.Rows.Remove(dataGridView.CurrentCell.OwningRow);
+                }
+                catch (InvalidOperationException exception)
+                {
+                    ShowWarning("De rij kan niet worden verwijderd. " +
+                        $"De volgende foutmelding werd gegeven: {exception.Message}");
+                }
+            }
+        }
+
+        private void ButtonMoveUpDatagridviewRow(object sender, EventArgs e)
+        {
+            int index = dataGridView.CurrentRow.Index;
+            int rowCount = dataGridView.Rows.Count;
+            DataGridViewRow row = dataGridView.CurrentRow;
+
+            if (index == 0 || index == rowCount - 1 || rowCount == 1) return;
+
+            dataGridView.Rows.Remove(row);
+            dataGridView.Rows.Insert(index - 1, row);
+
+            UpdateDatagridviewSelection(index - 1);
+        }
+
+        private void ButtonMoveDownDatagridviewRow(object sender, EventArgs e)
+        {
+            int index = dataGridView.CurrentRow.Index;
+            int rowCount = dataGridView.Rows.Count;
+            DataGridViewRow row = dataGridView.CurrentRow;
+
+            if (index == rowCount - 2 || rowCount == 1) return;
+
+            dataGridView.Rows.Remove(row);
+            dataGridView.Rows.Insert(index + 1, row);
+
+            UpdateDatagridviewSelection(index + 1);
+        }
+
+        private void UpdateDatagridviewSelection(int index)
+        {
+            dataGridView.ClearSelection();
+            dataGridView.Rows[index].Selected = true;
+            dataGridView.CurrentCell = dataGridView.Rows[index].Cells[0];
         }
     }
 }
