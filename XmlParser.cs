@@ -22,7 +22,7 @@ namespace PPTXcreator
             if (filePath is null || !File.Exists(filePath)) return null;
             // Load the XML file and get the node containing all services
             XmlNode root = Load(filePath, xpath);
-            if (!CheckNodeNotNull(root, filePath, xpath)) return null;
+            if (CheckNodeIsNull(root, filePath, xpath)) return null;
 
             // Iterate over all child nodes to find the node with the right datetime value
             foreach (XmlNode node in root.ChildNodes)
@@ -58,7 +58,7 @@ namespace PPTXcreator
             }
         }
 
-        private static bool CheckNodeNotNull(XmlNode node, string filePath, string xpath)
+        private static bool CheckNodeIsNull(XmlNode node, string filePath, string xpath)
         {
             if (node is null)
             {
@@ -67,11 +67,11 @@ namespace PPTXcreator
                     "Er is een fout opgetreden",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-                return false;
+                return true;
             }
             else
             {
-                return true;
+                return false;
             }
         }
     }
@@ -81,13 +81,13 @@ namespace PPTXcreator
         // TODO: create method which updates properties when Time or NextTime change
         public DateTime Time { get; }
         public DateTime NextTime { get; }
-        public string DsName { get; }
-        public string NextDsName { get; }
-        public string DsPlace { get; }
-        public string NextDsPlace { get; }
-        public string Collection_1 { get; }
-        public string Collection_3 { get; }
-        public string Organist { get; }
+        public string DsName { get; private set; }
+        public string NextDsName { get; private set; }
+        public string DsPlace { get; private set; }
+        public string NextDsPlace { get; private set; }
+        public string Collection_1 { get; private set; }
+        public string Collection_3 { get; private set; }
+        public string Organist { get; private set; }
 
         /// <summary>
         /// Data class containing information about a service
@@ -98,19 +98,44 @@ namespace PPTXcreator
         {
             if (!(serviceNode is null))
             {
+                // Get the next service
                 XmlNode nextServiceNode = serviceNode.NextSibling;
 
                 (DsName, DsPlace) = GetDsAttributes(serviceNode.SelectSingleNode("voorganger"));
-                (NextDsName, NextDsPlace) = GetDsAttributes(nextServiceNode.SelectSingleNode("voorganger"));
-                (Time, NextTime) = GetServiceTimes(serviceNode, nextServiceNode);
+                if (!(nextServiceNode is null))
+                {
+                    // Fill in GUI textboxes with the xml info
+                    (NextDsName, NextDsPlace) = GetDsAttributes(nextServiceNode.SelectSingleNode("voorganger"));
+                    (Time, NextTime) = GetServiceTimes(serviceNode, nextServiceNode);
+                }
+                else
+                {
+                    // Set the values for the next service to default if the next service is not found
+                    (NextDsName, NextDsPlace) = ("titel naam", "plaats");
+                    (Time, NextTime) = GetServiceTimes(serviceNode, serviceNode);
+                }
 
                 Collection_1 = serviceNode.SelectSingleNode("collecte_1").InnerText;
                 Collection_3 = serviceNode.SelectSingleNode("collecte_3").InnerText;
             }
+            else
+            {
+                // Reset to default values if the node is not found in the form
+                
+            }
+
             if (!(organistNode is null))
             {
                 Organist = organistNode.SelectSingleNode("organist").InnerText;
             }
+        }
+
+        private void ResetFields(bool onlyNextService = false)
+        {
+            DsName = NextDsName = "titel naam";
+            DsPlace = NextDsPlace = "plaats";
+            Collection_1 = "doel 1";
+            Collection_3 = "doel 3";
         }
 
         /// <summary>

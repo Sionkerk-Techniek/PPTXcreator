@@ -245,6 +245,8 @@ namespace PPTXcreator
 
         private void ButtonMoveUpDatagridviewRow(object sender, EventArgs e)
         {
+            if (dataGridView.CurrentRow is null) return;
+
             int index = dataGridView.CurrentRow.Index;
             int rowCount = dataGridView.Rows.Count;
             DataGridViewRow row = dataGridView.CurrentRow;
@@ -259,11 +261,13 @@ namespace PPTXcreator
 
         private void ButtonMoveDownDatagridviewRow(object sender, EventArgs e)
         {
+            if (dataGridView.CurrentRow is null) return;
+
             int index = dataGridView.CurrentRow.Index;
             int rowCount = dataGridView.Rows.Count;
             DataGridViewRow row = dataGridView.CurrentRow;
 
-            if (index == rowCount - 2 || rowCount == 1) return;
+            if (index >= rowCount - 2 || rowCount == 1) return;
 
             dataGridView.Rows.Remove(row);
             dataGridView.Rows.Insert(index + 1, row);
@@ -276,6 +280,77 @@ namespace PPTXcreator
             dataGridView.ClearSelection();
             dataGridView.Rows[index].Selected = true;
             dataGridView.CurrentCell = dataGridView.Rows[index].Cells[0];
+        }
+
+        private void ButtonGotoSettingsTab(object sender, EventArgs e)
+        {
+            tabControl.SelectTab("tabInstellingen");
+        }
+
+        private void ButtonNextTab(object sender, EventArgs e)
+        {
+            int index = tabControl.SelectedIndex;
+            tabControl.SelectTab(index + 1);
+        }
+
+        private void ButtonPreviousTab(object sender, EventArgs e)
+        {
+            int index = tabControl.SelectedIndex;
+            tabControl.SelectTab(index - 1);
+        }
+
+        private bool CheckValidInputs()
+        {
+            StringBuilder warning = new StringBuilder();
+            List<string> invalidInputs = new List<string>();
+
+            string[] fieldNames = new string[]
+            {
+                "titel van de voorganger van deze dienst", "titel van de voorganger van de volgende dienst",
+                "naam van de voorganger van deze dienst", "naam van de voorganger van de volgende dienst",
+                "plaats van de voorganger van deze dienst", "plaats van de voorganger van de volgende dienst",
+                "collectedoel 1", "collectedoel 3", "naam van de organist", "bestandspad QR-code", "liturgie"
+            };
+            string[] inputValues = new string[]
+            {
+                textBoxVoorgangerNuTitel.Text, textBoxVoorgangerNextTitel.Text,
+                textBoxVoorgangerNuNaam.Text, textBoxVoorgangerNextNaam.Text,
+                textBoxVoorgangerNuPlaats.Text, textBoxVoorgangerNextPlaats.Text,
+                textBoxCollecte1.Text, textBoxCollecte3.Text, textBoxOrganist.Text,
+                textBoxQRPath.Text, dataGridView.RowCount.ToString()
+            };
+            string[] defaultValues = new string[]
+            {
+                "titel", "titel", "naam", "naam", "plaats", "plaats",
+                "doel 1", "doel 3", "naam", "", "1"
+            };
+            
+            for (int i = 0; i < inputValues.Length; i++)
+            {
+                if (inputValues[i] == defaultValues[i] || string.IsNullOrWhiteSpace(inputValues[i]))
+                {
+                    invalidInputs.Add(fieldNames[i]);
+                }
+            }
+
+            if (invalidInputs.Count > 0)
+            {
+                if (invalidInputs.Count == 1) warning.Append("Het volgende veld is nog niet ingevuld: ");
+                else warning.Append("De volgende velden zijn nog niet ingevuld:\r\n    - ");
+                warning.Append(string.Join("\r\n    - ", invalidInputs));
+                warning.Append("\r\n\r\nWil je doorgaan met het maken van de presentaties?");
+
+                DialogResult result = MessageBox.Show(warning.ToString(), "Waarschuwing", 
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                return result == DialogResult.OK;
+            }
+
+            return true;
+        }
+
+        public void CreatePresentations(object sender, EventArgs e)
+        {
+            if (!CheckValidInputs()) return;
         }
     }
 }
