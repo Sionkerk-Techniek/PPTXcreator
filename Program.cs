@@ -14,32 +14,6 @@ namespace PPTXcreator
     static class Program
     {
         /// <summary>
-        /// Dictionary containing the values with which the keys will be replaced in the slides.
-        /// This dictionary will eventually be filled with form values instead of this way.
-        /// </summary>
-        public static Dictionary<string, string> TemplateContents = new Dictionary<string, string>()
-        {
-            { "#TIJD_1", "13:37" },
-            { "#TIJD_2", "16:15" },
-            { "#DS_PLAATS_1", "Null Island" },
-            { "#DS_NAAM_1", "ds. Voornaam Achternaam" },
-            { "#DS_PLAATS_2", "Null Island" },
-            { "#DS_NAAM_2", "ds. Voornaam Achternaam" },
-            { "#ORGANIST", "Abc van de Defgijklmnopqrstuvwxyz" },
-            { "#ZINGEN_1", "Ps 151 : 1, 2 en 3" },
-            { "#ZINGEN_2", "Ps 152 : 1, 2 en 3" },
-            { "#ZINGEN_3", "Ps 153 : 1, 2 en 3 WK" },
-            { "#ZINGEN_4", "Ps 154 : 1, 2 en 3" },
-            { "#ZINGEN_5", "Ps 155 : 1, 2 en 3" },
-            { "#ZINGEN_6", "Ps 156 : 1, 2 en 3" },
-            { "#ZINGEN_7", "Ps 157 : 1, 2 en 3 WK" },
-            { "#LEZING", "asdf" },
-            { "#THEMA", "testthema" },
-            { "#COLLECTE_1", "doel 1" },
-            { "#COLLECTE_2", "doel 2" },
-        };
-
-        /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
@@ -51,7 +25,7 @@ namespace PPTXcreator
 
             Console.WriteLine(Settings.OutputFolderPath + "test.pptx");
             Console.WriteLine(Settings.OutputFolderPath);
-            PowerPoint pptx = new PowerPoint(Settings.TemplatePathBefore, "test.pptx");// + "test.pptx");
+            PowerPoint pptx = new PowerPoint(Settings.TemplatePathBefore, "test.pptx"); // + "test.pptx");
             Console.WriteLine(Settings.ImagePath);
             pptx.ReplaceImage(Settings.ImagePath);
 

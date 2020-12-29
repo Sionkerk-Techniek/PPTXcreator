@@ -177,11 +177,11 @@ namespace PPTXcreator
                 Service currentService = Service.GetService(Settings.ServicesXml,
                     Settings.OrganistXml, dateTimeString);
 
-                UpdateForm(currentService);
+                SetFormData(currentService);
             }
         }
 
-        private void UpdateForm(Service service)
+        private void SetFormData(Service service)
         {
             (string dsNowTitle, string dsNowName) = Service.SplitName(service.DsName);
             (string dsNextTitle, string dsNextName) = Service.SplitName(service.NextDsName);
@@ -208,6 +208,126 @@ namespace PPTXcreator
             {
                 textBoxOrganist.Text = service.Organist;
             }
+        }
+
+        public Dictionary<string, string> GetFormKeywords()
+        {
+            Dictionary<string, string> keywords = new Dictionary<string, string>
+            {
+                { "[tijd]", GetTime(dateTimePickerNu) },
+                { "[tijd next]", GetTime(dateTimePickerNext) },
+                { "[datum next]", GetDateLong(dateTimePickerNext) },
+                { "[voorganger]", $"{textBoxVoorgangerNuTitel.Text} {textBoxVoorgangerNuNaam.Text}" },
+                { "[voorganger plaats]", textBoxVoorgangerNuPlaats.Text },
+                { "[voorganger next]", $"{textBoxVoorgangerNextTitel.Text} {textBoxVoorgangerNextNaam.Text}" },
+                { "[voorganger next plaats]", textBoxVoorgangerNextPlaats.Text },
+                { "[organist]", textBoxOrganist.Text },
+                { "[thema]", textBoxThema.Text }
+            };
+
+            return keywords;
+        }
+
+        public Dictionary<string, string> GetSongKeywords()
+        {
+            Dictionary<string, string> keywords = new Dictionary<string, string>();
+
+            byte songCounter = 0;
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                string type = (string)row.Cells[0].Value;
+                string song = (string)row.Cells[1].Value;
+                string name = (string)row.Cells[2].Value;
+
+                if (string.IsNullOrWhiteSpace(type)) continue;
+
+                if (type != "Lezing")
+                {
+                    songCounter++;
+                    keywords[$"[lied {songCounter}]"] = GetSongSelection(song, type, name);
+                    keywords[$"[liedbundel {songCounter}]"] = GetSongBundle(type, name);
+                }
+            }
+
+            return keywords;
+        }
+
+        public Dictionary<string, string> GetReadingKeywords()
+        {
+            Dictionary<string, string> keywords = new Dictionary<string, string>();
+
+            byte readingCounter = 0;
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                string type = (string)row.Cells[0].Value;
+                string reading = (string)row.Cells[1].Value;
+
+                if (type == "Lezing")
+                {
+                    readingCounter++;
+                    keywords[$"[lezing {readingCounter}]"] = reading.Replace(":", " : ").Replace("-", " - ");
+                }
+            }
+
+            return keywords;
+        }
+
+        private string SongReplaceLastComma(string input)
+        {
+            int lastComma = input.LastIndexOf(",");
+            if (lastComma == -1) return input;
+            return input.Remove(lastComma, 1).Insert(lastComma, " en ");
+        }
+
+        private string GetSongSelection(string song, string type, string name)
+        {
+            if (!string.IsNullOrWhiteSpace(song))
+            {
+                song = SongReplaceLastComma(song);
+                song = song.Replace(",", ", ").Replace(":", " : ");
+            }
+
+            switch (type)
+            {
+                case "Psalm":
+                    return $"Psalm {song}";
+                case "Psalm (WK)":
+                    return $"Psalm {song}   WK";
+                case "Lied (WK)":
+                    return $"Lied {song}";
+                default:
+                    return name;
+            }
+        }
+
+        private string GetSongBundle(string type, string name)
+        {
+            switch(type)
+            {
+                case "Psalm":
+                    return "Oude berijming";
+                case "Psalm (WK)":
+                    return "Weerklank";
+                default:
+                    return name;
+            }
+        }
+
+        private string GetTime(DateTimePicker dateTimePicker)
+        {
+            return dateTimePicker.Value.ToString("H:mm", CultureInfo.InvariantCulture);
+        }
+
+        private string GetDateLong(DateTimePicker dateTimePicker)
+        {
+            // Dictionary to avoid not having the nl-NL resource when using System.Globalization
+            Dictionary<int, string> monthNames = new Dictionary<int, string>()
+            {
+                { 1, "januari" }, { 2, "februari" }, { 3, "maart" }, { 4, "april" },
+                { 5, "mei" }, { 6, "juni" }, { 7, "juli" }, { 8, "augustus"},
+                { 9, "september" }, { 10, "oktober" }, { 11, "november" }, { 12, "december" }
+            };
+            return $"{dateTimePicker.Value.Day} {monthNames[dateTimePicker.Value.Month]}";
         }
 
         private void ButtonAddDatagridviewRow(object sender, EventArgs e)
@@ -342,7 +462,7 @@ namespace PPTXcreator
 
                 DialogResult result = MessageBox.Show(warning.ToString(), "Waarschuwing", 
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                return result == DialogResult.OK;
+                return result == DialogResult.Yes;
             }
 
             return true;
@@ -351,6 +471,16 @@ namespace PPTXcreator
         public void CreatePresentations(object sender, EventArgs e)
         {
             if (!CheckValidInputs()) return;
+
+            // TODO: methods should probably return key and value lists, easier to merge
+            Dictionary<string, string> keywords = GetFormKeywords();
+            keywords = keywords.Concat(GetSongKeywords()).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            keywords = keywords.Concat(GetReadingKeywords()).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+            foreach (var kvp in keywords)
+            {
+                Console.WriteLine($"{kvp.Key} = {kvp.Value}");
+            }
         }
     }
 }

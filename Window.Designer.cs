@@ -57,6 +57,7 @@ namespace PPTXcreator
             System.Windows.Forms.Label labelXmlOrganist;
             System.Windows.Forms.Label labelXmlServices;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window));
+            System.Windows.Forms.Label labelThema;
             this.textBoxOrganist = new System.Windows.Forms.TextBox();
             this.dateTimePickerNext = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerNu = new System.Windows.Forms.DateTimePicker();
@@ -107,6 +108,7 @@ namespace PPTXcreator
             this.ContentIdentifier = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabInstellingen = new System.Windows.Forms.TabPage();
+            this.textBoxThema = new System.Windows.Forms.TextBox();
             labelOrganist = new System.Windows.Forms.Label();
             labelDatumTijdNext = new System.Windows.Forms.Label();
             labelDatumTijdNu = new System.Windows.Forms.Label();
@@ -134,6 +136,7 @@ namespace PPTXcreator
             groupBoxXml = new System.Windows.Forms.GroupBox();
             labelXmlOrganist = new System.Windows.Forms.Label();
             labelXmlServices = new System.Windows.Forms.Label();
+            labelThema = new System.Windows.Forms.Label();
             groupBoxOrganist.SuspendLayout();
             groupBoxDatumTijd.SuspendLayout();
             groupBoxVoorgangers.SuspendLayout();
@@ -451,6 +454,7 @@ namespace PPTXcreator
             // checkBoxQRsave
             // 
             this.checkBoxQRsave.AutoSize = true;
+            this.checkBoxQRsave.Enabled = false;
             this.checkBoxQRsave.Location = new System.Drawing.Point(17, 90);
             this.checkBoxQRsave.Name = "checkBoxQRsave";
             this.checkBoxQRsave.Size = new System.Drawing.Size(195, 20);
@@ -464,9 +468,9 @@ namespace PPTXcreator
             this.checkBoxQRedit.Enabled = false;
             this.checkBoxQRedit.Location = new System.Drawing.Point(17, 64);
             this.checkBoxQRedit.Name = "checkBoxQRedit";
-            this.checkBoxQRedit.Size = new System.Drawing.Size(330, 20);
+            this.checkBoxQRedit.Size = new System.Drawing.Size(249, 20);
             this.checkBoxQRedit.TabIndex = 16;
-            this.checkBoxQRedit.Text = "Bijsnijden en zwart-wit maken (QR-script vereist)";
+            this.checkBoxQRedit.Text = "Bijsnijden en zwart-wit maken (WIP)";
             this.checkBoxQRedit.UseVisualStyleBackColor = true;
             // 
             // buttonQRSelect
@@ -511,10 +515,6 @@ namespace PPTXcreator
             // 
             this.textBoxCollecte2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxCollecte2.AutoCompleteCustomSource.AddRange(new string[] {
-            "Gebouwonderhoud"});
-            this.textBoxCollecte2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
-            this.textBoxCollecte2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBoxCollecte2.Location = new System.Drawing.Point(132, 60);
             this.textBoxCollecte2.Name = "textBoxCollecte2";
             this.textBoxCollecte2.Size = new System.Drawing.Size(185, 22);
@@ -549,6 +549,10 @@ namespace PPTXcreator
             // 
             this.textBoxCollecte1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxCollecte1.AutoCompleteCustomSource.AddRange(new string[] {
+            "Diaconie"});
+            this.textBoxCollecte1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.textBoxCollecte1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBoxCollecte1.Location = new System.Drawing.Point(132, 32);
             this.textBoxCollecte1.Name = "textBoxCollecte1";
             this.textBoxCollecte1.Size = new System.Drawing.Size(185, 22);
@@ -895,6 +899,8 @@ namespace PPTXcreator
             // 
             // tabLiturgie
             // 
+            this.tabLiturgie.Controls.Add(this.textBoxThema);
+            this.tabLiturgie.Controls.Add(labelThema);
             this.tabLiturgie.Controls.Add(this.buttonRowMoveDown);
             this.tabLiturgie.Controls.Add(this.buttonRowMoveUp);
             this.tabLiturgie.Controls.Add(this.buttonRowRemove);
@@ -917,7 +923,7 @@ namespace PPTXcreator
             this.buttonRowMoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRowMoveDown.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_keyboard_arrow_down_black_24dp;
             this.buttonRowMoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowMoveDown.Location = new System.Drawing.Point(503, 180);
+            this.buttonRowMoveDown.Location = new System.Drawing.Point(503, 173);
             this.buttonRowMoveDown.Name = "buttonRowMoveDown";
             this.buttonRowMoveDown.Size = new System.Drawing.Size(30, 30);
             this.buttonRowMoveDown.TabIndex = 16;
@@ -929,7 +935,7 @@ namespace PPTXcreator
             this.buttonRowMoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRowMoveUp.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_keyboard_arrow_up_black_24dp;
             this.buttonRowMoveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowMoveUp.Location = new System.Drawing.Point(503, 144);
+            this.buttonRowMoveUp.Location = new System.Drawing.Point(503, 137);
             this.buttonRowMoveUp.Name = "buttonRowMoveUp";
             this.buttonRowMoveUp.Size = new System.Drawing.Size(30, 30);
             this.buttonRowMoveUp.TabIndex = 15;
@@ -941,7 +947,7 @@ namespace PPTXcreator
             this.buttonRowRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRowRemove.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_remove_black_24dp;
             this.buttonRowRemove.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowRemove.Location = new System.Drawing.Point(503, 108);
+            this.buttonRowRemove.Location = new System.Drawing.Point(503, 101);
             this.buttonRowRemove.Name = "buttonRowRemove";
             this.buttonRowRemove.Size = new System.Drawing.Size(30, 30);
             this.buttonRowRemove.TabIndex = 14;
@@ -953,7 +959,7 @@ namespace PPTXcreator
             this.buttonRowAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRowAdd.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_add_black_24dp;
             this.buttonRowAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowAdd.Location = new System.Drawing.Point(503, 72);
+            this.buttonRowAdd.Location = new System.Drawing.Point(503, 65);
             this.buttonRowAdd.Name = "buttonRowAdd";
             this.buttonRowAdd.Size = new System.Drawing.Size(30, 30);
             this.buttonRowAdd.TabIndex = 13;
@@ -974,7 +980,7 @@ namespace PPTXcreator
             // buttonPreviousLiturgy
             // 
             this.buttonPreviousLiturgy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonPreviousLiturgy.Location = new System.Drawing.Point(347, 321);
+            this.buttonPreviousLiturgy.Location = new System.Drawing.Point(287, 321);
             this.buttonPreviousLiturgy.Name = "buttonPreviousLiturgy";
             this.buttonPreviousLiturgy.Size = new System.Drawing.Size(90, 30);
             this.buttonPreviousLiturgy.TabIndex = 10;
@@ -985,11 +991,11 @@ namespace PPTXcreator
             // buttonFinish
             // 
             this.buttonFinish.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonFinish.Location = new System.Drawing.Point(443, 321);
+            this.buttonFinish.Location = new System.Drawing.Point(383, 321);
             this.buttonFinish.Name = "buttonFinish";
-            this.buttonFinish.Size = new System.Drawing.Size(90, 30);
+            this.buttonFinish.Size = new System.Drawing.Size(150, 30);
             this.buttonFinish.TabIndex = 9;
-            this.buttonFinish.Text = "Voltooien";
+            this.buttonFinish.Text = "Maak presentaties";
             this.buttonFinish.UseVisualStyleBackColor = true;
             this.buttonFinish.Click += new System.EventHandler(this.CreatePresentations);
             // 
@@ -999,7 +1005,7 @@ namespace PPTXcreator
             this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView.BackgroundColor = System.Drawing.Color.Silver;
+            this.dataGridView.BackgroundColor = System.Drawing.Color.LightGray;
             this.dataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1008,11 +1014,11 @@ namespace PPTXcreator
             this.ContentName});
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView.GridColor = System.Drawing.SystemColors.ControlLight;
-            this.dataGridView.Location = new System.Drawing.Point(7, 72);
+            this.dataGridView.Location = new System.Drawing.Point(7, 65);
             this.dataGridView.MultiSelect = false;
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersWidth = 25;
-            this.dataGridView.Size = new System.Drawing.Size(490, 219);
+            this.dataGridView.Size = new System.Drawing.Size(490, 206);
             this.dataGridView.TabIndex = 3;
             // 
             // ContentType
@@ -1059,6 +1065,25 @@ namespace PPTXcreator
             this.tabInstellingen.TabIndex = 2;
             this.tabInstellingen.Text = "Instellingen";
             this.tabInstellingen.UseVisualStyleBackColor = true;
+            // 
+            // textBoxThema
+            // 
+            this.textBoxThema.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxThema.Location = new System.Drawing.Point(230, 280);
+            this.textBoxThema.Name = "textBoxThema";
+            this.textBoxThema.Size = new System.Drawing.Size(185, 22);
+            this.textBoxThema.TabIndex = 18;
+            // 
+            // labelThema
+            // 
+            labelThema.AutoSize = true;
+            labelThema.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelThema.Location = new System.Drawing.Point(9, 283);
+            labelThema.Name = "labelThema";
+            labelThema.Size = new System.Drawing.Size(215, 16);
+            labelThema.TabIndex = 17;
+            labelThema.Text = "Thema van de preek (optioneel):";
             // 
             // Window
             // 
@@ -1152,6 +1177,7 @@ namespace PPTXcreator
         private System.Windows.Forms.TextBox textBoxXmlOrganist;
         private System.Windows.Forms.Button buttonXmlServicesSelect;
         private System.Windows.Forms.TextBox textBoxXmlServices;
+        private System.Windows.Forms.TextBox textBoxThema;
     }
 }
 
