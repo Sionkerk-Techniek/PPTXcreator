@@ -57,6 +57,7 @@ namespace PPTXcreator
             System.Windows.Forms.Label labelXmlOrganist;
             System.Windows.Forms.Label labelXmlServices;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window));
+            System.Windows.Forms.Label labelThema;
             this.textBoxOrganist = new System.Windows.Forms.TextBox();
             this.dateTimePickerNext = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerNu = new System.Windows.Forms.DateTimePicker();
@@ -85,28 +86,29 @@ namespace PPTXcreator
             this.textBoxXmlOrganist = new System.Windows.Forms.TextBox();
             this.buttonXmlServicesSelect = new System.Windows.Forms.Button();
             this.textBoxXmlServices = new System.Windows.Forms.TextBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControl = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonSettingsGeneral = new System.Windows.Forms.Button();
+            this.buttonPreviousGeneral = new System.Windows.Forms.Button();
+            this.buttonNextGeneral = new System.Windows.Forms.Button();
             this.tabCollecte = new System.Windows.Forms.TabPage();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
+            this.buttonSettingsCollection = new System.Windows.Forms.Button();
+            this.buttonPreviousCollection = new System.Windows.Forms.Button();
+            this.buttonNextCollection = new System.Windows.Forms.Button();
             this.tabLiturgie = new System.Windows.Forms.TabPage();
             this.buttonRowMoveDown = new System.Windows.Forms.Button();
             this.buttonRowMoveUp = new System.Windows.Forms.Button();
             this.buttonRowRemove = new System.Windows.Forms.Button();
             this.buttonRowAdd = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.buttonSettingsLiturgy = new System.Windows.Forms.Button();
+            this.buttonPreviousLiturgy = new System.Windows.Forms.Button();
+            this.buttonFinish = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.ContentType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.ContentIdentifier = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabInstellingen = new System.Windows.Forms.TabPage();
+            this.textBoxThema = new System.Windows.Forms.TextBox();
             labelOrganist = new System.Windows.Forms.Label();
             labelDatumTijdNext = new System.Windows.Forms.Label();
             labelDatumTijdNu = new System.Windows.Forms.Label();
@@ -134,6 +136,7 @@ namespace PPTXcreator
             groupBoxXml = new System.Windows.Forms.GroupBox();
             labelXmlOrganist = new System.Windows.Forms.Label();
             labelXmlServices = new System.Windows.Forms.Label();
+            labelThema = new System.Windows.Forms.Label();
             groupBoxOrganist.SuspendLayout();
             groupBoxDatumTijd.SuspendLayout();
             groupBoxVoorgangers.SuspendLayout();
@@ -142,7 +145,7 @@ namespace PPTXcreator
             groupBoxOutput.SuspendLayout();
             groupBoxTemplates.SuspendLayout();
             groupBoxXml.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.tabControl.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabCollecte.SuspendLayout();
             this.tabLiturgie.SuspendLayout();
@@ -451,6 +454,7 @@ namespace PPTXcreator
             // checkBoxQRsave
             // 
             this.checkBoxQRsave.AutoSize = true;
+            this.checkBoxQRsave.Enabled = false;
             this.checkBoxQRsave.Location = new System.Drawing.Point(17, 90);
             this.checkBoxQRsave.Name = "checkBoxQRsave";
             this.checkBoxQRsave.Size = new System.Drawing.Size(195, 20);
@@ -464,9 +468,9 @@ namespace PPTXcreator
             this.checkBoxQRedit.Enabled = false;
             this.checkBoxQRedit.Location = new System.Drawing.Point(17, 64);
             this.checkBoxQRedit.Name = "checkBoxQRedit";
-            this.checkBoxQRedit.Size = new System.Drawing.Size(330, 20);
+            this.checkBoxQRedit.Size = new System.Drawing.Size(249, 20);
             this.checkBoxQRedit.TabIndex = 16;
-            this.checkBoxQRedit.Text = "Bijsnijden en zwart-wit maken (QR-script vereist)";
+            this.checkBoxQRedit.Text = "Bijsnijden en zwart-wit maken (WIP)";
             this.checkBoxQRedit.UseVisualStyleBackColor = true;
             // 
             // buttonQRSelect
@@ -511,10 +515,6 @@ namespace PPTXcreator
             // 
             this.textBoxCollecte2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxCollecte2.AutoCompleteCustomSource.AddRange(new string[] {
-            "Gebouwonderhoud"});
-            this.textBoxCollecte2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
-            this.textBoxCollecte2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBoxCollecte2.Location = new System.Drawing.Point(132, 60);
             this.textBoxCollecte2.Name = "textBoxCollecte2";
             this.textBoxCollecte2.Size = new System.Drawing.Size(185, 22);
@@ -549,6 +549,10 @@ namespace PPTXcreator
             // 
             this.textBoxCollecte1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxCollecte1.AutoCompleteCustomSource.AddRange(new string[] {
+            "Diaconie"});
+            this.textBoxCollecte1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.textBoxCollecte1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBoxCollecte1.Location = new System.Drawing.Point(132, 32);
             this.textBoxCollecte1.Name = "textBoxCollecte1";
             this.textBoxCollecte1.Size = new System.Drawing.Size(185, 22);
@@ -778,28 +782,28 @@ namespace PPTXcreator
             labelXmlServices.TabIndex = 19;
             labelXmlServices.Text = "Diensten:";
             // 
-            // tabControl1
+            // tabControl
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabGeneral);
-            this.tabControl1.Controls.Add(this.tabCollecte);
-            this.tabControl1.Controls.Add(this.tabLiturgie);
-            this.tabControl1.Controls.Add(this.tabInstellingen);
-            this.tabControl1.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControl1.Location = new System.Drawing.Point(4, 4);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.Padding = new System.Drawing.Point(8, 3);
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(547, 386);
-            this.tabControl1.TabIndex = 0;
+            this.tabControl.Controls.Add(this.tabGeneral);
+            this.tabControl.Controls.Add(this.tabCollecte);
+            this.tabControl.Controls.Add(this.tabLiturgie);
+            this.tabControl.Controls.Add(this.tabInstellingen);
+            this.tabControl.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControl.Location = new System.Drawing.Point(4, 4);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.Padding = new System.Drawing.Point(8, 3);
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(547, 386);
+            this.tabControl.TabIndex = 0;
             // 
             // tabGeneral
             // 
-            this.tabGeneral.Controls.Add(this.button3);
-            this.tabGeneral.Controls.Add(this.button2);
-            this.tabGeneral.Controls.Add(this.button1);
+            this.tabGeneral.Controls.Add(this.buttonSettingsGeneral);
+            this.tabGeneral.Controls.Add(this.buttonPreviousGeneral);
+            this.tabGeneral.Controls.Add(this.buttonNextGeneral);
             this.tabGeneral.Controls.Add(groupBoxOrganist);
             this.tabGeneral.Controls.Add(groupBoxDatumTijd);
             this.tabGeneral.Controls.Add(groupBoxVoorgangers);
@@ -811,42 +815,45 @@ namespace PPTXcreator
             this.tabGeneral.Text = "Algemeen";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // buttonSettingsGeneral
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button3.Location = new System.Drawing.Point(6, 321);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(100, 30);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "Instellingen";
-            this.button3.UseVisualStyleBackColor = true;
+            this.buttonSettingsGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonSettingsGeneral.Location = new System.Drawing.Point(6, 321);
+            this.buttonSettingsGeneral.Name = "buttonSettingsGeneral";
+            this.buttonSettingsGeneral.Size = new System.Drawing.Size(100, 30);
+            this.buttonSettingsGeneral.TabIndex = 8;
+            this.buttonSettingsGeneral.Text = "Instellingen";
+            this.buttonSettingsGeneral.UseVisualStyleBackColor = true;
+            this.buttonSettingsGeneral.Click += new System.EventHandler(this.ButtonGotoSettingsTab);
             // 
-            // button2
+            // buttonPreviousGeneral
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(347, 321);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(90, 30);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Terug";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonPreviousGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPreviousGeneral.Enabled = false;
+            this.buttonPreviousGeneral.Location = new System.Drawing.Point(347, 321);
+            this.buttonPreviousGeneral.Name = "buttonPreviousGeneral";
+            this.buttonPreviousGeneral.Size = new System.Drawing.Size(90, 30);
+            this.buttonPreviousGeneral.TabIndex = 7;
+            this.buttonPreviousGeneral.Text = "Terug";
+            this.buttonPreviousGeneral.UseVisualStyleBackColor = true;
+            this.buttonPreviousGeneral.Click += new System.EventHandler(this.ButtonPreviousTab);
             // 
-            // button1
+            // buttonNextGeneral
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(443, 321);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(90, 30);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Verder";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonNextGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonNextGeneral.Location = new System.Drawing.Point(443, 321);
+            this.buttonNextGeneral.Name = "buttonNextGeneral";
+            this.buttonNextGeneral.Size = new System.Drawing.Size(90, 30);
+            this.buttonNextGeneral.TabIndex = 6;
+            this.buttonNextGeneral.Text = "Verder";
+            this.buttonNextGeneral.UseVisualStyleBackColor = true;
+            this.buttonNextGeneral.Click += new System.EventHandler(this.ButtonNextTab);
             // 
             // tabCollecte
             // 
-            this.tabCollecte.Controls.Add(this.button7);
-            this.tabCollecte.Controls.Add(this.button8);
-            this.tabCollecte.Controls.Add(this.button9);
+            this.tabCollecte.Controls.Add(this.buttonSettingsCollection);
+            this.tabCollecte.Controls.Add(this.buttonPreviousCollection);
+            this.tabCollecte.Controls.Add(this.buttonNextCollection);
             this.tabCollecte.Controls.Add(groupBoxQR);
             this.tabCollecte.Controls.Add(groupBoxCollecte);
             this.tabCollecte.Location = new System.Drawing.Point(4, 25);
@@ -857,45 +864,50 @@ namespace PPTXcreator
             this.tabCollecte.Text = "Collecte";
             this.tabCollecte.UseVisualStyleBackColor = true;
             // 
-            // button7
+            // buttonSettingsCollection
             // 
-            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button7.Location = new System.Drawing.Point(6, 321);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(100, 30);
-            this.button7.TabIndex = 11;
-            this.button7.Text = "Instellingen";
-            this.button7.UseVisualStyleBackColor = true;
+            this.buttonSettingsCollection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonSettingsCollection.Location = new System.Drawing.Point(6, 321);
+            this.buttonSettingsCollection.Name = "buttonSettingsCollection";
+            this.buttonSettingsCollection.Size = new System.Drawing.Size(100, 30);
+            this.buttonSettingsCollection.TabIndex = 11;
+            this.buttonSettingsCollection.Text = "Instellingen";
+            this.buttonSettingsCollection.UseVisualStyleBackColor = true;
+            this.buttonSettingsCollection.Click += new System.EventHandler(this.ButtonGotoSettingsTab);
             // 
-            // button8
+            // buttonPreviousCollection
             // 
-            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button8.Location = new System.Drawing.Point(347, 321);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(90, 30);
-            this.button8.TabIndex = 10;
-            this.button8.Text = "Terug";
-            this.button8.UseVisualStyleBackColor = true;
+            this.buttonPreviousCollection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPreviousCollection.Location = new System.Drawing.Point(347, 321);
+            this.buttonPreviousCollection.Name = "buttonPreviousCollection";
+            this.buttonPreviousCollection.Size = new System.Drawing.Size(90, 30);
+            this.buttonPreviousCollection.TabIndex = 10;
+            this.buttonPreviousCollection.Text = "Terug";
+            this.buttonPreviousCollection.UseVisualStyleBackColor = true;
+            this.buttonPreviousCollection.Click += new System.EventHandler(this.ButtonPreviousTab);
             // 
-            // button9
+            // buttonNextCollection
             // 
-            this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button9.Location = new System.Drawing.Point(443, 321);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(90, 30);
-            this.button9.TabIndex = 9;
-            this.button9.Text = "Verder";
-            this.button9.UseVisualStyleBackColor = true;
+            this.buttonNextCollection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonNextCollection.Location = new System.Drawing.Point(443, 321);
+            this.buttonNextCollection.Name = "buttonNextCollection";
+            this.buttonNextCollection.Size = new System.Drawing.Size(90, 30);
+            this.buttonNextCollection.TabIndex = 9;
+            this.buttonNextCollection.Text = "Verder";
+            this.buttonNextCollection.UseVisualStyleBackColor = true;
+            this.buttonNextCollection.Click += new System.EventHandler(this.ButtonNextTab);
             // 
             // tabLiturgie
             // 
+            this.tabLiturgie.Controls.Add(this.textBoxThema);
+            this.tabLiturgie.Controls.Add(labelThema);
             this.tabLiturgie.Controls.Add(this.buttonRowMoveDown);
             this.tabLiturgie.Controls.Add(this.buttonRowMoveUp);
             this.tabLiturgie.Controls.Add(this.buttonRowRemove);
             this.tabLiturgie.Controls.Add(this.buttonRowAdd);
-            this.tabLiturgie.Controls.Add(this.button4);
-            this.tabLiturgie.Controls.Add(this.button5);
-            this.tabLiturgie.Controls.Add(this.button6);
+            this.tabLiturgie.Controls.Add(this.buttonSettingsLiturgy);
+            this.tabLiturgie.Controls.Add(this.buttonPreviousLiturgy);
+            this.tabLiturgie.Controls.Add(this.buttonFinish);
             this.tabLiturgie.Controls.Add(this.dataGridView);
             this.tabLiturgie.Controls.Add(labelLiturgie);
             this.tabLiturgie.Location = new System.Drawing.Point(4, 25);
@@ -911,7 +923,7 @@ namespace PPTXcreator
             this.buttonRowMoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRowMoveDown.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_keyboard_arrow_down_black_24dp;
             this.buttonRowMoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowMoveDown.Location = new System.Drawing.Point(503, 180);
+            this.buttonRowMoveDown.Location = new System.Drawing.Point(503, 173);
             this.buttonRowMoveDown.Name = "buttonRowMoveDown";
             this.buttonRowMoveDown.Size = new System.Drawing.Size(30, 30);
             this.buttonRowMoveDown.TabIndex = 16;
@@ -923,7 +935,7 @@ namespace PPTXcreator
             this.buttonRowMoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRowMoveUp.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_keyboard_arrow_up_black_24dp;
             this.buttonRowMoveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowMoveUp.Location = new System.Drawing.Point(503, 144);
+            this.buttonRowMoveUp.Location = new System.Drawing.Point(503, 137);
             this.buttonRowMoveUp.Name = "buttonRowMoveUp";
             this.buttonRowMoveUp.Size = new System.Drawing.Size(30, 30);
             this.buttonRowMoveUp.TabIndex = 15;
@@ -935,7 +947,7 @@ namespace PPTXcreator
             this.buttonRowRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRowRemove.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_remove_black_24dp;
             this.buttonRowRemove.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowRemove.Location = new System.Drawing.Point(503, 108);
+            this.buttonRowRemove.Location = new System.Drawing.Point(503, 101);
             this.buttonRowRemove.Name = "buttonRowRemove";
             this.buttonRowRemove.Size = new System.Drawing.Size(30, 30);
             this.buttonRowRemove.TabIndex = 14;
@@ -947,42 +959,45 @@ namespace PPTXcreator
             this.buttonRowAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRowAdd.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_add_black_24dp;
             this.buttonRowAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowAdd.Location = new System.Drawing.Point(503, 72);
+            this.buttonRowAdd.Location = new System.Drawing.Point(503, 65);
             this.buttonRowAdd.Name = "buttonRowAdd";
             this.buttonRowAdd.Size = new System.Drawing.Size(30, 30);
             this.buttonRowAdd.TabIndex = 13;
             this.buttonRowAdd.UseVisualStyleBackColor = true;
             this.buttonRowAdd.Click += new System.EventHandler(this.ButtonAddDatagridviewRow);
             // 
-            // button4
+            // buttonSettingsLiturgy
             // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button4.Location = new System.Drawing.Point(6, 321);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(100, 30);
-            this.button4.TabIndex = 11;
-            this.button4.Text = "Instellingen";
-            this.button4.UseVisualStyleBackColor = true;
+            this.buttonSettingsLiturgy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonSettingsLiturgy.Location = new System.Drawing.Point(6, 321);
+            this.buttonSettingsLiturgy.Name = "buttonSettingsLiturgy";
+            this.buttonSettingsLiturgy.Size = new System.Drawing.Size(100, 30);
+            this.buttonSettingsLiturgy.TabIndex = 11;
+            this.buttonSettingsLiturgy.Text = "Instellingen";
+            this.buttonSettingsLiturgy.UseVisualStyleBackColor = true;
+            this.buttonSettingsLiturgy.Click += new System.EventHandler(this.ButtonGotoSettingsTab);
             // 
-            // button5
+            // buttonPreviousLiturgy
             // 
-            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Location = new System.Drawing.Point(347, 321);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(90, 30);
-            this.button5.TabIndex = 10;
-            this.button5.Text = "Terug";
-            this.button5.UseVisualStyleBackColor = true;
+            this.buttonPreviousLiturgy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPreviousLiturgy.Location = new System.Drawing.Point(287, 321);
+            this.buttonPreviousLiturgy.Name = "buttonPreviousLiturgy";
+            this.buttonPreviousLiturgy.Size = new System.Drawing.Size(90, 30);
+            this.buttonPreviousLiturgy.TabIndex = 10;
+            this.buttonPreviousLiturgy.Text = "Terug";
+            this.buttonPreviousLiturgy.UseVisualStyleBackColor = true;
+            this.buttonPreviousLiturgy.Click += new System.EventHandler(this.ButtonPreviousTab);
             // 
-            // button6
+            // buttonFinish
             // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.Location = new System.Drawing.Point(443, 321);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(90, 30);
-            this.button6.TabIndex = 9;
-            this.button6.Text = "Verder";
-            this.button6.UseVisualStyleBackColor = true;
+            this.buttonFinish.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonFinish.Location = new System.Drawing.Point(383, 321);
+            this.buttonFinish.Name = "buttonFinish";
+            this.buttonFinish.Size = new System.Drawing.Size(150, 30);
+            this.buttonFinish.TabIndex = 9;
+            this.buttonFinish.Text = "Maak presentaties";
+            this.buttonFinish.UseVisualStyleBackColor = true;
+            this.buttonFinish.Click += new System.EventHandler(this.CreatePresentations);
             // 
             // dataGridView
             // 
@@ -990,7 +1005,7 @@ namespace PPTXcreator
             this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView.BackgroundColor = System.Drawing.Color.Silver;
+            this.dataGridView.BackgroundColor = System.Drawing.Color.LightGray;
             this.dataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -999,11 +1014,11 @@ namespace PPTXcreator
             this.ContentName});
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView.GridColor = System.Drawing.SystemColors.ControlLight;
-            this.dataGridView.Location = new System.Drawing.Point(7, 72);
+            this.dataGridView.Location = new System.Drawing.Point(7, 65);
             this.dataGridView.MultiSelect = false;
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersWidth = 25;
-            this.dataGridView.Size = new System.Drawing.Size(490, 222);
+            this.dataGridView.Size = new System.Drawing.Size(490, 206);
             this.dataGridView.TabIndex = 3;
             // 
             // ContentType
@@ -1051,19 +1066,38 @@ namespace PPTXcreator
             this.tabInstellingen.Text = "Instellingen";
             this.tabInstellingen.UseVisualStyleBackColor = true;
             // 
+            // textBoxThema
+            // 
+            this.textBoxThema.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxThema.Location = new System.Drawing.Point(230, 280);
+            this.textBoxThema.Name = "textBoxThema";
+            this.textBoxThema.Size = new System.Drawing.Size(185, 22);
+            this.textBoxThema.TabIndex = 18;
+            // 
+            // labelThema
+            // 
+            labelThema.AutoSize = true;
+            labelThema.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelThema.Location = new System.Drawing.Point(9, 283);
+            labelThema.Name = "labelThema";
+            labelThema.Size = new System.Drawing.Size(215, 16);
+            labelThema.TabIndex = 17;
+            labelThema.Text = "Thema van de preek (optioneel):";
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.ClientSize = new System.Drawing.Size(554, 394);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControl);
             this.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "Window";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PPTX creator";
+            this.Text = "Presentatiemaker Sionkerk";
             groupBoxOrganist.ResumeLayout(false);
             groupBoxOrganist.PerformLayout();
             groupBoxDatumTijd.ResumeLayout(false);
@@ -1080,7 +1114,7 @@ namespace PPTXcreator
             groupBoxTemplates.PerformLayout();
             groupBoxXml.ResumeLayout(false);
             groupBoxXml.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
             this.tabCollecte.ResumeLayout(false);
             this.tabLiturgie.ResumeLayout(false);
@@ -1093,7 +1127,7 @@ namespace PPTXcreator
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabGeneral;
         private System.Windows.Forms.TabPage tabLiturgie;
         private System.Windows.Forms.DateTimePicker dateTimePickerNu;
@@ -1107,12 +1141,12 @@ namespace PPTXcreator
         private System.Windows.Forms.TextBox textBoxOrganist;
         private System.Windows.Forms.TabPage tabInstellingen;
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button buttonNextGeneral;
+        private System.Windows.Forms.Button buttonPreviousGeneral;
+        private System.Windows.Forms.Button buttonSettingsGeneral;
+        private System.Windows.Forms.Button buttonSettingsLiturgy;
+        private System.Windows.Forms.Button buttonPreviousLiturgy;
+        private System.Windows.Forms.Button buttonFinish;
         private System.Windows.Forms.TextBox textBoxOutputFolder;
         private System.Windows.Forms.Button buttonOutputFolderSelect;
         private System.Windows.Forms.TabPage tabCollecte;
@@ -1120,9 +1154,9 @@ namespace PPTXcreator
         private System.Windows.Forms.TextBox textBoxCollecte3;
         private System.Windows.Forms.TextBox textBoxCollecte1;
         private System.Windows.Forms.Button buttonRowAdd;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button buttonSettingsCollection;
+        private System.Windows.Forms.Button buttonPreviousCollection;
+        private System.Windows.Forms.Button buttonNextCollection;
         private System.Windows.Forms.CheckBox checkBoxQRedit;
         private System.Windows.Forms.Button buttonQRSelect;
         private System.Windows.Forms.Button buttonRowMoveDown;
@@ -1143,6 +1177,7 @@ namespace PPTXcreator
         private System.Windows.Forms.TextBox textBoxXmlOrganist;
         private System.Windows.Forms.Button buttonXmlServicesSelect;
         private System.Windows.Forms.TextBox textBoxXmlServices;
+        private System.Windows.Forms.TextBox textBoxThema;
     }
 }
 
