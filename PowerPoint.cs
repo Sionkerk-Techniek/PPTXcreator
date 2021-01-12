@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using System.Linq; // for ToArray()
 using System.Text;
 using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Presentation;
+using Presentation = DocumentFormat.OpenXml.Presentation;
 using Drawing = DocumentFormat.OpenXml.Drawing;
-using DocumentFormat.OpenXml.Drawing.Pictures;
 using DocumentFormat.OpenXml.Packaging;
-using System.Reflection;
 
 namespace PPTXcreator
 {
@@ -60,25 +58,29 @@ namespace PPTXcreator
         /// </summary>
         public void ReplaceImage(string imagePath)
         {
+            if (!File.Exists(imagePath)) return;
+
             // Loop over slides (not really necessary if the slide number is known)
             foreach (SlidePart slide in Slides)
             {
-                // Loop over all ImageParts in the slide
-                foreach (ImagePart image in slide.ImageParts)
+                // Loop over all picture objects
+                foreach (Presentation.Picture pic in slide.Slide.Descendants<Presentation.Picture>())
                 {
-                    // TODO: write all URIs to logfile so they can be easily known by the user
+                    // Get the description and rId from the object
+                    string description = pic.NonVisualPictureProperties.NonVisualDrawingProperties.Description;
+                    string rId = pic.BlipFill.Blip.Embed.Value;
+                    Console.WriteLine($"rid: {rId}, description: {description}");
 
-                    // Check if the image's URI is equal to a known URI
-                    if (image.Uri.ToString() == "/ppt/media/image44.png")
+                    if (description == Settings.QRdescription)
                     {
+                        // Get the ImagePart by id, and replace the image
+                        ImagePart imagePart = (ImagePart)slide.GetPartById(rId);
                         FileStream imageStream = File.OpenRead(imagePath);
-                        image.FeedData(imageStream);
+                        imagePart.FeedData(imageStream);
                         imageStream.Close();
                     }
                 }
             }
-            // TODO?: check image dimensions maybe instead of a URI
-            // slide.GetIdOfPart(image) -> possibly useful
         }
 
         /// <summary>

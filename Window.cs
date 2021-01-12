@@ -222,7 +222,10 @@ namespace PPTXcreator
                 { "[voorganger next]", $"{textBoxVoorgangerNextTitel.Text} {textBoxVoorgangerNextNaam.Text}" },
                 { "[voorganger next plaats]", textBoxVoorgangerNextPlaats.Text },
                 { "[organist]", textBoxOrganist.Text },
-                { "[thema]", textBoxThema.Text }
+                { "[thema]", textBoxThema.Text },
+                { "[collectedoel 1]", textBoxCollecte1.Text },
+                { "[collectedoel 2]", textBoxCollecte2.Text },
+                { "[collectedoel 3]", textBoxCollecte3.Text }
             };
 
             return keywords;
@@ -249,6 +252,8 @@ namespace PPTXcreator
                 }
             }
 
+            // TODO: set all unused keywords to empty strings
+
             return keywords;
         }
 
@@ -268,6 +273,8 @@ namespace PPTXcreator
                     keywords[$"[lezing {readingCounter}]"] = reading.Replace(":", " : ").Replace("-", " - ");
                 }
             }
+
+            // TODO: set all unused keywords to empty strings
 
             return keywords;
         }
@@ -481,6 +488,23 @@ namespace PPTXcreator
             {
                 Console.WriteLine($"{kvp.Key} = {kvp.Value}");
             }
+
+            PowerPoint.Keywords = keywords;
+
+            PowerPoint beforeService = new PowerPoint(Settings.TemplatePathBefore, Settings.OutputFolderPath + "/outputbefore.pptx");
+            beforeService.ReplaceKeywords(keywords);
+            beforeService.ReplaceImage(textBoxQRPath.Text);
+            beforeService.SaveClose();
+
+            /*PowerPoint duringService = new PowerPoint(Settings.TemplatePathDuring, Settings.OutputFolderPath + "/outputduring.pptx");
+            duringService.ReplaceKeywords(keywords);
+            duringService.ReplaceImage(textBoxQRPath.Text);
+            duringService.SaveClose();
+
+            PowerPoint afterService = new PowerPoint(Settings.TemplatePathAfter, Settings.OutputFolderPath + "/outputafter.pptx");
+            afterService.ReplaceKeywords(keywords);
+            afterService.ReplaceImage(textBoxQRPath.Text);
+            afterService.SaveClose();*/
         }
     }
 }

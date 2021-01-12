@@ -19,6 +19,7 @@ namespace PPTXcreator
             { "Template tijdens dienst", "../../../PPTXcreatorfiles/template_tijdens-dienst-v2.pptx" },
             { "Template na dienst", "../../../PPTXcreatorfiles/template_na-dienst-v2.pptx" },
             { "QR afbeelding", "../../../PPTXcreatorfiles/QR.png" },
+            { "QR placeholder description", "QR-code" },
             { "Kerkdiensten Xml", "../../../PPTXcreatorfiles/services.xml" },
             { "Organisten Xml", "../../../PPTXcreatorfiles/organisten.xml" },
             { "Output folder", "./output" },
@@ -49,6 +50,11 @@ namespace PPTXcreator
         {
             get => SettingsDictionary["QR afbeelding"];
             set => SettingsDictionary["QR afbeelding"] = GetPath(value);
+        }
+        public static string QRdescription
+        {
+            get => SettingsDictionary["QR placeholder description"];
+            set => SettingsDictionary["QR placeholder description"] = value;
         }
         public static string ServicesXml
         {
