@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq; // for ToArray()
+using System.Linq;
 using System.Text;
 using DocumentFormat.OpenXml;
-using Presentation = DocumentFormat.OpenXml.Presentation;
+using DocumentFormat.OpenXml.Presentation;
 using Drawing = DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Packaging;
 
@@ -13,7 +13,8 @@ namespace PPTXcreator
     class PowerPoint
     {
         private PresentationDocument Document { get; }
-        private SlidePart[] Slides { get => Document.PresentationPart.SlideParts.ToArray(); }
+        private PresentationPart PresPart { get => Document.PresentationPart; }
+        private SlidePart[] Slides { get => PresPart.SlideParts.ToArray(); }
         public static Dictionary<string, string> Keywords { get; set; }
         
         /// <summary>
@@ -53,7 +54,7 @@ namespace PPTXcreator
         }
 
         /// <summary>
-        /// Replaces the image located at "/ppt/media/image4.png"
+        /// Replaces the image with description <see cref="Settings.QRdescription"/>
         /// with the image at <paramref name="imagePath"/>.
         /// </summary>
         public void ReplaceImage(string imagePath)
@@ -64,7 +65,7 @@ namespace PPTXcreator
             foreach (SlidePart slide in Slides)
             {
                 // Loop over all picture objects
-                foreach (Presentation.Picture pic in slide.Slide.Descendants<Presentation.Picture>())
+                foreach (Picture pic in slide.Slide.Descendants<Picture>())
                 {
                     // Get the description and rId from the object
                     string description = pic.NonVisualPictureProperties.NonVisualDrawingProperties.Description;
@@ -81,6 +82,34 @@ namespace PPTXcreator
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Copy the first slide of this document and paste it at the end,
+        /// and make the copied slide visible if it was hidden
+        /// </summary>
+        public void DuplicateFirstSlide()
+        {
+            // Get the SlideIdList and the largest id in it
+            SlideIdList idList = PresPart.Presentation.SlideIdList;
+            uint maxId = (from slideId in idList select ((SlideId)slideId).Id).Max();
+
+            // Get the first SlidePart from the SlideIdList
+            SlideId sourceSlideId = (SlideId)idList.FirstChild;
+            SlidePart sourceSlidePart = (SlidePart)PresPart.GetPartById(sourceSlideId.RelationshipId);
+
+            // Copy the slide and SlideLayoutPart to a new slidepart, set it to visible
+            SlidePart targetSlidePart = PresPart.AddNewPart<SlidePart>();
+            sourceSlidePart.Slide.Save(targetSlidePart);
+            targetSlidePart.AddPart(sourceSlidePart.SlideLayoutPart);
+            targetSlidePart.Slide.Show = true;
+
+            // Append a new id for the slidepart to the SlideIdList
+            SlideId targetSlideId = idList.AppendChild(new SlideId());
+            targetSlideId.Id = maxId + 1;
+            targetSlideId.RelationshipId = PresPart.GetIdOfPart(targetSlidePart);
+
+            PresPart.Presentation.Save();
         }
 
         /// <summary>
