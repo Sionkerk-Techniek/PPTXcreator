@@ -47,7 +47,7 @@ namespace PPTXcreator
             {
                 if (File.Exists(fileDialog.FileName))
                 {
-                    this.textBoxQRPath.Text = Settings.GetPath(fileDialog.FileName);
+                    textBoxQRPath.Text = Settings.GetPath(fileDialog.FileName);
                     Settings.ImagePath = fileDialog.FileName;
                 }
                 else
@@ -252,7 +252,12 @@ namespace PPTXcreator
                 }
             }
 
-            // TODO: set all unused keywords to empty strings
+            // HACK: not a proper way of doing things, change later
+            while (songCounter < 10) // 10 is probably enough, should be >= the maximum number of songs in the templates
+            {
+                keywords[$"[lied {songCounter}"] = "";
+                songCounter++;
+            }
 
             return keywords;
         }
@@ -488,8 +493,6 @@ namespace PPTXcreator
             {
                 Console.WriteLine($"{kvp.Key} = {kvp.Value}");
             }
-
-            PowerPoint.Keywords = keywords;
 
             PowerPoint beforeService = new PowerPoint(Settings.TemplatePathBefore, Settings.OutputFolderPath + "/outputbefore.pptx");
             beforeService.ReplaceKeywords(keywords);

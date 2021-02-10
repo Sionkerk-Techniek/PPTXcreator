@@ -14,8 +14,7 @@ namespace PPTXcreator
     {
         private PresentationDocument Document { get; }
         private PresentationPart PresPart { get => Document.PresentationPart; }
-        private SlidePart[] Slides { get => PresPart.SlideParts.ToArray(); }
-        public static Dictionary<string, string> Keywords { get; set; }
+        private IEnumerable<SlidePart> Slides { get => PresPart.SlideParts; }
         
         /// <summary>
         /// Constructs a Presentation object from the .pptx file at <paramref name="openPath"/>,
@@ -28,6 +27,29 @@ namespace PPTXcreator
         }
 
         /// <summary>
+        /// Replaces all keywords in a slide with their respective values
+        /// </summary>
+        /// <param name="keywords">A dictionary containing replaceable strings
+        /// and what they should be replaced by</param>
+        /// <param name="slide">The slide the keywords have to be replaced in</param>
+        private void ReplaceKeywords(Dictionary<string, string> keywords, Slide slide)
+        {
+            // Loop over text in the slide
+            foreach (Drawing.Text text in slide.Descendants<Drawing.Text>())
+            {
+                StringBuilder sb = new StringBuilder(text.Text);
+
+                // Loop over replacable keywords
+                foreach (KeyValuePair<string, string> kvp in keywords)
+                {
+                    sb.Replace(kvp.Key, kvp.Value);
+                }
+
+                text.Text = sb.ToString();
+            }
+        }
+
+        /// <summary>
         /// Replaces all keywords in the presentation with their respective values
         /// </summary>
         /// <param name="keywords">A dictionary containing replaceable strings
@@ -35,20 +57,35 @@ namespace PPTXcreator
         public void ReplaceKeywords(Dictionary<string, string> keywords)
         {
             // Loop over slides
-            foreach (SlidePart slide in Slides)
+            foreach (SlidePart slidePart in Slides)
             {
-                // Loop over text in slides
-                foreach (Drawing.Text text in slide.Slide.Descendants<Drawing.Text>())
+                ReplaceKeywords(keywords, slidePart.Slide);
+            }
+        }
+
+        /// <summary>
+        /// Replaces the image with description <see cref="Settings.QRdescription"/>
+        /// with the image at <paramref name="imagePath"/>.
+        /// </summary>
+        /// <param name="imagePath">Path to the image</param>
+        /// <param name="slidePart">The slidePart the image has to be replaced in</param>
+        private void ReplaceImage(string imagePath, SlidePart slidePart)
+        {
+            // Loop over all picture objects
+            foreach (Picture pic in slidePart.Slide.Descendants<Picture>())
+            {
+                // Get the description and rId from the object
+                string description = pic.NonVisualPictureProperties.NonVisualDrawingProperties.Description;
+                string rId = pic.BlipFill.Blip.Embed.Value;
+                Console.WriteLine($"rid: {rId}, description: {description}");
+
+                if (description == Settings.QRdescription)
                 {
-                    StringBuilder sb = new StringBuilder(text.Text);
-
-                    // Loop over replacable keywords
-                    foreach (KeyValuePair<string, string> kvp in keywords)
-                    {
-                        sb.Replace(kvp.Key, kvp.Value);
-                    }
-
-                    text.Text = sb.ToString();
+                    // Get the ImagePart by id, and replace the image
+                    ImagePart imagePart = (ImagePart)slidePart.GetPartById(rId);
+                    FileStream imageStream = File.OpenRead(imagePath);
+                    imagePart.FeedData(imageStream);
+                    imageStream.Close();
                 }
             }
         }
@@ -61,26 +98,10 @@ namespace PPTXcreator
         {
             if (!File.Exists(imagePath)) return;
 
-            // Loop over slides (not really necessary if the slide number is known)
-            foreach (SlidePart slide in Slides)
+            // Loop over slideparts (not really necessary if the slide number is known)
+            foreach (SlidePart slidePart in Slides)
             {
-                // Loop over all picture objects
-                foreach (Picture pic in slide.Slide.Descendants<Picture>())
-                {
-                    // Get the description and rId from the object
-                    string description = pic.NonVisualPictureProperties.NonVisualDrawingProperties.Description;
-                    string rId = pic.BlipFill.Blip.Embed.Value;
-                    Console.WriteLine($"rid: {rId}, description: {description}");
-
-                    if (description == Settings.QRdescription)
-                    {
-                        // Get the ImagePart by id, and replace the image
-                        ImagePart imagePart = (ImagePart)slide.GetPartById(rId);
-                        FileStream imageStream = File.OpenRead(imagePath);
-                        imagePart.FeedData(imageStream);
-                        imageStream.Close();
-                    }
-                }
+                ReplaceImage(imagePath, slidePart);
             }
         }
 
@@ -88,7 +109,7 @@ namespace PPTXcreator
         /// Copy the first slide of this document and paste it at the end,
         /// and make the copied slide visible if it was hidden
         /// </summary>
-        public void DuplicateFirstSlide()
+        public SlidePart DuplicateFirstSlide()
         {
             // Get the SlideIdList and the largest id in it
             SlideIdList idList = PresPart.Presentation.SlideIdList;
@@ -110,6 +131,20 @@ namespace PPTXcreator
             targetSlideId.RelationshipId = PresPart.GetIdOfPart(targetSlidePart);
 
             PresPart.Presentation.Save();
+            return targetSlidePart;
+        }
+
+        /// <summary>
+        /// Duplicates the first slide, then calls
+        /// <see cref="ReplaceKeywords(Dictionary{string, string}, Slide)"/>
+        /// </summary>
+        /// <param name="keywords">A dictionary containing replaceable strings
+        /// and what they should be replaced by</param>
+        public void DuplicateAndReplace(Dictionary<string, string> keywords)
+        {
+            SlidePart slidePart = DuplicateFirstSlide();
+            ReplaceKeywords(keywords, slidePart.Slide);
+            // ReplaceImage can also be used if necessary
         }
 
         /// <summary>
