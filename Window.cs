@@ -231,100 +231,6 @@ namespace PPTXcreator
             return keywords;
         }
 
-        public Dictionary<string, string> GetSongKeywords()
-        {
-            Dictionary<string, string> keywords = new Dictionary<string, string>();
-
-            byte songCounter = 0;
-            foreach (DataGridViewRow row in dataGridView.Rows)
-            {
-                string type = (string)row.Cells[0].Value;
-                string song = (string)row.Cells[1].Value;
-                string name = (string)row.Cells[2].Value;
-
-                if (string.IsNullOrWhiteSpace(type)) continue;
-
-                if (type != "Lezing")
-                {
-                    songCounter++;
-                    keywords[$"[lied {songCounter}]"] = GetSongSelection(song, type, name);
-                    keywords[$"[liedbundel {songCounter}]"] = GetSongBundle(type, name);
-                }
-            }
-
-            // HACK: not a proper way of doing things, change later
-            while (songCounter < 10) // 10 is probably enough, should be >= the maximum number of songs in the templates
-            {
-                keywords[$"[lied {songCounter}"] = "";
-                songCounter++;
-            }
-
-            return keywords;
-        }
-
-        public Dictionary<string, string> GetReadingKeywords()
-        {
-            Dictionary<string, string> keywords = new Dictionary<string, string>();
-
-            byte readingCounter = 0;
-            foreach (DataGridViewRow row in dataGridView.Rows)
-            {
-                string type = (string)row.Cells[0].Value;
-                string reading = (string)row.Cells[1].Value;
-
-                if (type == "Lezing")
-                {
-                    readingCounter++;
-                    keywords[$"[lezing {readingCounter}]"] = reading.Replace(":", " : ").Replace("-", " - ");
-                }
-            }
-
-            // TODO: set all unused keywords to empty strings
-
-            return keywords;
-        }
-
-        private string SongReplaceLastComma(string input)
-        {
-            int lastComma = input.LastIndexOf(",");
-            if (lastComma == -1) return input;
-            return input.Remove(lastComma, 1).Insert(lastComma, " en ");
-        }
-
-        private string GetSongSelection(string song, string type, string name)
-        {
-            if (!string.IsNullOrWhiteSpace(song))
-            {
-                song = SongReplaceLastComma(song);
-                song = song.Replace(",", ", ").Replace(":", " : ");
-            }
-
-            switch (type)
-            {
-                case "Psalm":
-                    return $"Psalm {song}";
-                case "Psalm (WK)":
-                    return $"Psalm {song}   WK";
-                case "Lied (WK)":
-                    return $"Lied {song}";
-                default:
-                    return name;
-            }
-        }
-
-        private string GetSongBundle(string type, string name)
-        {
-            switch(type)
-            {
-                case "Psalm":
-                    return "Oude berijming";
-                case "Psalm (WK)":
-                    return "Weerklank";
-                default:
-                    return name;
-            }
-        }
-
         private string GetTime(DateTimePicker dateTimePicker)
         {
             return dateTimePicker.Value.ToString("H:mm", CultureInfo.InvariantCulture);
@@ -484,30 +390,35 @@ namespace PPTXcreator
         {
             if (!CheckValidInputs()) return;
 
-            // TODO: methods should probably return key and value lists, easier to merge
             Dictionary<string, string> keywords = GetFormKeywords();
-            keywords = keywords.Concat(GetSongKeywords()).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            keywords = keywords.Concat(GetReadingKeywords()).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-
-            foreach (var kvp in keywords)
+            List<ServiceElement> elements = new List<ServiceElement>();
+            foreach (DataGridViewRow row in dataGridView.Rows)
             {
-                Console.WriteLine($"{kvp.Key} = {kvp.Value}");
+                elements.Add(new ServiceElement(row));
             }
 
             PowerPoint beforeService = new PowerPoint(Settings.TemplatePathBefore, Settings.OutputFolderPath + "/outputbefore.pptx");
             beforeService.ReplaceKeywords(keywords);
             beforeService.ReplaceImage(textBoxQRPath.Text);
+            beforeService.ReplaceMultilineKeywords(
+                (from ServiceElement element in elements where element.IsSong select element).ToList(),
+                (from ServiceElement element in elements where !element.IsSong select element).ToList()
+            );
             beforeService.SaveClose();
 
-            /*PowerPoint duringService = new PowerPoint(Settings.TemplatePathDuring, Settings.OutputFolderPath + "/outputduring.pptx");
+            PowerPoint duringService = new PowerPoint(Settings.TemplatePathDuring, Settings.OutputFolderPath + "/outputduring.pptx");
             duringService.ReplaceKeywords(keywords);
             duringService.ReplaceImage(textBoxQRPath.Text);
+            foreach (ServiceElement element in elements)
+            {
+                duringService.DuplicateAndReplace(new Dictionary<string, string> { { "[titel]", element.Title }, { "[subtitel]", element.Subtitle } });
+            }
             duringService.SaveClose();
 
             PowerPoint afterService = new PowerPoint(Settings.TemplatePathAfter, Settings.OutputFolderPath + "/outputafter.pptx");
             afterService.ReplaceKeywords(keywords);
             afterService.ReplaceImage(textBoxQRPath.Text);
-            afterService.SaveClose();*/
+            afterService.SaveClose();
         }
     }
 }

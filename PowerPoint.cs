@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Presentation;
-using Drawing = DocumentFormat.OpenXml.Drawing;
+using Presentation = DocumentFormat.OpenXml.Presentation;
+using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Packaging;
 
 namespace PPTXcreator
@@ -32,10 +32,10 @@ namespace PPTXcreator
         /// <param name="keywords">A dictionary containing replaceable strings
         /// and what they should be replaced by</param>
         /// <param name="slide">The slide the keywords have to be replaced in</param>
-        private void ReplaceKeywords(Dictionary<string, string> keywords, Slide slide)
+        private void ReplaceKeywords(Dictionary<string, string> keywords, Presentation.Slide slide)
         {
             // Loop over text in the slide
-            foreach (Drawing.Text text in slide.Descendants<Drawing.Text>())
+            foreach (Text text in slide.Descendants<Text>())
             {
                 StringBuilder sb = new StringBuilder(text.Text);
 
@@ -50,7 +50,8 @@ namespace PPTXcreator
         }
 
         /// <summary>
-        /// Replaces all keywords in the presentation with their respective values
+        /// Replaces all keywords in the presentation with their respective values,
+        /// except for '[zingen]' and '[lezen]'
         /// </summary>
         /// <param name="keywords">A dictionary containing replaceable strings
         /// and what they should be replaced by</param>
@@ -60,6 +61,58 @@ namespace PPTXcreator
             foreach (SlidePart slidePart in Slides)
             {
                 ReplaceKeywords(keywords, slidePart.Slide);
+            }
+        }
+
+        /// <summary>
+        /// Replace a <see cref="Run"/> element and the paragraph it's in
+        /// with multiple <see cref="Paragraph"/> objects
+        /// </summary>
+        /// <param name="run">The run to replace</param>
+        /// <param name="elements">The ServiceElements to replace the run by</param>
+        public void ReplaceMultilineKeywords(Run run, List<ServiceElement> elements)
+        {
+            // Get the paragraph and textbody the run is a child of
+            Paragraph par = (Paragraph)run.Parent;
+            Presentation.TextBody textBody = (Presentation.TextBody)par.Parent;
+            OpenXmlElement lastPar = par;
+
+            // Add a new run to the paragraph for every line in the input list
+            foreach (ServiceElement element in elements)
+            {
+                string text;
+                if (element.Type == ElementType.PsalmWK) text = element.Title + "   WK";
+                else text = element.Title;
+
+                // A new deep copy of the runproperties is needed for every new run
+                RunProperties runProperties = (RunProperties)run.RunProperties.CloneNode(true);
+                ParagraphProperties parProperties = (ParagraphProperties)par.ParagraphProperties.CloneNode(true);
+                Paragraph newPar = new Paragraph(
+                    new Run(
+                        new Text(text)
+                    ) { RunProperties = runProperties }
+                ) { ParagraphProperties = parProperties };
+                lastPar = textBody.InsertAfter(newPar, lastPar);
+            }
+
+            // Remove the placeholder
+            par.Remove();
+        }
+
+        /// <summary>
+        /// Replace '[zingen]' and '[lezen]' text in the document with songs and readings
+        /// </summary>
+        public void ReplaceMultilineKeywords(List<ServiceElement> songs, List<ServiceElement> readings)
+        {
+            // Loop over all Drawing.Run elements in the document
+            foreach (SlidePart slidePart in Slides)
+            {
+                foreach (Run run in slidePart.Slide.Descendants<Run>())
+                {
+                    // Replace the run with the contents of the relevant list
+                    if (run.InnerText.Contains("[zingen]")) ReplaceMultilineKeywords(run, songs);
+                    else if (run.InnerText.Contains("[lezen]")) ReplaceMultilineKeywords(run, readings);
+                }
             }
         }
 
@@ -112,11 +165,11 @@ namespace PPTXcreator
         public SlidePart DuplicateFirstSlide()
         {
             // Get the SlideIdList and the largest id in it
-            SlideIdList idList = PresPart.Presentation.SlideIdList;
-            uint maxId = (from slideId in idList select ((SlideId)slideId).Id).Max();
+            Presentation.SlideIdList idList = PresPart.Presentation.SlideIdList;
+            uint maxId = (from slideId in idList select ((Presentation.SlideId)slideId).Id).Max();
 
             // Get the first SlidePart from the SlideIdList
-            SlideId sourceSlideId = (SlideId)idList.FirstChild;
+            Presentation.SlideId sourceSlideId = (Presentation.SlideId)idList.FirstChild;
             SlidePart sourceSlidePart = (SlidePart)PresPart.GetPartById(sourceSlideId.RelationshipId);
 
             // Copy the slide and SlideLayoutPart to a new slidepart, set it to visible
@@ -126,7 +179,7 @@ namespace PPTXcreator
             targetSlidePart.Slide.Show = true;
 
             // Append a new id for the slidepart to the SlideIdList
-            SlideId targetSlideId = idList.AppendChild(new SlideId());
+            Presentation.SlideId targetSlideId = idList.AppendChild(new Presentation.SlideId());
             targetSlideId.Id = maxId + 1;
             targetSlideId.RelationshipId = PresPart.GetIdOfPart(targetSlidePart);
 
