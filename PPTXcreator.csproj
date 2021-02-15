@@ -90,6 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PowerPoint.cs" />
+    <Compile Include="Service.cs" />
+    <Compile Include="ServiceElement.cs" />
     <Compile Include="XmlParser.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Window.cs">

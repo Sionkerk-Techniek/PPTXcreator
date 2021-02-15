@@ -20,14 +20,7 @@ namespace PPTXcreator
         public static void Main()
         {
             Settings.Load();
-            Service service = Service.GetService(Settings.ServicesXml, Settings.OrganistXml, "2020-12-20 9:30");
             // TODO: set UI content to service properties
-
-            Console.WriteLine(Settings.OutputFolderPath + "test.pptx");
-            Console.WriteLine(Settings.OutputFolderPath);
-            PowerPoint pptx = new PowerPoint(Settings.TemplatePathBefore, "test.pptx"); // + "test.pptx");
-            Console.WriteLine(Settings.ImagePath);
-            pptx.ReplaceImage(Settings.ImagePath);
 
             // start UI
             Application.EnableVisualStyles();
@@ -35,11 +28,6 @@ namespace PPTXcreator
             Application.Run(new Window());
 
             Settings.Save();
-            /*// edit de powerpoints met ReplacePlaceholders() en sla het resultaat op
-            PresentationDocument pptx = PresentationDocument.Open(Settings.PPTXTemplatePre, true); // open pptx file. TODO: exception handling
-            ReplacePlaceholders(pptx);
-            pptx.SaveAs("../../edited.pptx");
-            pptx.Close();*/
         }
     }
 }
