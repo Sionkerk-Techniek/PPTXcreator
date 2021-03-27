@@ -18,42 +18,21 @@ namespace PPTXcreator
             InitializeComponent();
         }
 
-        private void ShowWarning(string message)
-        {
-            MessageBox.Show(
-                message,
-                "Er is een fout opgetreden",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning
-            );
-        }
-
         /// <summary>
         /// Selects a file and sets this.textBoxQRPath.Text and
         /// QRFile to the path
         /// </summary>
         private void ButtonSelectQR(object sender, EventArgs e)
         {
-            // Create an OpenFileDialog object which can open .jpeg and .png files
-            OpenFileDialog fileDialog = new OpenFileDialog
-            {
-                Filter = "JPEG (*.jpeg)|*.jpeg|PNG (*.png)|*.png|Alle bestanden (*.*)|*.*",
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer),
-                Title = "Selecteer de QR-code",
-                RestoreDirectory = true
-            };
+            string path = Dialogs.SelectFile(
+                "JPEG (*.jpeg)|*.jpeg|PNG (*.png)|*.png|Alle bestanden (*.*)|*.*",
+                "Selecteer de QR-code"
+            );
 
-            if (fileDialog.ShowDialog() == DialogResult.OK)
+            if (!string.IsNullOrEmpty(path))
             {
-                if (File.Exists(fileDialog.FileName))
-                {
-                    textBoxQRPath.Text = Settings.GetPath(fileDialog.FileName);
-                    Settings.ImagePath = fileDialog.FileName;
-                }
-                else
-                {
-                    ShowWarning("Het geselecteerde bestand kan niet worden gevonden");
-                }
+                textBoxQRPath.Text = path;
+                Settings.ImagePath = path;
             }
         }
 
@@ -63,107 +42,78 @@ namespace PPTXcreator
         /// </summary>
         private void ButtonSelectOutputFolder(object sender, EventArgs e)
         {
-            FolderBrowserDialog folderDialog = new FolderBrowserDialog
+            string path = Dialogs.SelectFolder("Selecteer de output folder");
+            if (!string.IsNullOrEmpty(path))
             {
-                Description = "Selecteer de output folder",
-            };
-
-            if (folderDialog.ShowDialog() == DialogResult.OK)
-            {
-                if (Directory.Exists(folderDialog.SelectedPath))
-                {
-                    textBoxOutputFolder.Text = Settings.GetPath(folderDialog.SelectedPath);
-                    Settings.OutputFolderPath = folderDialog.SelectedPath;
-                }
-                else
-                {
-                    ShowWarning("De geselecteerde folder kan niet worden gevonden");
-                }
+                textBoxOutputFolder.Text = path;
+                Settings.OutputFolderPath = path;
             }
         }
 
         private void ButtonSelectTemplateBefore(object sender, EventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog
+            string path = Dialogs.SelectFile(
+                "PowerPoint (*.pptx)|*.pptx",
+                "Selecteer de 'voor de dienst' template"
+            );
+            if (!string.IsNullOrEmpty(path))
             {
-                Filter = "PowerPoint (*.pptx)|*.pptx|Alle bestanden (*.*)|*.*",
-                InitialDirectory = Directory.GetCurrentDirectory(),
-                Title = "Selecteer de 'voor de dienst' template",
-                RestoreDirectory = true,
-            };
-
-            if (fileDialog.ShowDialog() == DialogResult.OK)
-            {
-                textBoxTemplatePre.Text = Settings.GetPath(fileDialog.FileName);
-                Settings.TemplatePathBefore = fileDialog.FileName;
+                textBoxTemplatePre.Text = path;
+                Settings.TemplatePathBefore = path;
             }
         }
 
         private void ButtonSelectTemplateDuring(object sender, EventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog
+            string path = Dialogs.SelectFile(
+                "PowerPoint (*.pptx)|*.pptx",
+                "Selecteer de 'tijdens de dienst' template"
+            );
+            if (!string.IsNullOrEmpty(path))
             {
-                Filter = "PowerPoint (*.pptx)|*.pptx|Alle bestanden (*.*)|*.*",
-                InitialDirectory = Directory.GetCurrentDirectory(),
-                Title = "Selecteer de 'tijdens de dienst' template",
-                RestoreDirectory = true,
-            };
-
-            if (fileDialog.ShowDialog() == DialogResult.OK)
-            {
-                textBoxTemplateDuring.Text = Settings.GetPath(fileDialog.FileName);
-                Settings.TemplatePathDuring = fileDialog.FileName;
+                textBoxTemplateDuring.Text = path;
+                Settings.TemplatePathDuring = path;
             }
         }
 
         private void ButtonSelectTemplateAfter(object sender, EventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog
+            string path = Dialogs.SelectFile(
+                "PowerPoint (*.pptx)|*.pptx",
+                "Selecteer de 'voor de dienst' template"
+            );
+            if (!string.IsNullOrEmpty(path))
             {
-                Filter = "PowerPoint (*.pptx)|*.pptx|Alle bestanden (*.*)|*.*",
-                InitialDirectory = Directory.GetCurrentDirectory(),
-                Title = "Selecteer de 'na de dienst' template",
-                RestoreDirectory = true,
-            };
-
-            if (fileDialog.ShowDialog() == DialogResult.OK)
-            {
-                textBoxTemplateAfter.Text = Settings.GetPath(fileDialog.FileName);
-                Settings.TemplatePathAfter = fileDialog.FileName;
+                textBoxTemplateAfter.Text = path;
+                Settings.TemplatePathAfter = path;
             }
         }
 
         private void ButtonSelectXmlServices(object sender, EventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog
+            string path = Dialogs.SelectFile(
+               "XML (*.xml)|*.xml",
+                "Selecteer het diensten XML-bestand"
+            );
+            
+            if (!string.IsNullOrEmpty(path))
             {
-                Filter = "XML (*.xml)|*.xml|Alle bestanden (*.*)|*.*",
-                InitialDirectory = Directory.GetCurrentDirectory(),
-                Title = "Selecteer het XML-bestand met diensten",
-                RestoreDirectory = true,
-            };
-
-            if (fileDialog.ShowDialog() == DialogResult.OK)
-            {
-                textBoxXmlServices.Text = Settings.GetPath(fileDialog.FileName);
-                Settings.ServicesXml = fileDialog.FileName;
+                textBoxXmlServices.Text = path;
+                Settings.ServicesXml = path;
             }
         }
 
         private void ButtonSelectXmlOrganists(object sender, EventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog
-            {
-                Filter = "XML (*.xml)|*.xml|Alle bestanden (*.*)|*.*",
-                InitialDirectory = Directory.GetCurrentDirectory(),
-                Title = "Selecteer het XML-bestand met organisten",
-                RestoreDirectory = true,
-            };
+            string path = Dialogs.SelectFile(
+               "XML (*.xml)|*.xml",
+                "Selecteer het organisten XML-bestand"
+            );
 
-            if (fileDialog.ShowDialog() == DialogResult.OK)
+            if (!string.IsNullOrEmpty(path))
             {
-                textBoxXmlOrganist.Text = Settings.GetPath(fileDialog.FileName);
-                Settings.OrganistXml = fileDialog.FileName;
+                textBoxXmlOrganist.Text = path;
+                Settings.OrganistXml = path;
             }
         }
 
@@ -263,7 +213,7 @@ namespace PPTXcreator
                 }
                 catch (InvalidOperationException exception)
                 {
-                    ShowWarning("De rij kan niet worden verwijderd." +
+                    Dialogs.GenericWarning("De rij kan niet worden verwijderd." +
                         $"De volgende foutmelding werd gegeven: {exception.Message}");
                 }
             }
@@ -275,7 +225,7 @@ namespace PPTXcreator
                 }
                 catch (InvalidOperationException exception)
                 {
-                    ShowWarning("De rij kan niet worden verwijderd. " +
+                    Dialogs.GenericWarning("De rij kan niet worden verwijderd. " +
                         $"De volgende foutmelding werd gegeven: {exception.Message}");
                 }
             }

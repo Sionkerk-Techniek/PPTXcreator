@@ -21,7 +21,9 @@ namespace PPTXcreator
         {
             Settings.Load();
             // TODO: set UI content to service properties
-
+            //Dialogs.UpdateAvailable("");
+            Task updatechecker = Task.Run(() => UpdateChecker.CheckReleases());
+            
             // start UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
