@@ -72,7 +72,6 @@ namespace PPTXcreator
                 {
                     GenericWarning("Het geselecteerde bestand kan niet worden gevonden");
                 }
-                
             }
 
             return null;
