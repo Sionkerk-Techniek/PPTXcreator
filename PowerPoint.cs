@@ -22,8 +22,10 @@ namespace PPTXcreator
         /// </summary>
         public PowerPoint(string openPath, string savePath)
         {
-            PresentationDocument document = PresentationDocument.Open(openPath, true);
-            Document = (PresentationDocument)document.Clone(savePath, true);
+            using (PresentationDocument document = PresentationDocument.Open(openPath, false))
+            {
+                Document = (PresentationDocument)document.Clone(savePath, true);
+            }
         }
 
         /// <summary>
