@@ -25,7 +25,7 @@ namespace PPTXcreator
             using (PresentationDocument document = PresentationDocument.Open(openPath, false))
             {
                 Document = (PresentationDocument)document.Clone(savePath, true);
-            };
+            }
         }
 
         /// <summary>
