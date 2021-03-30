@@ -95,7 +95,7 @@ namespace PPTXcreator
                "XML (*.xml)|*.xml",
                 "Selecteer het diensten XML-bestand"
             );
-            
+
             if (!string.IsNullOrEmpty(path))
             {
                 textBoxXmlServices.Text = path;
@@ -312,7 +312,7 @@ namespace PPTXcreator
                 "titel", "titel", "naam", "naam", "plaats", "plaats",
                 "doel 1", "doel 3", "naam", "", "1"
             };
-            
+
             for (int i = 0; i < inputValues.Length; i++)
             {
                 if (inputValues[i] == defaultValues[i] || string.IsNullOrWhiteSpace(inputValues[i]))
@@ -347,7 +347,8 @@ namespace PPTXcreator
                 elements.Add(new ServiceElement(row));
             }
 
-            PowerPoint beforeService = new PowerPoint(Settings.TemplatePathBefore, Settings.OutputFolderPath + "/outputbefore.pptx");
+            PowerPoint beforeService = CreatePowerpoint(Settings.TemplatePathBefore, Settings.OutputFolderPath + "/outputbefore.pptx");
+            if (beforeService == null) return;
             beforeService.ReplaceKeywords(keywords);
             beforeService.ReplaceImage(textBoxQRPath.Text);
             beforeService.ReplaceMultilineKeywords(
@@ -356,7 +357,8 @@ namespace PPTXcreator
             );
             beforeService.SaveClose();
 
-            PowerPoint duringService = new PowerPoint(Settings.TemplatePathDuring, Settings.OutputFolderPath + "/outputduring.pptx");
+            PowerPoint duringService = CreatePowerpoint(Settings.TemplatePathDuring, Settings.OutputFolderPath + "/outputduring.pptx");
+            if (duringService == null) return;
             duringService.ReplaceKeywords(keywords);
             duringService.ReplaceImage(textBoxQRPath.Text);
             foreach (ServiceElement element in elements)
@@ -365,10 +367,26 @@ namespace PPTXcreator
             }
             duringService.SaveClose();
 
-            PowerPoint afterService = new PowerPoint(Settings.TemplatePathAfter, Settings.OutputFolderPath + "/outputafter.pptx");
+            PowerPoint afterService = CreatePowerpoint(Settings.TemplatePathAfter, Settings.OutputFolderPath + "/outputafter.pptx");
+            if (afterService == null) return;
             afterService.ReplaceKeywords(keywords);
             afterService.ReplaceImage(textBoxQRPath.Text);
             afterService.SaveClose();
+        }
+
+        private PowerPoint CreatePowerpoint(string templatePath, string outputPath)
+        {
+            try
+            {
+                PowerPoint powerpoint = new PowerPoint(templatePath, outputPath);
+                return powerpoint;
+            }
+            catch (IOException)
+            {
+                Dialogs.GenericWarning("Niet alle presentaties konden worden gemaakt omdat een of meer " +
+                    "bestanden op de outputlocatie geopend zijn. Sluit PowerPoint en probeer het opnieuw.");
+                return null;
+            }
         }
     }
 }

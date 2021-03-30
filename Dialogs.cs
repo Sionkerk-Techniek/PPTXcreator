@@ -20,6 +20,16 @@ namespace PPTXcreator
             );
         }
 
+        public static void CrashNotification(string message)
+        {
+            MessageBox.Show(
+                "De volgende foutmelding werd gegeven: " + message,
+                "Het programma is gestopt",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
+        }
+
         public static string SelectFolder(string description)
         {
             FolderBrowserDialog folderDialog = new FolderBrowserDialog
