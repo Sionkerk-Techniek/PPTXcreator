@@ -32,7 +32,7 @@ namespace PPTXcreator
             if (!string.IsNullOrEmpty(path))
             {
                 textBoxQRPath.Text = path;
-                Settings.ImagePath = path;
+                Settings.Instance.PathQRImage = path;
             }
         }
 
@@ -46,7 +46,7 @@ namespace PPTXcreator
             if (!string.IsNullOrEmpty(path))
             {
                 textBoxOutputFolder.Text = path;
-                Settings.OutputFolderPath = path;
+                Settings.Instance.PathOutputFolder = path;
             }
         }
 
@@ -59,7 +59,7 @@ namespace PPTXcreator
             if (!string.IsNullOrEmpty(path))
             {
                 textBoxTemplatePre.Text = path;
-                Settings.TemplatePathBefore = path;
+                Settings.Instance.PathTemplateBefore = path;
             }
         }
 
@@ -72,7 +72,7 @@ namespace PPTXcreator
             if (!string.IsNullOrEmpty(path))
             {
                 textBoxTemplateDuring.Text = path;
-                Settings.TemplatePathDuring = path;
+                Settings.Instance.PathTemplateDuring = path;
             }
         }
 
@@ -85,7 +85,7 @@ namespace PPTXcreator
             if (!string.IsNullOrEmpty(path))
             {
                 textBoxTemplateAfter.Text = path;
-                Settings.TemplatePathAfter = path;
+                Settings.Instance.PathTemplateAfter = path;
             }
         }
 
@@ -99,7 +99,7 @@ namespace PPTXcreator
             if (!string.IsNullOrEmpty(path))
             {
                 textBoxXmlServices.Text = path;
-                Settings.ServicesXml = path;
+                Settings.Instance.PathServicesJson = path;
             }
         }
 
@@ -113,7 +113,7 @@ namespace PPTXcreator
             if (!string.IsNullOrEmpty(path))
             {
                 textBoxXmlOrganist.Text = path;
-                Settings.OrganistXml = path;
+                Settings.Instance.PathOrganistsJson = path;
             }
         }
 
@@ -122,10 +122,10 @@ namespace PPTXcreator
             string dateTimeString = dateTimePickerNu.Value.ToString("yyyy-MM-dd H:mm",
                 CultureInfo.InvariantCulture);
 
-            if (Settings.AutoPopulate)
+            if (Settings.Instance.EnableAutoPopulate)
             {
-                Service currentService = Service.GetService(Settings.ServicesXml,
-                    Settings.OrganistXml, dateTimeString);
+                Service currentService = Service.GetService(Settings.Instance.PathServicesJson,
+                    Settings.Instance.PathOrganistsJson, dateTimeString);
 
                 SetFormData(currentService);
             }
@@ -162,20 +162,21 @@ namespace PPTXcreator
 
         public Dictionary<string, string> GetFormKeywords()
         {
+            KeywordSettings tags = Settings.Instance.Keywords;
             Dictionary<string, string> keywords = new Dictionary<string, string>
             {
-                { "[tijd]", GetTime(dateTimePickerNu) },
-                { "[tijd next]", GetTime(dateTimePickerNext) },
-                { "[datum next]", GetDateLong(dateTimePickerNext) },
-                { "[voorganger]", $"{textBoxVoorgangerNuTitel.Text} {textBoxVoorgangerNuNaam.Text}" },
-                { "[voorganger plaats]", textBoxVoorgangerNuPlaats.Text },
-                { "[voorganger next]", $"{textBoxVoorgangerNextTitel.Text} {textBoxVoorgangerNextNaam.Text}" },
-                { "[voorganger next plaats]", textBoxVoorgangerNextPlaats.Text },
-                { "[organist]", textBoxOrganist.Text },
-                { "[thema]", textBoxThema.Text },
-                { "[collectedoel 1]", textBoxCollecte1.Text },
-                { "[collectedoel 2]", textBoxCollecte2.Text },
-                { "[collectedoel 3]", textBoxCollecte3.Text }
+                { tags.ServiceTime, GetTime(dateTimePickerNu) },
+                { tags.ServiceNextTime, GetTime(dateTimePickerNext) },
+                { tags.ServiceNextDate, GetDateLong(dateTimePickerNext) },
+                { tags.Pastor, $"{textBoxVoorgangerNuTitel.Text} {textBoxVoorgangerNuNaam.Text}" },
+                { tags.PastorPlace, textBoxVoorgangerNuPlaats.Text },
+                { tags.PastorNext, $"{textBoxVoorgangerNextTitel.Text} {textBoxVoorgangerNextNaam.Text}" },
+                { tags.PastorNextPlace, textBoxVoorgangerNextPlaats.Text },
+                { tags.Organist, textBoxOrganist.Text },
+                { tags.Theme, textBoxThema.Text },
+                { tags.Collection1, textBoxCollecte1.Text },
+                { tags.Collection2, textBoxCollecte2.Text },
+                { tags.Collection3, textBoxCollecte3.Text }
             };
 
             return keywords;
@@ -347,7 +348,7 @@ namespace PPTXcreator
                 elements.Add(new ServiceElement(row));
             }
 
-            PowerPoint beforeService = CreatePowerpoint(Settings.TemplatePathBefore, Settings.OutputFolderPath + "/outputbefore.pptx");
+            PowerPoint beforeService = CreatePowerpoint(Settings.Instance.PathTemplateBefore, Settings.Instance.PathOutputFolder + "/outputbefore.pptx");
             if (beforeService == null) return;
             beforeService.ReplaceKeywords(keywords);
             beforeService.ReplaceImage(textBoxQRPath.Text);
@@ -357,17 +358,21 @@ namespace PPTXcreator
             );
             beforeService.SaveClose();
 
-            PowerPoint duringService = CreatePowerpoint(Settings.TemplatePathDuring, Settings.OutputFolderPath + "/outputduring.pptx");
+            PowerPoint duringService = CreatePowerpoint(Settings.Instance.PathTemplateDuring, Settings.Instance.PathOutputFolder + "/outputduring.pptx");
             if (duringService == null) return;
             duringService.ReplaceKeywords(keywords);
             duringService.ReplaceImage(textBoxQRPath.Text);
+            KeywordSettings tags = Settings.Instance.Keywords;
             foreach (ServiceElement element in elements)
             {
-                duringService.DuplicateAndReplace(new Dictionary<string, string> { { "[titel]", element.Title }, { "[subtitel]", element.Subtitle } });
+                duringService.DuplicateAndReplace(new Dictionary<string, string> {
+                    { tags.ServiceElementTitle, element.Title },
+                    { tags.ServiceElementSubtitle, element.Subtitle }
+                });
             }
             duringService.SaveClose();
 
-            PowerPoint afterService = CreatePowerpoint(Settings.TemplatePathAfter, Settings.OutputFolderPath + "/outputafter.pptx");
+            PowerPoint afterService = CreatePowerpoint(Settings.Instance.PathTemplateAfter, Settings.Instance.PathOutputFolder + "/outputafter.pptx");
             if (afterService == null) return;
             afterService.ReplaceKeywords(keywords);
             afterService.ReplaceImage(textBoxQRPath.Text);

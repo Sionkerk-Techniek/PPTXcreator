@@ -12,16 +12,19 @@ namespace PPTXcreator
         [STAThread]
         public static void Main()
         {
+            // Configure error handling
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(CrashHandlerUI);
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CrashHandlerDomain);
+
             Settings.Load();
-            // TODO: set UI content to service properties
-            Task updatechecker = Task.Run(() => UpdateChecker.CheckReleases());
+            Settings.Save();
+
+            if (Settings.Instance.EnableUpdateChecker) Task.Run(() => UpdateChecker.CheckReleases());
 
             // start UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(CrashHandlerUI);
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CrashHandlerDomain);
             Application.Run(new Window());
 
             Settings.Save();

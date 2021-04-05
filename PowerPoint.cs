@@ -112,8 +112,9 @@ namespace PPTXcreator
                 foreach (Run run in slidePart.Slide.Descendants<Run>())
                 {
                     // Replace the run with the contents of the relevant list
-                    if (run.InnerText.Contains("[zingen]")) ReplaceMultilineKeywords(run, songs);
-                    else if (run.InnerText.Contains("[lezen]")) ReplaceMultilineKeywords(run, readings);
+                    KeywordSettings tags = Settings.Instance.Keywords;
+                    if (run.InnerText.Contains(tags.Songs)) ReplaceMultilineKeywords(run, songs);
+                    else if (run.InnerText.Contains(tags.Readings)) ReplaceMultilineKeywords(run, readings);
                 }
             }
         }
@@ -132,9 +133,8 @@ namespace PPTXcreator
                 // Get the description and rId from the object
                 string description = pic.NonVisualPictureProperties.NonVisualDrawingProperties.Description;
                 string rId = pic.BlipFill.Blip.Embed.Value;
-                Console.WriteLine($"rid: {rId}, description: {description}");
 
-                if (description == Settings.QRdescription)
+                if (description == Settings.Instance.ImageDescription)
                 {
                     // Get the ImagePart by id, and replace the image
                     ImagePart imagePart = (ImagePart)slidePart.GetPartById(rId);

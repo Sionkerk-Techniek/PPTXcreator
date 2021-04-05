@@ -1,91 +1,104 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq; // for ToList()
 using System.IO;
-using System.Windows.Forms;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Security;
 
 namespace PPTXcreator
 {
-    static class Settings
+    class Settings
     {
         // Where the settings file is located
-        private const string SettingsPath = "settings.cfg";
+        private const string SettingsPath = @"settings.json";
 
-        private static Dictionary<string, string> SettingsDictionary = new Dictionary<string, string>
+        private static Settings instance;
+        public static Settings Instance
         {
-            { "Template voor dienst", "../../../PPTXcreatorfiles/template_voor-dienst-v2.pptx" },
-            { "Template tijdens dienst", "../../../PPTXcreatorfiles/template_tijdens-dienst-v2.pptx" },
-            { "Template na dienst", "../../../PPTXcreatorfiles/template_na-dienst-v2.pptx" },
-            { "QR afbeelding", "../../../PPTXcreatorfiles/QR.png" },
-            { "QR placeholder description", "QR-code" },
-            { "Kerkdiensten Xml", "../../../PPTXcreatorfiles/services.xml" },
-            { "Organisten Xml", "../../../PPTXcreatorfiles/organisten.xml" },
-            { "Output folder", "./output" },
-            { "Volgende dienst", "" },
-            { "Check voor updates", "True" },
-            { "Automatisch aanvullen", "True" }
-        };
+            get
+            {
+                if (instance == null) instance = new Settings();
+                return instance;
+            }
+            set => instance = value;
+        }
 
-        // These properties effectively translate the keys to english
-        // and provide easier access to the values
-        // TODO: show these values on startup in the textfields
-        public static string TemplatePathBefore
+        private string pathTemplateBefore = "template_voor_dienst.pptx";
+        [JsonPropertyName("Bestandspad template voor dienst")]
+        public string PathTemplateBefore
         {
-            get => SettingsDictionary["Template voor dienst"];
-            set => SettingsDictionary["Template voor dienst"] = GetPath(value);
+            get => pathTemplateBefore;
+            set => pathTemplateBefore = GetPath(value);
         }
-        public static string TemplatePathDuring
+
+        private string pathTemplateDuring = "template_tijdens_dienst.pptx";
+        [JsonPropertyName("Bestandspad template tijdens dienst")]
+        public string PathTemplateDuring
         {
-            get => SettingsDictionary["Template tijdens dienst"];
-            set => SettingsDictionary["Template tijdens dienst"] = GetPath(value);
+            get => pathTemplateDuring;
+            set => pathTemplateDuring = GetPath(value);
         }
-        public static string TemplatePathAfter
+
+        private string pathTemplateAfter = "template_na_dienst.pptx";
+        [JsonPropertyName("Bestandspad template na dienst")]
+        public string PathTemplateAfter
         {
-            get => SettingsDictionary["Template na dienst"];
-            set => SettingsDictionary["Template na dienst"] = GetPath(value);
+            get => pathTemplateAfter;
+            set => pathTemplateAfter = GetPath(value);
         }
-        public static string ImagePath
+
+        private string pathServicesJson = "diensten.json";
+        [JsonPropertyName("Bestandspad kerkdiensten json")]
+        public string PathServicesJson
         {
-            get => SettingsDictionary["QR afbeelding"];
-            set => SettingsDictionary["QR afbeelding"] = GetPath(value);
+            get => pathServicesJson;
+            set => pathServicesJson = GetPath(value);
         }
-        public static string QRdescription
+
+        private string pathOrganistsJson = "organisten.json";
+        [JsonPropertyName("Bestandspad organisten json")]
+        public string PathOrganistsJson
         {
-            get => SettingsDictionary["QR placeholder description"];
-            set => SettingsDictionary["QR placeholder description"] = value;
+            get => pathOrganistsJson;
+            set => pathOrganistsJson = GetPath(value);
         }
-        public static string ServicesXml
+
+        private string pathOutputFolder = "./output";
+        [JsonPropertyName("Outputfolder")]
+        public string PathOutputFolder
         {
-            get => SettingsDictionary["Kerkdiensten Xml"];
-            set => SettingsDictionary["Kerkdiensten Xml"] = GetPath(value);
+            get => pathOutputFolder;
+            set => pathOutputFolder = GetPath(value);
         }
-        public static string OrganistXml
+
+        private string pathQRImage;
+        [JsonIgnore]
+        public string PathQRImage
         {
-            get => SettingsDictionary["Organisten Xml"];
-            set => SettingsDictionary["Organisten Xml"] = GetPath(value);
+            get => pathQRImage;
+            set => pathQRImage = GetPath(value);
         }
-        public static string OutputFolderPath
-        {
-            get => SettingsDictionary["Output folder"];
-            set => SettingsDictionary["Output folder"] = GetPath(value);
-        }
-        public static string LastFutureService
-        {
-            get => SettingsDictionary["Volgende dienst"];
-            set => SettingsDictionary["Volgende dienst"] = GetPath(value);
-        }
-        public static bool CheckForUpdates
-        {
-            get => bool.Parse(SettingsDictionary["Check voor updates"]);
-            set => SettingsDictionary["Check voor updates"] = value.ToString();
-        }
-        public static bool AutoPopulate
-        {
-            get => bool.Parse(SettingsDictionary["Automatisch aanvullen"]);
-            set => SettingsDictionary["Automatisch aanvullen"] = value.ToString();
-        }
+
+        [JsonPropertyName("QR placeholder beschrijving")]
+        public string ImageDescription { get; set; } = "QR-code";
+
+        [JsonPropertyName("Volgende dienst")]
+        public DateTime NextService { get; set; }
+
+        [JsonPropertyName("Check voor updates")]
+        public bool EnableUpdateChecker { get; set; } = true;
+
+        [JsonPropertyName("Automatisch invullen van velden")]
+        public bool EnableAutoPopulate { get; set; } = true;
+
+        [JsonPropertyName("QR-afbeeldingen bewerken")]
+        public bool EnableEditQR { get; set; } = true;
+
+        [JsonPropertyName("QR opslaan in de outputfolder")]
+        public bool EnableExportQR { get; set; } = true;
+
+        public KeywordSettings Keywords { get; set; }
 
         /// <summary>
         /// Load settings from the file located at <see cref="SettingsPath"/>
@@ -93,22 +106,35 @@ namespace PPTXcreator
         public static void Load()
         {
             // If the settings file cannot be found, notify the user and abort loading
-            if (!FileAvailable()) return;
-
-            // Loop over every line in the settings file
-            foreach (string line in File.ReadAllLines(SettingsPath))
+            try
             {
-                // Skip lines without key-value pair
-                if (!line.Contains("=")) continue;
-                
-                // Split every line in a settingID and a value (separated by '=')
-                (string settingID, string value) = ParseSetting(line);
-
-                // Change the respective settingID to the new value
-                if (SettingsDictionary.ContainsKey(settingID) && !string.IsNullOrWhiteSpace(value))
+                using (var file = File.OpenText(SettingsPath))
                 {
-                    SettingsDictionary[settingID] = value;
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        AllowTrailingCommas = true,
+                        ReadCommentHandling = JsonCommentHandling.Skip
+                    };
+                    Instance = JsonSerializer.Deserialize<Settings>(file.ReadToEnd(), options);
                 }
+            }
+            catch (FileNotFoundException)
+            {
+                Dialogs.GenericWarning($"De instellingen konden niet worden geladen " +
+                    $"omdat {SettingsPath} niet is gevonden. Standaardwaarden worden gebruikt.");
+            }
+            catch (Exception ex) when (ex is IOException
+                || ex is UnauthorizedAccessException
+                || ex is NotSupportedException
+            )
+            {
+                Dialogs.GenericWarning("Instellingen konden niet worden geladen. Standaardwaarden " +
+                    "worden gebruikt.\n\n De volgende foutmelding werd gegeven: " + ex.Message);
+            }
+            catch (JsonException ex)
+            {
+                Dialogs.GenericWarning("Instellingen konden niet worden geladen vanwege ongeldige waarden in " +
+                    $"{SettingsPath}. Standaardwaarden worden gebruikt.\n\nVolledige error: {ex.Message}");
             }
         }
 
@@ -117,99 +143,20 @@ namespace PPTXcreator
         /// </summary>
         public static void Save()
         {
-            // Check if the file exists before writing to it
-            if (!File.Exists(SettingsPath)) return;
-
-            // Copy the dictionary and read the settings file
-            Dictionary<string, string> settingsDictionary = SettingsDictionary;
-            List<string> settingsLines = File.ReadAllLines(SettingsPath).ToList();
-
-            // Overwrite every setting in settingsLines with the value in the dictionary
-            for (int i = 0; i < settingsLines.Count; i++)
+            JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true};
+            string json = JsonSerializer.Serialize(Instance, options);
+            try
             {
-                string line = settingsLines[i];
-                if (line.StartsWith("#") || !line.Contains("=")) continue;
-                
-                (string settingID, _) = ParseSetting(line);
-                if (settingsDictionary.ContainsKey(settingID))
-                {
-                    settingsLines[i] = $"{settingID} = {settingsDictionary[settingID]}";
-                    settingsDictionary.Remove(settingID);
-                }
+                File.WriteAllText(SettingsPath, json);
             }
-
-            // Append all other settings which weren't in the file before
-            foreach (KeyValuePair<string, string> keyValuePair in settingsDictionary)
+            catch (Exception ex) when (
+                ex is IOException
+                || ex is UnauthorizedAccessException
+                || ex is SecurityException
+            )
             {
-                settingsLines.Add($"{keyValuePair.Key} = {keyValuePair.Value}");
-            }
-            
-            // Write the settings to file
-            File.WriteAllLines(SettingsPath, settingsLines);
-        }
-
-        /// <summary>
-        /// Parses a string by splitting at the first equals sign and stripping leading/trailing whitespace
-        /// </summary>
-        /// <param name="settingLine">The inputline to be parsed</param>
-        /// <returns>The settingID and the value</returns>
-        private static (string, string) ParseSetting(string settingLine)
-        {
-            string[] lineElements = settingLine.Split("=".ToCharArray(), 2, StringSplitOptions.None);
-            string settingID = lineElements[0].Trim();
-            string value = lineElements[1].Trim();
-            return (settingID, value);
-        }
-
-        /// <summary>
-        /// Check whether the settings file exists at SettingsPath.
-        /// If false, call <see cref="FileCreate"/>.
-        /// </summary>
-        /// <returns>Whether or not the settings file is available</returns>
-        private static bool FileAvailable()
-        {
-            if (!File.Exists(SettingsPath))
-            {
-                // If a settings file is created in FileCreate(), return true. If not, return false
-                if (FileCreate()) return true;
-                else return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// Ask the user if a new settings file at should be created at SettingsPath.
-        /// </summary>
-        /// <returns>True if the file was created, false otherwise</returns>
-        private static bool FileCreate()
-        {
-            // Ask the user if a new settings file should be created
-            DialogResult dialogResult = MessageBox.Show(
-                $"Het configuratiebestand is niet gevonden op locatie '{SettingsPath}'. Wil je een nieuw bestand maken?",
-                "Er is een fout opgetreden",
-                MessageBoxButtons.YesNoCancel,
-                MessageBoxIcon.Warning
-            );
-
-            // Create a file if the user answered 'yes'
-            if (dialogResult == DialogResult.Yes)
-            {
-                File.Create(SettingsPath).Close();
-                return true;
-            }
-            else
-            {
-                // If the user doesn't want to create a new settings file, warn them the settings won't be saved and stop
-                MessageBox.Show(
-                    "Instellingen kunnen niet worden opgeslagen en gaan verloren als dit programma wordt afgesloten.",
-                    "",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
-                return false;
+                Dialogs.GenericWarning("Instellingen konden niet worden opgeslagen. " +
+                    $"De volgende foutmelding werd gegeven: {ex.Message}");
             }
         }
 
@@ -220,7 +167,18 @@ namespace PPTXcreator
         /// </summary>
         public static string GetPath(string path)
         {
-            Uri uri = new Uri(path);
+            // TÖDO: replace with Path.GetRelativePath, which is only available in .NET 5.0+
+
+            Uri uri;
+            try
+            {
+                uri = new Uri(path);
+            }
+            catch (UriFormatException) // Probably already a relative path
+            {
+                return path;
+            }
+
             Uri assembly = new Uri(Assembly.GetExecutingAssembly().Location);
             if (assembly.IsBaseOf(uri))
             {

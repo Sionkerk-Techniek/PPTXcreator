@@ -77,6 +77,16 @@ namespace PPTXcreator
             return null;
         }
 
+        public static DialogResult CreateNewSettingsfile(string path)
+        {
+            return MessageBox.Show(
+                $"Het configuratiebestand is niet gevonden op locatie '{path}'. Wil je een nieuw bestand maken?",
+                "Er is een fout opgetreden",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Warning
+            );
+        }
+
         public static void UpdateAvailable(string newversion)
         {
             DialogResult result = MessageBox.Show(
