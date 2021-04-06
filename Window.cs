@@ -16,6 +16,17 @@ namespace PPTXcreator
         public Window()
         {
             InitializeComponent();
+
+            // Load settings into the form
+            textBoxTemplateBefore.Text = Settings.Instance.PathTemplateBefore;
+            textBoxTemplateDuring.Text = Settings.Instance.PathTemplateDuring;
+            textBoxTemplateAfter.Text = Settings.Instance.PathTemplateAfter;
+            textBoxJsonServices.Text = Settings.Instance.PathServicesJson;
+            textBoxJsonOrganist.Text = Settings.Instance.PathOrganistsJson;
+            textBoxOutputFolder.Text = Settings.Instance.PathOutputFolder;
+            checkBoxQRedit.Checked = Settings.Instance.EnableEditQR;
+            checkBoxQRsave.Checked = Settings.Instance.EnableExportQR;
+            dateTimePickerNu.Value = Settings.Instance.NextService;
         }
 
         /// <summary>
@@ -58,7 +69,7 @@ namespace PPTXcreator
             );
             if (!string.IsNullOrEmpty(path))
             {
-                textBoxTemplatePre.Text = path;
+                textBoxTemplateBefore.Text = path;
                 Settings.Instance.PathTemplateBefore = path;
             }
         }
@@ -89,30 +100,30 @@ namespace PPTXcreator
             }
         }
 
-        private void ButtonSelectXmlServices(object sender, EventArgs e)
+        private void ButtonSelectJsonServices(object sender, EventArgs e)
         {
             string path = Dialogs.SelectFile(
-               "XML (*.xml)|*.xml",
-                "Selecteer het diensten XML-bestand"
+               "JSON (*.json)|*.json",
+                "Selecteer het diensten JSON-bestand"
             );
 
             if (!string.IsNullOrEmpty(path))
             {
-                textBoxXmlServices.Text = path;
+                textBoxJsonServices.Text = path;
                 Settings.Instance.PathServicesJson = path;
             }
         }
 
-        private void ButtonSelectXmlOrganists(object sender, EventArgs e)
+        private void ButtonSelectJsonOrganists(object sender, EventArgs e)
         {
             string path = Dialogs.SelectFile(
-               "XML (*.xml)|*.xml",
-                "Selecteer het organisten XML-bestand"
+               "JSON (*.json)|*.json",
+                "Selecteer het organisten JSON-bestand"
             );
 
             if (!string.IsNullOrEmpty(path))
             {
-                textBoxXmlOrganist.Text = path;
+                textBoxJsonOrganist.Text = path;
                 Settings.Instance.PathOrganistsJson = path;
             }
         }

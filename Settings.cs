@@ -98,7 +98,7 @@ namespace PPTXcreator
         [JsonPropertyName("QR opslaan in de outputfolder")]
         public bool EnableExportQR { get; set; } = true;
 
-        public KeywordSettings Keywords { get; set; }
+        public KeywordSettings Keywords { get; set; } = new KeywordSettings();
 
         /// <summary>
         /// Load settings from the file located at <see cref="SettingsPath"/>
@@ -125,8 +125,7 @@ namespace PPTXcreator
             }
             catch (Exception ex) when (ex is IOException
                 || ex is UnauthorizedAccessException
-                || ex is NotSupportedException
-            )
+                || ex is NotSupportedException)
             {
                 Dialogs.GenericWarning("Instellingen konden niet worden geladen. Standaardwaarden " +
                     "worden gebruikt.\n\n De volgende foutmelding werd gegeven: " + ex.Message);

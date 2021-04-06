@@ -52,12 +52,12 @@ namespace PPTXcreator
             System.Windows.Forms.GroupBox groupBoxTemplates;
             System.Windows.Forms.Label labelTemplateAfter;
             System.Windows.Forms.Label labelTemplateDuring;
-            System.Windows.Forms.Label labelTemplatePre;
+            System.Windows.Forms.Label labelTemplateBefore;
             System.Windows.Forms.GroupBox groupBoxXml;
-            System.Windows.Forms.Label labelXmlOrganist;
-            System.Windows.Forms.Label labelXmlServices;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window));
+            System.Windows.Forms.Label labelJsonOrganist;
+            System.Windows.Forms.Label labelJsonServices;
             System.Windows.Forms.Label labelThema;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window));
             this.textBoxOrganist = new System.Windows.Forms.TextBox();
             this.dateTimePickerNext = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerNu = new System.Windows.Forms.DateTimePicker();
@@ -80,12 +80,12 @@ namespace PPTXcreator
             this.textBoxTemplateAfter = new System.Windows.Forms.TextBox();
             this.buttonTemplateDuringSelect = new System.Windows.Forms.Button();
             this.textBoxTemplateDuring = new System.Windows.Forms.TextBox();
-            this.buttonTemplatePreSelect = new System.Windows.Forms.Button();
-            this.textBoxTemplatePre = new System.Windows.Forms.TextBox();
-            this.buttonXmlOrganistSelect = new System.Windows.Forms.Button();
-            this.textBoxXmlOrganist = new System.Windows.Forms.TextBox();
-            this.buttonXmlServicesSelect = new System.Windows.Forms.Button();
-            this.textBoxXmlServices = new System.Windows.Forms.TextBox();
+            this.buttonTemplateBeforeSelect = new System.Windows.Forms.Button();
+            this.textBoxTemplateBefore = new System.Windows.Forms.TextBox();
+            this.buttonJsonOrganistSelect = new System.Windows.Forms.Button();
+            this.textBoxJsonOrganist = new System.Windows.Forms.TextBox();
+            this.buttonJsonServicesSelect = new System.Windows.Forms.Button();
+            this.textBoxJsonServices = new System.Windows.Forms.TextBox();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.buttonSettingsGeneral = new System.Windows.Forms.Button();
@@ -96,6 +96,7 @@ namespace PPTXcreator
             this.buttonPreviousCollection = new System.Windows.Forms.Button();
             this.buttonNextCollection = new System.Windows.Forms.Button();
             this.tabLiturgie = new System.Windows.Forms.TabPage();
+            this.textBoxThema = new System.Windows.Forms.TextBox();
             this.buttonRowMoveDown = new System.Windows.Forms.Button();
             this.buttonRowMoveUp = new System.Windows.Forms.Button();
             this.buttonRowRemove = new System.Windows.Forms.Button();
@@ -108,7 +109,6 @@ namespace PPTXcreator
             this.ContentIdentifier = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabInstellingen = new System.Windows.Forms.TabPage();
-            this.textBoxThema = new System.Windows.Forms.TextBox();
             labelOrganist = new System.Windows.Forms.Label();
             labelDatumTijdNext = new System.Windows.Forms.Label();
             labelDatumTijdNu = new System.Windows.Forms.Label();
@@ -132,10 +132,10 @@ namespace PPTXcreator
             groupBoxTemplates = new System.Windows.Forms.GroupBox();
             labelTemplateAfter = new System.Windows.Forms.Label();
             labelTemplateDuring = new System.Windows.Forms.Label();
-            labelTemplatePre = new System.Windows.Forms.Label();
+            labelTemplateBefore = new System.Windows.Forms.Label();
             groupBoxXml = new System.Windows.Forms.GroupBox();
-            labelXmlOrganist = new System.Windows.Forms.Label();
-            labelXmlServices = new System.Windows.Forms.Label();
+            labelJsonOrganist = new System.Windows.Forms.Label();
+            labelJsonServices = new System.Windows.Forms.Label();
             labelThema = new System.Windows.Forms.Label();
             groupBoxOrganist.SuspendLayout();
             groupBoxDatumTijd.SuspendLayout();
@@ -519,7 +519,6 @@ namespace PPTXcreator
             this.textBoxCollecte2.Name = "textBoxCollecte2";
             this.textBoxCollecte2.Size = new System.Drawing.Size(185, 22);
             this.textBoxCollecte2.TabIndex = 9;
-            this.textBoxCollecte2.Text = "Algemeen kerkenwerk";
             // 
             // labelCollecte2
             // 
@@ -543,7 +542,6 @@ namespace PPTXcreator
             this.textBoxCollecte3.Name = "textBoxCollecte3";
             this.textBoxCollecte3.Size = new System.Drawing.Size(185, 22);
             this.textBoxCollecte3.TabIndex = 7;
-            this.textBoxCollecte3.Text = "doel 3";
             // 
             // textBoxCollecte1
             // 
@@ -557,7 +555,6 @@ namespace PPTXcreator
             this.textBoxCollecte1.Name = "textBoxCollecte1";
             this.textBoxCollecte1.Size = new System.Drawing.Size(185, 22);
             this.textBoxCollecte1.TabIndex = 4;
-            this.textBoxCollecte1.Text = "doel 1";
             // 
             // groupBoxOutput
             // 
@@ -592,7 +589,6 @@ namespace PPTXcreator
             this.textBoxOutputFolder.ReadOnly = true;
             this.textBoxOutputFolder.Size = new System.Drawing.Size(344, 22);
             this.textBoxOutputFolder.TabIndex = 4;
-            this.textBoxOutputFolder.Text = "./output";
             // 
             // groupBoxTemplates
             // 
@@ -602,9 +598,9 @@ namespace PPTXcreator
             groupBoxTemplates.Controls.Add(this.buttonTemplateDuringSelect);
             groupBoxTemplates.Controls.Add(this.textBoxTemplateDuring);
             groupBoxTemplates.Controls.Add(labelTemplateDuring);
-            groupBoxTemplates.Controls.Add(this.buttonTemplatePreSelect);
-            groupBoxTemplates.Controls.Add(this.textBoxTemplatePre);
-            groupBoxTemplates.Controls.Add(labelTemplatePre);
+            groupBoxTemplates.Controls.Add(this.buttonTemplateBeforeSelect);
+            groupBoxTemplates.Controls.Add(this.textBoxTemplateBefore);
+            groupBoxTemplates.Controls.Add(labelTemplateBefore);
             groupBoxTemplates.Location = new System.Drawing.Point(6, 96);
             groupBoxTemplates.Name = "groupBoxTemplates";
             groupBoxTemplates.Size = new System.Drawing.Size(527, 127);
@@ -631,7 +627,6 @@ namespace PPTXcreator
             this.textBoxTemplateAfter.ReadOnly = true;
             this.textBoxTemplateAfter.Size = new System.Drawing.Size(344, 22);
             this.textBoxTemplateAfter.TabIndex = 23;
-            this.textBoxTemplateAfter.Text = "../../../PPTXcreatorfiles/template_na-dienst-v2.pptx";
             // 
             // labelTemplateAfter
             // 
@@ -662,7 +657,6 @@ namespace PPTXcreator
             this.textBoxTemplateDuring.ReadOnly = true;
             this.textBoxTemplateDuring.Size = new System.Drawing.Size(344, 22);
             this.textBoxTemplateDuring.TabIndex = 20;
-            this.textBoxTemplateDuring.Text = "../../../PPTXcreatorfiles/template_tijdens-dienst-v2.pptx";
             // 
             // labelTemplateDuring
             // 
@@ -674,113 +668,120 @@ namespace PPTXcreator
             labelTemplateDuring.TabIndex = 19;
             labelTemplateDuring.Text = "Tijdens dienst:";
             // 
-            // buttonTemplatePreSelect
+            // buttonTemplateBeforeSelect
             // 
-            this.buttonTemplatePreSelect.Location = new System.Drawing.Point(479, 31);
-            this.buttonTemplatePreSelect.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonTemplatePreSelect.Name = "buttonTemplatePreSelect";
-            this.buttonTemplatePreSelect.Size = new System.Drawing.Size(29, 24);
-            this.buttonTemplatePreSelect.TabIndex = 18;
-            this.buttonTemplatePreSelect.Text = "...";
-            this.buttonTemplatePreSelect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonTemplatePreSelect.UseVisualStyleBackColor = true;
-            this.buttonTemplatePreSelect.Click += new System.EventHandler(this.ButtonSelectTemplateBefore);
+            this.buttonTemplateBeforeSelect.Location = new System.Drawing.Point(479, 31);
+            this.buttonTemplateBeforeSelect.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonTemplateBeforeSelect.Name = "buttonTemplateBeforeSelect";
+            this.buttonTemplateBeforeSelect.Size = new System.Drawing.Size(29, 24);
+            this.buttonTemplateBeforeSelect.TabIndex = 18;
+            this.buttonTemplateBeforeSelect.Text = "...";
+            this.buttonTemplateBeforeSelect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonTemplateBeforeSelect.UseVisualStyleBackColor = true;
+            this.buttonTemplateBeforeSelect.Click += new System.EventHandler(this.ButtonSelectTemplateBefore);
             // 
-            // textBoxTemplatePre
+            // textBoxTemplateBefore
             // 
-            this.textBoxTemplatePre.Location = new System.Drawing.Point(132, 32);
-            this.textBoxTemplatePre.Name = "textBoxTemplatePre";
-            this.textBoxTemplatePre.ReadOnly = true;
-            this.textBoxTemplatePre.Size = new System.Drawing.Size(344, 22);
-            this.textBoxTemplatePre.TabIndex = 17;
-            this.textBoxTemplatePre.Text = "../../../PPTXcreatorfiles/template_voor-dienst-v2.pptx";
+            this.textBoxTemplateBefore.Location = new System.Drawing.Point(132, 32);
+            this.textBoxTemplateBefore.Name = "textBoxTemplateBefore";
+            this.textBoxTemplateBefore.ReadOnly = true;
+            this.textBoxTemplateBefore.Size = new System.Drawing.Size(344, 22);
+            this.textBoxTemplateBefore.TabIndex = 17;
             // 
-            // labelTemplatePre
+            // labelTemplateBefore
             // 
-            labelTemplatePre.AutoSize = true;
-            labelTemplatePre.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            labelTemplatePre.Location = new System.Drawing.Point(14, 35);
-            labelTemplatePre.Name = "labelTemplatePre";
-            labelTemplatePre.Size = new System.Drawing.Size(83, 16);
-            labelTemplatePre.TabIndex = 16;
-            labelTemplatePre.Text = "Voor dienst:";
+            labelTemplateBefore.AutoSize = true;
+            labelTemplateBefore.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelTemplateBefore.Location = new System.Drawing.Point(14, 35);
+            labelTemplateBefore.Name = "labelTemplateBefore";
+            labelTemplateBefore.Size = new System.Drawing.Size(83, 16);
+            labelTemplateBefore.TabIndex = 16;
+            labelTemplateBefore.Text = "Voor dienst:";
             // 
             // groupBoxXml
             // 
-            groupBoxXml.Controls.Add(this.buttonXmlOrganistSelect);
-            groupBoxXml.Controls.Add(this.textBoxXmlOrganist);
-            groupBoxXml.Controls.Add(labelXmlOrganist);
-            groupBoxXml.Controls.Add(this.buttonXmlServicesSelect);
-            groupBoxXml.Controls.Add(this.textBoxXmlServices);
-            groupBoxXml.Controls.Add(labelXmlServices);
+            groupBoxXml.Controls.Add(this.buttonJsonOrganistSelect);
+            groupBoxXml.Controls.Add(this.textBoxJsonOrganist);
+            groupBoxXml.Controls.Add(labelJsonOrganist);
+            groupBoxXml.Controls.Add(this.buttonJsonServicesSelect);
+            groupBoxXml.Controls.Add(this.textBoxJsonServices);
+            groupBoxXml.Controls.Add(labelJsonServices);
             groupBoxXml.Location = new System.Drawing.Point(6, 237);
             groupBoxXml.Name = "groupBoxXml";
             groupBoxXml.Size = new System.Drawing.Size(527, 99);
             groupBoxXml.TabIndex = 6;
             groupBoxXml.TabStop = false;
-            groupBoxXml.Text = "Xml bestanden";
+            groupBoxXml.Text = "JSON bestanden";
             // 
-            // buttonXmlOrganistSelect
+            // buttonJsonOrganistSelect
             // 
-            this.buttonXmlOrganistSelect.Location = new System.Drawing.Point(479, 59);
-            this.buttonXmlOrganistSelect.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonXmlOrganistSelect.Name = "buttonXmlOrganistSelect";
-            this.buttonXmlOrganistSelect.Size = new System.Drawing.Size(29, 24);
-            this.buttonXmlOrganistSelect.TabIndex = 24;
-            this.buttonXmlOrganistSelect.Text = "...";
-            this.buttonXmlOrganistSelect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonXmlOrganistSelect.UseVisualStyleBackColor = true;
-            this.buttonXmlOrganistSelect.Click += new System.EventHandler(this.ButtonSelectXmlOrganists);
+            this.buttonJsonOrganistSelect.Location = new System.Drawing.Point(479, 59);
+            this.buttonJsonOrganistSelect.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonJsonOrganistSelect.Name = "buttonJsonOrganistSelect";
+            this.buttonJsonOrganistSelect.Size = new System.Drawing.Size(29, 24);
+            this.buttonJsonOrganistSelect.TabIndex = 24;
+            this.buttonJsonOrganistSelect.Text = "...";
+            this.buttonJsonOrganistSelect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonJsonOrganistSelect.UseVisualStyleBackColor = true;
+            this.buttonJsonOrganistSelect.Click += new System.EventHandler(this.ButtonSelectJsonOrganists);
             // 
-            // textBoxXmlOrganist
+            // textBoxJsonOrganist
             // 
-            this.textBoxXmlOrganist.Location = new System.Drawing.Point(132, 60);
-            this.textBoxXmlOrganist.Name = "textBoxXmlOrganist";
-            this.textBoxXmlOrganist.ReadOnly = true;
-            this.textBoxXmlOrganist.Size = new System.Drawing.Size(344, 22);
-            this.textBoxXmlOrganist.TabIndex = 23;
-            this.textBoxXmlOrganist.Text = "../../../PPTXcreatorfiles/organisten.xml";
+            this.textBoxJsonOrganist.Location = new System.Drawing.Point(132, 60);
+            this.textBoxJsonOrganist.Name = "textBoxJsonOrganist";
+            this.textBoxJsonOrganist.ReadOnly = true;
+            this.textBoxJsonOrganist.Size = new System.Drawing.Size(344, 22);
+            this.textBoxJsonOrganist.TabIndex = 23;
             // 
-            // labelXmlOrganist
+            // labelJsonOrganist
             // 
-            labelXmlOrganist.AutoSize = true;
-            labelXmlOrganist.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            labelXmlOrganist.Location = new System.Drawing.Point(14, 63);
-            labelXmlOrganist.Name = "labelXmlOrganist";
-            labelXmlOrganist.Size = new System.Drawing.Size(82, 16);
-            labelXmlOrganist.TabIndex = 22;
-            labelXmlOrganist.Text = "Organisten:";
+            labelJsonOrganist.AutoSize = true;
+            labelJsonOrganist.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelJsonOrganist.Location = new System.Drawing.Point(14, 63);
+            labelJsonOrganist.Name = "labelJsonOrganist";
+            labelJsonOrganist.Size = new System.Drawing.Size(82, 16);
+            labelJsonOrganist.TabIndex = 22;
+            labelJsonOrganist.Text = "Organisten:";
             // 
-            // buttonXmlServicesSelect
+            // buttonJsonServicesSelect
             // 
-            this.buttonXmlServicesSelect.Location = new System.Drawing.Point(479, 31);
-            this.buttonXmlServicesSelect.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonXmlServicesSelect.Name = "buttonXmlServicesSelect";
-            this.buttonXmlServicesSelect.Size = new System.Drawing.Size(29, 24);
-            this.buttonXmlServicesSelect.TabIndex = 21;
-            this.buttonXmlServicesSelect.Text = "...";
-            this.buttonXmlServicesSelect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonXmlServicesSelect.UseVisualStyleBackColor = true;
-            this.buttonXmlServicesSelect.Click += new System.EventHandler(this.ButtonSelectXmlServices);
+            this.buttonJsonServicesSelect.Location = new System.Drawing.Point(479, 31);
+            this.buttonJsonServicesSelect.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonJsonServicesSelect.Name = "buttonJsonServicesSelect";
+            this.buttonJsonServicesSelect.Size = new System.Drawing.Size(29, 24);
+            this.buttonJsonServicesSelect.TabIndex = 21;
+            this.buttonJsonServicesSelect.Text = "...";
+            this.buttonJsonServicesSelect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonJsonServicesSelect.UseVisualStyleBackColor = true;
+            this.buttonJsonServicesSelect.Click += new System.EventHandler(this.ButtonSelectJsonServices);
             // 
-            // textBoxXmlServices
+            // textBoxJsonServices
             // 
-            this.textBoxXmlServices.Location = new System.Drawing.Point(132, 32);
-            this.textBoxXmlServices.Name = "textBoxXmlServices";
-            this.textBoxXmlServices.ReadOnly = true;
-            this.textBoxXmlServices.Size = new System.Drawing.Size(344, 22);
-            this.textBoxXmlServices.TabIndex = 20;
-            this.textBoxXmlServices.Text = "../../../PPTXcreatorfiles/services.xml";
+            this.textBoxJsonServices.Location = new System.Drawing.Point(132, 32);
+            this.textBoxJsonServices.Name = "textBoxJsonServices";
+            this.textBoxJsonServices.ReadOnly = true;
+            this.textBoxJsonServices.Size = new System.Drawing.Size(344, 22);
+            this.textBoxJsonServices.TabIndex = 20;
             // 
-            // labelXmlServices
+            // labelJsonServices
             // 
-            labelXmlServices.AutoSize = true;
-            labelXmlServices.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            labelXmlServices.Location = new System.Drawing.Point(14, 35);
-            labelXmlServices.Name = "labelXmlServices";
-            labelXmlServices.Size = new System.Drawing.Size(68, 16);
-            labelXmlServices.TabIndex = 19;
-            labelXmlServices.Text = "Diensten:";
+            labelJsonServices.AutoSize = true;
+            labelJsonServices.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelJsonServices.Location = new System.Drawing.Point(14, 35);
+            labelJsonServices.Name = "labelJsonServices";
+            labelJsonServices.Size = new System.Drawing.Size(68, 16);
+            labelJsonServices.TabIndex = 19;
+            labelJsonServices.Text = "Diensten:";
+            // 
+            // labelThema
+            // 
+            labelThema.AutoSize = true;
+            labelThema.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            labelThema.Location = new System.Drawing.Point(9, 283);
+            labelThema.Name = "labelThema";
+            labelThema.Size = new System.Drawing.Size(215, 16);
+            labelThema.TabIndex = 17;
+            labelThema.Text = "Thema van de preek (optioneel):";
             // 
             // tabControl
             // 
@@ -917,6 +918,15 @@ namespace PPTXcreator
             this.tabLiturgie.TabIndex = 1;
             this.tabLiturgie.Text = "Liturgie";
             this.tabLiturgie.UseVisualStyleBackColor = true;
+            // 
+            // textBoxThema
+            // 
+            this.textBoxThema.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxThema.Location = new System.Drawing.Point(230, 280);
+            this.textBoxThema.Name = "textBoxThema";
+            this.textBoxThema.Size = new System.Drawing.Size(185, 22);
+            this.textBoxThema.TabIndex = 18;
             // 
             // buttonRowMoveDown
             // 
@@ -1066,25 +1076,6 @@ namespace PPTXcreator
             this.tabInstellingen.Text = "Instellingen";
             this.tabInstellingen.UseVisualStyleBackColor = true;
             // 
-            // textBoxThema
-            // 
-            this.textBoxThema.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxThema.Location = new System.Drawing.Point(230, 280);
-            this.textBoxThema.Name = "textBoxThema";
-            this.textBoxThema.Size = new System.Drawing.Size(185, 22);
-            this.textBoxThema.TabIndex = 18;
-            // 
-            // labelThema
-            // 
-            labelThema.AutoSize = true;
-            labelThema.Font = new System.Drawing.Font("Arial", 8.830189F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            labelThema.Location = new System.Drawing.Point(9, 283);
-            labelThema.Name = "labelThema";
-            labelThema.Size = new System.Drawing.Size(215, 16);
-            labelThema.TabIndex = 17;
-            labelThema.Text = "Thema van de preek (optioneel):";
-            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -1170,13 +1161,13 @@ namespace PPTXcreator
         private System.Windows.Forms.TextBox textBoxTemplateAfter;
         private System.Windows.Forms.Button buttonTemplateDuringSelect;
         private System.Windows.Forms.TextBox textBoxTemplateDuring;
-        private System.Windows.Forms.Button buttonTemplatePreSelect;
-        private System.Windows.Forms.TextBox textBoxTemplatePre;
+        private System.Windows.Forms.Button buttonTemplateBeforeSelect;
+        private System.Windows.Forms.TextBox textBoxTemplateBefore;
         private System.Windows.Forms.TextBox textBoxCollecte2;
-        private System.Windows.Forms.Button buttonXmlOrganistSelect;
-        private System.Windows.Forms.TextBox textBoxXmlOrganist;
-        private System.Windows.Forms.Button buttonXmlServicesSelect;
-        private System.Windows.Forms.TextBox textBoxXmlServices;
+        private System.Windows.Forms.Button buttonJsonOrganistSelect;
+        private System.Windows.Forms.TextBox textBoxJsonOrganist;
+        private System.Windows.Forms.Button buttonJsonServicesSelect;
+        private System.Windows.Forms.TextBox textBoxJsonServices;
         private System.Windows.Forms.TextBox textBoxThema;
     }
 }
