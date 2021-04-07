@@ -329,7 +329,8 @@ namespace PPTXcreator
             this.dateTimePickerNext.Name = "dateTimePickerNext";
             this.dateTimePickerNext.Size = new System.Drawing.Size(175, 22);
             this.dateTimePickerNext.TabIndex = 13;
-            this.dateTimePickerNext.Value = new System.DateTime(2021, 1, 3, 0, 0, 0, 0);
+            this.dateTimePickerNext.Value = new System.DateTime(2021, 1, 3, 16, 15, 0, 0);
+            this.dateTimePickerNext.ValueChanged += new System.EventHandler(this.DateTimePickerNext_Leave);
             // 
             // dateTimePickerNu
             // 
@@ -341,7 +342,7 @@ namespace PPTXcreator
             this.dateTimePickerNu.Size = new System.Drawing.Size(175, 22);
             this.dateTimePickerNu.TabIndex = 2;
             this.dateTimePickerNu.Value = new System.DateTime(2021, 1, 3, 9, 30, 0, 0);
-            this.dateTimePickerNu.Leave += new System.EventHandler(this.DateTimePickerNu_Leave);
+            this.dateTimePickerNu.ValueChanged += new System.EventHandler(this.DateTimePickerNu_Leave);
             // 
             // groupBoxVoorgangers
             // 
@@ -1075,6 +1076,7 @@ namespace PPTXcreator
             this.tabInstellingen.TabIndex = 2;
             this.tabInstellingen.Text = "Instellingen";
             this.tabInstellingen.UseVisualStyleBackColor = true;
+            this.tabInstellingen.Leave += new System.EventHandler(this.FocusLeaveSettingsTab);
             // 
             // Window
             // 

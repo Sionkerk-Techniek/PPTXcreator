@@ -105,30 +105,16 @@ namespace PPTXcreator
         /// </summary>
         public static void Load()
         {
-            // If the settings file cannot be found, notify the user and abort loading
+            if (!Program.TryGetFileContents(SettingsPath, out string filecontents)) return;
+
             try
             {
-                using (var file = File.OpenText(SettingsPath))
+                JsonSerializerOptions options = new JsonSerializerOptions
                 {
-                    JsonSerializerOptions options = new JsonSerializerOptions
-                    {
-                        AllowTrailingCommas = true,
-                        ReadCommentHandling = JsonCommentHandling.Skip
-                    };
-                    Instance = JsonSerializer.Deserialize<Settings>(file.ReadToEnd(), options);
-                }
-            }
-            catch (FileNotFoundException)
-            {
-                Dialogs.GenericWarning($"De instellingen konden niet worden geladen " +
-                    $"omdat {SettingsPath} niet is gevonden. Standaardwaarden worden gebruikt.");
-            }
-            catch (Exception ex) when (ex is IOException
-                || ex is UnauthorizedAccessException
-                || ex is NotSupportedException)
-            {
-                Dialogs.GenericWarning("Instellingen konden niet worden geladen. Standaardwaarden " +
-                    "worden gebruikt.\n\n De volgende foutmelding werd gegeven: " + ex.Message);
+                    AllowTrailingCommas = true,
+                    ReadCommentHandling = JsonCommentHandling.Skip
+                };
+                Instance = JsonSerializer.Deserialize<Settings>(filecontents, options);
             }
             catch (JsonException ex)
             {

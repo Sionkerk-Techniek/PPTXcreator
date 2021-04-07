@@ -26,7 +26,9 @@ namespace PPTXcreator
             textBoxOutputFolder.Text = Settings.Instance.PathOutputFolder;
             checkBoxQRedit.Checked = Settings.Instance.EnableEditQR;
             checkBoxQRsave.Checked = Settings.Instance.EnableExportQR;
-            dateTimePickerNu.Value = Settings.Instance.NextService;
+            
+            if (Settings.Instance.NextService != DateTime.MinValue)
+                dateTimePickerNu.Value = Settings.Instance.NextService;
         }
 
         /// <summary>
@@ -130,45 +132,46 @@ namespace PPTXcreator
 
         private void DateTimePickerNu_Leave(object sender, EventArgs e)
         {
-            string dateTimeString = dateTimePickerNu.Value.ToString("yyyy-MM-dd H:mm",
-                CultureInfo.InvariantCulture);
-
             if (Settings.Instance.EnableAutoPopulate)
             {
-                Service currentService = Service.GetService(Settings.Instance.PathServicesJson,
-                    Settings.Instance.PathOrganistsJson, dateTimeString);
-
-                SetFormData(currentService);
+                (Service current, Service next) = Service.GetCurrentAndNext(dateTimePickerNu.Value);
+                SetFormDataCurrent(current);
+                SetFormDataNext(next);
             }
         }
 
-        private void SetFormData(Service service)
+        private void DateTimePickerNext_Leave(object sender, EventArgs e)
         {
-            (string dsNowTitle, string dsNowName) = Service.SplitName(service.DsName);
-            (string dsNextTitle, string dsNextName) = Service.SplitName(service.NextDsName);
-
-            if (service.Time != DateTime.MinValue)
+            if (Settings.Instance.EnableAutoPopulate)
             {
-                textBoxVoorgangerNuTitel.Text = dsNowTitle;
-                textBoxVoorgangerNuNaam.Text = dsNowName;
-                textBoxVoorgangerNuPlaats.Text = service.DsPlace;
+                (Service next, _) = Service.GetCurrentAndNext(dateTimePickerNext.Value);
+                SetFormDataNext(next);
+            }
+        }
 
-                textBoxCollecte1.Text = service.Collection_1;
-                textBoxCollecte3.Text = service.Collection_3;
+        private void SetFormDataCurrent(Service service)
+        {
+            textBoxVoorgangerNuTitel.Text = service.Pastor.Title;
+            textBoxVoorgangerNuNaam.Text = service.Pastor.Name;
+            textBoxVoorgangerNuPlaats.Text = service.Pastor.Place;
+
+            textBoxCollecte1.Text = service.Collections.First;
+            textBoxCollecte2.Text = service.Collections.Second;
+            textBoxCollecte3.Text = service.Collections.Third;
+
+            textBoxOrganist.Text = service.Organist;
+        }
+
+        private void SetFormDataNext(Service nextService)
+        {
+            if (nextService.Datetime != DateTime.MinValue)
+            {
+                dateTimePickerNext.Value = nextService.Datetime;
             }
 
-            if (service.NextTime != DateTime.MinValue)
-            {
-                dateTimePickerNext.Value = service.NextTime;
-                textBoxVoorgangerNextTitel.Text = dsNextTitle;
-                textBoxVoorgangerNextNaam.Text = dsNextName;
-                textBoxVoorgangerNextPlaats.Text = service.NextDsPlace;
-            }
-
-            if (!string.IsNullOrWhiteSpace(service.Organist))
-            {
-                textBoxOrganist.Text = service.Organist;
-            }
+            textBoxVoorgangerNextTitel.Text = nextService.Pastor.Title;
+            textBoxVoorgangerNextNaam.Text = nextService.Pastor.Name;
+            textBoxVoorgangerNextPlaats.Text = nextService.Pastor.Place;
         }
 
         public Dictionary<string, string> GetFormKeywords()
@@ -297,6 +300,11 @@ namespace PPTXcreator
         {
             int index = tabControl.SelectedIndex;
             tabControl.SelectTab(index - 1);
+        }
+
+        private void FocusLeaveSettingsTab(object sender, EventArgs e)
+        {
+            Settings.Save();
         }
 
         private bool CheckValidInputs()
