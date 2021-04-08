@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
@@ -98,7 +97,7 @@ namespace PPTXcreator
         [JsonPropertyName("QR opslaan in de outputfolder")]
         public bool EnableExportQR { get; set; } = true;
 
-        public KeywordSettings Keywords { get; set; } = new KeywordSettings();
+        public KeywordSettings Keywords { get; set; } = new();
 
         /// <summary>
         /// Load settings from the file located at <see cref="SettingsPath"/>
@@ -109,7 +108,7 @@ namespace PPTXcreator
 
             try
             {
-                JsonSerializerOptions options = new JsonSerializerOptions
+                JsonSerializerOptions options = new()
                 {
                     AllowTrailingCommas = true,
                     ReadCommentHandling = JsonCommentHandling.Skip
@@ -128,7 +127,7 @@ namespace PPTXcreator
         /// </summary>
         public static void Save()
         {
-            JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true};
+            JsonSerializerOptions options = new() { WriteIndented = true };
             string json = JsonSerializer.Serialize(Instance, options);
             try
             {
@@ -136,8 +135,8 @@ namespace PPTXcreator
             }
             catch (Exception ex) when (
                 ex is IOException
-                || ex is UnauthorizedAccessException
-                || ex is SecurityException
+                or UnauthorizedAccessException
+                or SecurityException
             )
             {
                 Dialogs.GenericWarning("Instellingen konden niet worden opgeslagen. " +
@@ -152,31 +151,11 @@ namespace PPTXcreator
         /// </summary>
         public static string GetPath(string path)
         {
-            // TÖDO: replace with Path.GetRelativePath, which is only available in .NET 5.0+
+            string assemblyPath = Assembly.GetExecutingAssembly().Location;
+            string relativePath = Path.GetRelativePath(assemblyPath, path);
 
-            Uri uri;
-            try
-            {
-                uri = new Uri(path);
-            }
-            catch (UriFormatException) // Probably already a relative path
-            {
-                return path;
-            }
-
-            Uri assembly = new Uri(Assembly.GetExecutingAssembly().Location);
-            if (assembly.IsBaseOf(uri))
-            {
-                uri = assembly.MakeRelativeUri(uri);
-            }
-
-            string uriString = uri.ToString();
-            if (uriString.StartsWith("file:///"))
-            {
-                uriString = uriString.Substring(8);
-            }
-
-            return uriString;
+            if (relativePath.StartsWith("..")) return path;
+            else return relativePath;
         }
     }
 }

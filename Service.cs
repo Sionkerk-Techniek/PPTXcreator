@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
-using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -13,10 +11,10 @@ namespace PPTXcreator
         public DateTime Datetime { get; set; }
 
         [JsonPropertyName("Voorganger")]
-        public PastorInfo Pastor { get; set; } = new PastorInfo();
+        public PastorInfo Pastor { get; set; } = new();
 
         [JsonPropertyName("Collecten")]
-        public CollectionsInfo Collections { get; set; } = new CollectionsInfo();
+        public CollectionsInfo Collections { get; set; } = new();
 
         public string Organist { get; set; } = "organist";
 
@@ -28,8 +26,8 @@ namespace PPTXcreator
             // Initialize some values
             JsonElement[] services;
             IEnumerable<JsonElement> organists;
-            Service current = new Service();
-            Service next = new Service();
+            Service current = new();
+            Service next = new();
 
             // Load the file contents
             if (!Program.TryGetFileContents(Settings.Instance.PathServicesJson, out string servicesFile)
@@ -41,8 +39,10 @@ namespace PPTXcreator
             // Parse the file contents
             try
             {
-                JsonDocumentOptions options = new JsonDocumentOptions {
-                    AllowTrailingCommas = true, CommentHandling = JsonCommentHandling.Skip };
+                JsonDocumentOptions options = new() {
+                    AllowTrailingCommas = true,
+                    CommentHandling = JsonCommentHandling.Skip
+                };
                 services = JsonDocument.Parse(servicesFile, options).RootElement.EnumerateArray().ToArray();
                 organists = JsonDocument.Parse(organistsFile, options).RootElement.EnumerateArray();
             }

@@ -177,7 +177,7 @@ namespace PPTXcreator
         public Dictionary<string, string> GetFormKeywords()
         {
             KeywordSettings tags = Settings.Instance.Keywords;
-            Dictionary<string, string> keywords = new Dictionary<string, string>
+            Dictionary<string, string> keywords = new()
             {
                 { tags.ServiceTime, GetTime(dateTimePickerNu) },
                 { tags.ServiceNextTime, GetTime(dateTimePickerNext) },
@@ -196,15 +196,15 @@ namespace PPTXcreator
             return keywords;
         }
 
-        private string GetTime(DateTimePicker dateTimePicker)
+        private static string GetTime(DateTimePicker dateTimePicker)
         {
             return dateTimePicker.Value.ToString("H:mm", CultureInfo.InvariantCulture);
         }
 
-        private string GetDateLong(DateTimePicker dateTimePicker)
+        private static string GetDateLong(DateTimePicker dateTimePicker)
         {
             // Dictionary to avoid not having the nl-NL resource when using System.Globalization
-            Dictionary<int, string> monthNames = new Dictionary<int, string>()
+            Dictionary<int, string> monthNames = new()
             {
                 { 1, "januari" }, { 2, "februari" }, { 3, "maart" }, { 4, "april" },
                 { 5, "mei" }, { 6, "juni" }, { 7, "juli" }, { 8, "augustus"},
@@ -302,15 +302,15 @@ namespace PPTXcreator
             tabControl.SelectTab(index - 1);
         }
 
-        private void FocusLeaveSettingsTab(object sender, EventArgs e)
+        private static void FocusLeaveSettingsTab(object sender, EventArgs e)
         {
             Settings.Save();
         }
 
         private bool CheckValidInputs()
         {
-            StringBuilder warning = new StringBuilder();
-            List<string> invalidInputs = new List<string>();
+            StringBuilder warning = new();
+            List<string> invalidInputs = new();
 
             string[] fieldNames = new string[]
             {
@@ -361,7 +361,7 @@ namespace PPTXcreator
             if (!CheckValidInputs()) return;
 
             Dictionary<string, string> keywords = GetFormKeywords();
-            List<ServiceElement> elements = new List<ServiceElement>();
+            List<ServiceElement> elements = new();
             foreach (DataGridViewRow row in dataGridView.Rows)
             {
                 elements.Add(new ServiceElement(row));
@@ -398,11 +398,11 @@ namespace PPTXcreator
             afterService.SaveClose();
         }
 
-        private PowerPoint CreatePowerpoint(string templatePath, string outputPath)
+        private static PowerPoint CreatePowerpoint(string templatePath, string outputPath)
         {
             try
             {
-                PowerPoint powerpoint = new PowerPoint(templatePath, outputPath);
+                PowerPoint powerpoint = new(templatePath, outputPath);
                 return powerpoint;
             }
             catch (IOException)
