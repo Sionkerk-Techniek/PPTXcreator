@@ -177,7 +177,7 @@ namespace PPTXcreator
         public Dictionary<string, string> GetFormKeywords()
         {
             KeywordSettings tags = Settings.Instance.Keywords;
-            Dictionary<string, string> keywords = new()
+            Dictionary<string, string> keywords = new Dictionary<string, string>
             {
                 { tags.ServiceTime, GetTime(dateTimePickerNu) },
                 { tags.ServiceNextTime, GetTime(dateTimePickerNext) },
@@ -204,7 +204,7 @@ namespace PPTXcreator
         private static string GetDateLong(DateTimePicker dateTimePicker)
         {
             // Dictionary to avoid not having the nl-NL resource when using System.Globalization
-            Dictionary<int, string> monthNames = new()
+            Dictionary<int, string> monthNames = new Dictionary<int, string>
             {
                 { 1, "januari" }, { 2, "februari" }, { 3, "maart" }, { 4, "april" },
                 { 5, "mei" }, { 6, "juni" }, { 7, "juli" }, { 8, "augustus"},
@@ -309,8 +309,8 @@ namespace PPTXcreator
 
         private bool CheckValidInputs()
         {
-            StringBuilder warning = new();
-            List<string> invalidInputs = new();
+            StringBuilder warning = new StringBuilder();
+            List<string> invalidInputs = new List<string>();
 
             string[] fieldNames = new string[]
             {
@@ -361,7 +361,7 @@ namespace PPTXcreator
             if (!CheckValidInputs()) return;
 
             Dictionary<string, string> keywords = GetFormKeywords();
-            List<ServiceElement> elements = new();
+            List<ServiceElement> elements = new List<ServiceElement>();
             foreach (DataGridViewRow row in dataGridView.Rows)
             {
                 elements.Add(new ServiceElement(row));
@@ -402,7 +402,7 @@ namespace PPTXcreator
         {
             try
             {
-                PowerPoint powerpoint = new(templatePath, outputPath);
+                PowerPoint powerpoint = new PowerPoint(templatePath, outputPath);
                 return powerpoint;
             }
             catch (IOException)
