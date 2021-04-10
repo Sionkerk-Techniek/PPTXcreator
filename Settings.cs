@@ -55,14 +55,6 @@ namespace PPTXcreator
             set => pathServicesJson = GetPath(value);
         }
 
-        private string pathOrganistsJson = "organisten.json";
-        [JsonPropertyName("Bestandspad organisten json")]
-        public string PathOrganistsJson
-        {
-            get => pathOrganistsJson;
-            set => pathOrganistsJson = GetPath(value);
-        }
-
         private string pathOutputFolder = "./output";
         [JsonPropertyName("Outputfolder")]
         public string PathOutputFolder
@@ -97,7 +89,7 @@ namespace PPTXcreator
         [JsonPropertyName("QR opslaan in de outputfolder")]
         public bool EnableExportQR { get; set; } = true;
 
-        public KeywordSettings Keywords { get; set; } = new();
+        public KeywordSettings Keywords { get; set; } = new KeywordSettings();
 
         /// <summary>
         /// Load settings from the file located at <see cref="SettingsPath"/>
@@ -108,7 +100,7 @@ namespace PPTXcreator
 
             try
             {
-                JsonSerializerOptions options = new()
+                JsonSerializerOptions options = new JsonSerializerOptions()
                 {
                     AllowTrailingCommas = true,
                     ReadCommentHandling = JsonCommentHandling.Skip
@@ -127,7 +119,7 @@ namespace PPTXcreator
         /// </summary>
         public static void Save()
         {
-            JsonSerializerOptions options = new() { WriteIndented = true };
+            JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true };
             string json = JsonSerializer.Serialize(Instance, options);
             try
             {
@@ -135,8 +127,8 @@ namespace PPTXcreator
             }
             catch (Exception ex) when (
                 ex is IOException
-                or UnauthorizedAccessException
-                or SecurityException
+                || ex is UnauthorizedAccessException
+                || ex is SecurityException
             )
             {
                 Dialogs.GenericWarning("Instellingen konden niet worden opgeslagen. " +
@@ -151,9 +143,11 @@ namespace PPTXcreator
         /// </summary>
         public static string GetPath(string path)
         {
-            string assemblyPath = Assembly.GetExecutingAssembly().Location;
-            string relativePath = Path.GetRelativePath(assemblyPath, path);
-
+            Uri assemblyPath = new Uri(AppContext.BaseDirectory);
+            Uri targetPath = new Uri(Path.GetFullPath(path));
+            string relativePath = assemblyPath.MakeRelativeUri(targetPath).ToString();
+            relativePath = relativePath.Replace('/', '\\'); // URIs use forward slashes
+            
             if (relativePath.StartsWith("..")) return path;
             else return relativePath;
         }

@@ -30,6 +30,16 @@ namespace PPTXcreator
             );
         }
 
+        public static void GenericInformation(string title, string message)
+        {
+            MessageBox.Show(
+                message,
+                title,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+        }
+
         public static string SelectFolder(string description)
         {
             FolderBrowserDialog folderDialog = new FolderBrowserDialog

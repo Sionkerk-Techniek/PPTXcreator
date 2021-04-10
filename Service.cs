@@ -11,10 +11,10 @@ namespace PPTXcreator
         public DateTime Datetime { get; set; }
 
         [JsonPropertyName("Voorganger")]
-        public PastorInfo Pastor { get; set; } = new();
+        public PastorInfo Pastor { get; set; } = new PastorInfo();
 
         [JsonPropertyName("Collecten")]
-        public CollectionsInfo Collections { get; set; } = new();
+        public CollectionsInfo Collections { get; set; } = new CollectionsInfo();
 
         public string Organist { get; set; } = "organist";
 
@@ -25,13 +25,11 @@ namespace PPTXcreator
         {
             // Initialize some values
             JsonElement[] services;
-            IEnumerable<JsonElement> organists;
-            Service current = new();
-            Service next = new();
+            Service current = new Service();
+            Service next = new Service();
 
             // Load the file contents
-            if (!Program.TryGetFileContents(Settings.Instance.PathServicesJson, out string servicesFile)
-                || !Program.TryGetFileContents(Settings.Instance.PathOrganistsJson, out string organistsFile))
+            if (!Program.TryGetFileContents(Settings.Instance.PathServicesJson, out string servicesFile))
             {
                 return (current, next);
             }
@@ -39,17 +37,16 @@ namespace PPTXcreator
             // Parse the file contents
             try
             {
-                JsonDocumentOptions options = new() {
+                JsonDocumentOptions options = new JsonDocumentOptions() {
                     AllowTrailingCommas = true,
                     CommentHandling = JsonCommentHandling.Skip
                 };
                 services = JsonDocument.Parse(servicesFile, options).RootElement.EnumerateArray().ToArray();
-                organists = JsonDocument.Parse(organistsFile, options).RootElement.EnumerateArray();
             }
             catch (Exception ex) when (ex is JsonException || ex is InvalidOperationException)
             {
-                Dialogs.GenericWarning($"{Settings.Instance.PathServicesJson} of {Settings.Instance.PathOrganistsJson}" +
-                    $" hebben niet de juiste structuur.\n\nDe volgende foutmelding werd gegeven: {ex.Message}");
+                Dialogs.GenericWarning($"{Settings.Instance.PathServicesJson}" +
+                    $" heeft niet de juiste structuur.\n\nDe volgende foutmelding werd gegeven: {ex.Message}");
                 return (current, next);
             }
 
@@ -73,12 +70,6 @@ namespace PPTXcreator
                     break;
                 }
             }
-
-            // Get the organist
-            current.Organist = (from organist in organists
-                                where organist.GetProperty("Datetime").GetDateTime() == datetime
-                                select organist.GetProperty("Organist").GetString()).FirstOrDefault();
-            if (current.Organist == null) current.Organist = "organist";
 
             return (current, next);
         }

@@ -128,12 +128,12 @@ namespace PPTXcreator
         private void ReplaceImage(string imagePath, SlidePart slidePart)
         {
             // Loop over all picture objects
-            foreach (Picture pic in slidePart.Slide.Descendants<Picture>())
+            foreach (Presentation.Picture pic in slidePart.Slide.Descendants<Presentation.Picture>())
             {
                 // Get the description and rId from the object
                 string description = pic.NonVisualPictureProperties.NonVisualDrawingProperties.Description;
                 string rId = pic.BlipFill.Blip.Embed.Value;
-
+                
                 if (description == Settings.Instance.ImageDescription)
                 {
                     // Get the ImagePart by id, and replace the image

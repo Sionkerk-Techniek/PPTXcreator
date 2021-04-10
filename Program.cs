@@ -62,16 +62,16 @@ namespace PPTXcreator
                 filecontents = File.ReadAllText(path);
                 return true;
             }
-            catch (Exception ex) when (ex is DirectoryNotFoundException or FileNotFoundException)
+            catch (Exception ex) when (ex is DirectoryNotFoundException || ex is FileNotFoundException)
             {
                 Dialogs.GenericWarning($"{path} kon niet worden geopgend omdat het bestand niet gevonden is.");
                 filecontents = "";
                 return false;
             }
             catch (Exception ex) when (ex is IOException
-                or UnauthorizedAccessException
-                or NotSupportedException
-                or System.Security.SecurityException)
+                || ex is UnauthorizedAccessException
+                || ex is NotSupportedException
+                || ex is System.Security.SecurityException)
             {
                 Dialogs.GenericWarning($"{path} kon niet worden geopend.\n\n" +
                     $"De volgende foutmelding werd gegeven: {ex.Message}");
