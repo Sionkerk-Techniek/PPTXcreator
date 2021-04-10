@@ -55,14 +55,6 @@ namespace PPTXcreator
             set => pathServicesJson = GetPath(value);
         }
 
-        private string pathOrganistsJson = "organisten.json";
-        [JsonPropertyName("Bestandspad organisten json")]
-        public string PathOrganistsJson
-        {
-            get => pathOrganistsJson;
-            set => pathOrganistsJson = GetPath(value);
-        }
-
         private string pathOutputFolder = "./output";
         [JsonPropertyName("Outputfolder")]
         public string PathOutputFolder

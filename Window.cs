@@ -22,10 +22,10 @@ namespace PPTXcreator
             textBoxTemplateDuring.Text = Settings.Instance.PathTemplateDuring;
             textBoxTemplateAfter.Text = Settings.Instance.PathTemplateAfter;
             textBoxJsonServices.Text = Settings.Instance.PathServicesJson;
-            textBoxJsonOrganist.Text = Settings.Instance.PathOrganistsJson;
             textBoxOutputFolder.Text = Settings.Instance.PathOutputFolder;
             checkBoxQRedit.Checked = Settings.Instance.EnableEditQR;
             checkBoxQRsave.Checked = Settings.Instance.EnableExportQR;
+            checkBoxAutoPopulate.Checked = Settings.Instance.EnableAutoPopulate;
             
             if (Settings.Instance.NextService != DateTime.MinValue)
                 dateTimePickerNu.Value = Settings.Instance.NextService;
@@ -113,20 +113,6 @@ namespace PPTXcreator
             {
                 textBoxJsonServices.Text = path;
                 Settings.Instance.PathServicesJson = path;
-            }
-        }
-
-        private void ButtonSelectJsonOrganists(object sender, EventArgs e)
-        {
-            string path = Dialogs.SelectFile(
-               "JSON (*.json)|*.json",
-                "Selecteer het organisten JSON-bestand"
-            );
-
-            if (!string.IsNullOrEmpty(path))
-            {
-                textBoxJsonOrganist.Text = path;
-                Settings.Instance.PathOrganistsJson = path;
             }
         }
 
@@ -302,11 +288,15 @@ namespace PPTXcreator
             tabControl.SelectTab(index - 1);
         }
 
-        private static void FocusLeaveSettingsTab(object sender, EventArgs e)
+        private void FocusLeaveSettingsTab(object sender, EventArgs e)
         {
             Settings.Save();
         }
 
+        /// <summary>
+        /// Check if the values are not the default values, and ask the user if they want to continue
+        /// if there are more than one default values present
+        /// </summary>
         private bool CheckValidInputs()
         {
             StringBuilder warning = new StringBuilder();
@@ -359,6 +349,11 @@ namespace PPTXcreator
         public void CreatePresentations(object sender, EventArgs e)
         {
             if (!CheckValidInputs()) return;
+            if (!Directory.Exists(Settings.Instance.PathOutputFolder))
+            {
+                Dialogs.GenericWarning("De outputfolder bestaat niet, selecteer een bestaande folder in de instellingen");
+                return;
+            }
 
             Dictionary<string, string> keywords = GetFormKeywords();
             List<ServiceElement> elements = new List<ServiceElement>();
@@ -396,6 +391,8 @@ namespace PPTXcreator
             afterService.ReplaceKeywords(keywords);
             afterService.ReplaceImage(textBoxQRPath.Text);
             afterService.SaveClose();
+
+            Dialogs.GenericInformation("Voltooid", $"De presentaties zijn gemaakt en staan in {Settings.Instance.PathOutputFolder}.");
         }
 
         private static PowerPoint CreatePowerpoint(string templatePath, string outputPath)
@@ -411,6 +408,11 @@ namespace PPTXcreator
                     "bestanden op de outputlocatie geopend zijn. Sluit PowerPoint en probeer het opnieuw.");
                 return null;
             }
+        }
+
+        private void CheckBoxAutoPopulateChanged(object sender, EventArgs e)
+        {
+            Settings.Instance.EnableAutoPopulate = ((CheckBox)sender).Checked;
         }
     }
 }

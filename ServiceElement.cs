@@ -58,11 +58,13 @@ namespace PPTXcreator
                 case "Lied (WK)":
                     Type = ElementType.SongWK;
                     Title = "Lied " + FormatTitle(selection);
-                    Subtitle = songname.Trim();
+                    if (string.IsNullOrWhiteSpace(songname)) Subtitle = "";
+                    else Subtitle = songname.Trim();
                     break;
                 case "Lied (Overig)":
                     Type = ElementType.SongOther;
-                    Title = songname.Trim();
+                    if (string.IsNullOrWhiteSpace(songname)) Title = "";
+                    else Title = songname.Trim();
                     break;
             }
         }
