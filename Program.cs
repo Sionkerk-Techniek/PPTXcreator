@@ -71,11 +71,43 @@ namespace PPTXcreator
             catch (Exception ex) when (ex is IOException
                 || ex is UnauthorizedAccessException
                 || ex is NotSupportedException
-                || ex is System.Security.SecurityException)
+                || ex is System.Security.SecurityException
+                || ex is PathTooLongException)
             {
                 Dialogs.GenericWarning($"{path} kon niet worden geopend.\n\n" +
                     $"De volgende foutmelding werd gegeven: {ex.Message}");
                 filecontents = "";
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Helper function for opening a filestream and handling exceptions
+        /// </summary>
+        /// <param name="path">Path to the file that has to be read</param>
+        /// <param name="stream">The filestream, or null if reading failed</param>
+        /// <returns>Whether the function succeeded</returns>
+        public static bool TryGetFileStream(string path, out FileStream stream)
+        {
+            try
+            {
+                stream = File.OpenRead(path);
+                return true;
+            }
+            catch (Exception ex) when (ex is DirectoryNotFoundException || ex is FileNotFoundException)
+            {
+                Dialogs.GenericWarning($"{path} kon niet worden geopgend omdat het bestand niet gevonden is.");
+                stream = null;
+                return false;
+            }
+            catch (Exception ex) when (ex is IOException
+                || ex is UnauthorizedAccessException
+                || ex is NotSupportedException
+                || ex is PathTooLongException)
+            {
+                Dialogs.GenericWarning($"{path} kon niet worden geopend.\n\n" +
+                    $"De volgende foutmelding werd gegeven: {ex.Message}");
+                stream = null;
                 return false;
             }
         }

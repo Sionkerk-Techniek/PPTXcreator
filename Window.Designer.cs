@@ -1,4 +1,4 @@
-﻿
+
 namespace PPTXcreator
 {
     partial class Window
@@ -1004,6 +1004,7 @@ namespace PPTXcreator
             "Psalm",
             "Psalm (WK)",
             "Lied (WK)",
+            "Lied (OTH)",
             "Lied (Overig)",
             "Lezing"});
             this.ContentType.MinimumWidth = 6;

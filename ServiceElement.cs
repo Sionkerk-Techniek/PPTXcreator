@@ -4,10 +4,12 @@ namespace PPTXcreator
 {
     public enum ElementType
     {
+        None,
         Reading,
         PsalmOB,
         PsalmWK,
         SongWK,
+        SongOTH,
         SongOther
     }
 
@@ -27,7 +29,9 @@ namespace PPTXcreator
         /// Appears in the second line in the presentation during the service
         /// </summary>
         public string Subtitle { get; }
-        public bool IsSong { get => Type != ElementType.Reading; }
+        public bool IsSong { get => Type > ElementType.Reading; }
+        public bool IsReading { get => Type == ElementType.Reading; }
+        public bool ShowQR { get; set; } = false;
 
         /// <summary>
         /// Construct a ServiceElement instance from a DataGridViewRow
@@ -61,12 +65,30 @@ namespace PPTXcreator
                     if (string.IsNullOrWhiteSpace(songname)) Subtitle = "";
                     else Subtitle = songname.Trim();
                     break;
+                case "Lied (OTH)":
+                    Type = ElementType.SongOTH;
+                    Title = "OTH " + FormatTitle(selection);
+                    if (string.IsNullOrWhiteSpace(songname)) Subtitle = "";
+                    else Subtitle = songname.Trim();
+                    break;
                 case "Lied (Overig)":
                     Type = ElementType.SongOther;
                     if (string.IsNullOrWhiteSpace(songname)) Title = "";
                     else Title = songname.Trim();
                     break;
+                default:
+                    Type = ElementType.None;
+                    Title = "";
+                    Subtitle = "";
+                    break;
             }
+        }
+
+        public ServiceElement()
+        {
+            Type = ElementType.None;
+            Title = "";
+            Subtitle = "";
         }
 
         private string ReplaceLastComma(string input)
