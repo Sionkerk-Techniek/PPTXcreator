@@ -26,9 +26,9 @@ namespace PPTXcreator
             checkBoxQRedit.Checked = Settings.Instance.EnableEditQR;
             checkBoxQRsave.Checked = Settings.Instance.EnableExportQR;
             checkBoxAutoPopulate.Checked = Settings.Instance.EnableAutoPopulate;
-            
+
             if (Settings.Instance.NextService != DateTime.MinValue)
-                dateTimePickerNu.Value = Settings.Instance.NextService;
+                dateTimePickerCurrent.Value = Settings.Instance.NextService; // automatically triggers the ValueChanged event
         }
 
         /// <summary>
@@ -116,17 +116,17 @@ namespace PPTXcreator
             }
         }
 
-        private void DateTimePickerNu_Leave(object sender, EventArgs e)
+        private void DateTimePickerCurrentChanged(object sender, EventArgs e)
         {
             if (Settings.Instance.EnableAutoPopulate)
             {
-                (Service current, Service next) = Service.GetCurrentAndNext(dateTimePickerNu.Value);
+                (Service current, Service next) = Service.GetCurrentAndNext(dateTimePickerCurrent.Value);
                 SetFormDataCurrent(current);
                 SetFormDataNext(next);
             }
         }
 
-        private void DateTimePickerNext_Leave(object sender, EventArgs e)
+        private void DateTimePickerNextChanged(object sender, EventArgs e)
         {
             if (Settings.Instance.EnableAutoPopulate)
             {
@@ -165,7 +165,7 @@ namespace PPTXcreator
             KeywordSettings tags = Settings.Instance.Keywords;
             Dictionary<string, string> keywords = new Dictionary<string, string>
             {
-                { tags.ServiceTime, GetTime(dateTimePickerNu) },
+                { tags.ServiceTime, GetTime(dateTimePickerCurrent) },
                 { tags.ServiceNextTime, GetTime(dateTimePickerNext) },
                 { tags.ServiceNextDate, GetDateLong(dateTimePickerNext) },
                 { tags.Pastor, $"{TitleCase(textBoxVoorgangerNuTitel.Text)} {textBoxVoorgangerNuNaam.Text}" },
@@ -299,6 +299,11 @@ namespace PPTXcreator
             Settings.Save();
         }
 
+        private void CheckBoxAutoPopulateChanged(object sender, EventArgs e)
+        {
+            Settings.Instance.EnableAutoPopulate = ((CheckBox)sender).Checked;
+        }
+
         private List<ServiceElement> GetServiceElements()
         {
             List<ServiceElement> elements = new List<ServiceElement>();
@@ -382,7 +387,7 @@ namespace PPTXcreator
 
             Dictionary<string, string> keywords = GetFormKeywords();
             List<ServiceElement> elements = GetServiceElements();
-            string filenamepart = GetFilenamePart(dateTimePickerNu);
+            string filenamepart = GetFilenamePart(dateTimePickerCurrent);
 
             PowerPoint beforeService = CreatePowerpoint(Settings.Instance.PathTemplateBefore,
                 Settings.Instance.PathOutputFolder + $"/voor {filenamepart}.pptx");
@@ -418,7 +423,7 @@ namespace PPTXcreator
             afterService.SaveClose();
 
             Dialogs.GenericInformation("Voltooid", $"De presentaties zijn gemaakt " +
-                $"en staan in de folder {Settings.Instance.PathOutputFolder}.");
+                $"en staan in de folder '{Settings.Instance.PathOutputFolder}'.");
         }
 
         private static PowerPoint CreatePowerpoint(string templatePath, string outputPath)
@@ -428,12 +433,29 @@ namespace PPTXcreator
                 PowerPoint powerpoint = new PowerPoint(templatePath, outputPath);
                 return powerpoint;
             }
-            catch (IOException)
+            catch (FileNotFoundException ex)
             {
-                Dialogs.GenericWarning("Niet alle presentaties konden worden gemaakt omdat een of meer " +
-                    "bestanden op de outputlocatie geopend zijn. Sluit PowerPoint en probeer het opnieuw.");
-                return null;
+                Dialogs.GenericWarning($"Het bestand '{ex.FileName}' is niet gevonden. Controleer het bestandspad en probeer opnieuw.");
             }
+            catch (DirectoryNotFoundException)
+            {
+                Dialogs.GenericWarning($"Het bestandspad '{templatePath}' of '{outputPath}' bestaat niet. Controleer het bestandspad " +
+                    $"en probeer opnieuw");
+            }
+            catch (IOException ex) when ((ex.HResult & 0x0000FFFF) == 32)
+            {
+                Dialogs.GenericWarning($"Het bestand '{outputPath}' kon niet worden bewerkt omdat het geopend is in een ander " +
+                    "programma. Sluit het bestand en probeer opnieuw.");
+            }
+            catch (Exception ex) when (ex is IOException
+                || ex is UnauthorizedAccessException
+                || ex is NotSupportedException
+                || ex is System.Security.SecurityException)
+            {
+                Dialogs.GenericWarning($"'{templatePath}' of '{outputPath}' kon niet worden geopend.\n\n" +
+                    $"De volgende foutmelding werd gegeven: {ex.Message}");
+            }
+            return null;
         }
 
         private static string GetFilenamePart(DateTimePicker dateTimePicker)
@@ -445,11 +467,6 @@ namespace PPTXcreator
             else output += "avond ";
             output += dateTime.ToString("yyyy-MM-dd");
             return output;
-        }
-
-        private void CheckBoxAutoPopulateChanged(object sender, EventArgs e)
-        {
-            Settings.Instance.EnableAutoPopulate = ((CheckBox)sender).Checked;
         }
     }
 }

@@ -59,7 +59,7 @@ namespace PPTXcreator
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window));
             this.textBoxOrganist = new System.Windows.Forms.TextBox();
             this.dateTimePickerNext = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePickerNu = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerCurrent = new System.Windows.Forms.DateTimePicker();
             this.textBoxVoorgangerNextPlaats = new System.Windows.Forms.TextBox();
             this.textBoxVoorgangerNuPlaats = new System.Windows.Forms.TextBox();
             this.textBoxVoorgangerNextNaam = new System.Windows.Forms.TextBox();
@@ -309,7 +309,7 @@ namespace PPTXcreator
             groupBoxDatumTijd.Controls.Add(this.dateTimePickerNext);
             groupBoxDatumTijd.Controls.Add(labelDatumTijdNext);
             groupBoxDatumTijd.Controls.Add(labelDatumTijdNu);
-            groupBoxDatumTijd.Controls.Add(this.dateTimePickerNu);
+            groupBoxDatumTijd.Controls.Add(this.dateTimePickerCurrent);
             groupBoxDatumTijd.Location = new System.Drawing.Point(6, 15);
             groupBoxDatumTijd.Name = "groupBoxDatumTijd";
             groupBoxDatumTijd.Size = new System.Drawing.Size(527, 97);
@@ -327,19 +327,19 @@ namespace PPTXcreator
             this.dateTimePickerNext.Size = new System.Drawing.Size(175, 22);
             this.dateTimePickerNext.TabIndex = 13;
             this.dateTimePickerNext.Value = new System.DateTime(2021, 1, 3, 16, 15, 0, 0);
-            this.dateTimePickerNext.ValueChanged += new System.EventHandler(this.DateTimePickerNext_Leave);
+            this.dateTimePickerNext.ValueChanged += new System.EventHandler(this.DateTimePickerNextChanged);
             // 
-            // dateTimePickerNu
+            // dateTimePickerCurrent
             // 
-            this.dateTimePickerNu.CustomFormat = "yyyy-MM-dd HH:mm";
-            this.dateTimePickerNu.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerNu.Location = new System.Drawing.Point(132, 33);
-            this.dateTimePickerNu.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
-            this.dateTimePickerNu.Name = "dateTimePickerNu";
-            this.dateTimePickerNu.Size = new System.Drawing.Size(175, 22);
-            this.dateTimePickerNu.TabIndex = 2;
-            this.dateTimePickerNu.Value = new System.DateTime(2021, 1, 3, 9, 30, 0, 0);
-            this.dateTimePickerNu.ValueChanged += new System.EventHandler(this.DateTimePickerNu_Leave);
+            this.dateTimePickerCurrent.CustomFormat = "yyyy-MM-dd HH:mm";
+            this.dateTimePickerCurrent.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerCurrent.Location = new System.Drawing.Point(132, 33);
+            this.dateTimePickerCurrent.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
+            this.dateTimePickerCurrent.Name = "dateTimePickerNu";
+            this.dateTimePickerCurrent.Size = new System.Drawing.Size(175, 22);
+            this.dateTimePickerCurrent.TabIndex = 2;
+            this.dateTimePickerCurrent.Value = new System.DateTime(2021, 1, 3, 9, 30, 0, 0);
+            this.dateTimePickerCurrent.ValueChanged += new System.EventHandler(this.DateTimePickerCurrentChanged);
             // 
             // groupBoxVoorgangers
             // 
@@ -1101,7 +1101,7 @@ namespace PPTXcreator
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabGeneral;
         private System.Windows.Forms.TabPage tabLiturgie;
-        private System.Windows.Forms.DateTimePicker dateTimePickerNu;
+        private System.Windows.Forms.DateTimePicker dateTimePickerCurrent;
         private System.Windows.Forms.TextBox textBoxVoorgangerNuNaam;
         private System.Windows.Forms.TextBox textBoxVoorgangerNuTitel;
         private System.Windows.Forms.TextBox textBoxVoorgangerNextTitel;

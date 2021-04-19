@@ -57,6 +57,8 @@ namespace PPTXcreator
         /// <returns>Whether the function succeeded</returns>
         public static bool TryGetFileContents(string path, out string filecontents)
         {
+            filecontents = "";
+
             try
             {
                 filecontents = File.ReadAllText(path);
@@ -64,19 +66,16 @@ namespace PPTXcreator
             }
             catch (Exception ex) when (ex is DirectoryNotFoundException || ex is FileNotFoundException)
             {
-                Dialogs.GenericWarning($"{path} kon niet worden geopgend omdat het bestand niet gevonden is.");
-                filecontents = "";
+                Dialogs.GenericWarning($"'{path}' kon niet worden geopgend omdat het bestand niet gevonden is.");
                 return false;
             }
             catch (Exception ex) when (ex is IOException
                 || ex is UnauthorizedAccessException
                 || ex is NotSupportedException
-                || ex is System.Security.SecurityException
-                || ex is PathTooLongException)
+                || ex is System.Security.SecurityException)
             {
-                Dialogs.GenericWarning($"{path} kon niet worden geopend.\n\n" +
+                Dialogs.GenericWarning($"'{path}' kon niet worden geopend.\n\n" +
                     $"De volgende foutmelding werd gegeven: {ex.Message}");
-                filecontents = "";
                 return false;
             }
         }
@@ -89,25 +88,24 @@ namespace PPTXcreator
         /// <returns>Whether the function succeeded</returns>
         public static bool TryGetFileStream(string path, out FileStream stream)
         {
+            stream = null;
+
             try
             {
                 stream = File.OpenRead(path);
                 return true;
             }
-            catch (Exception ex) when (ex is DirectoryNotFoundException || ex is FileNotFoundException)
+            catch (IOException ex) when (ex is DirectoryNotFoundException || ex is FileNotFoundException)
             {
-                Dialogs.GenericWarning($"{path} kon niet worden geopgend omdat het bestand niet gevonden is.");
-                stream = null;
+                Dialogs.GenericWarning($"'{path}' kon niet worden geopgend omdat het bestand niet gevonden is.");
                 return false;
             }
             catch (Exception ex) when (ex is IOException
                 || ex is UnauthorizedAccessException
-                || ex is NotSupportedException
-                || ex is PathTooLongException)
+                || ex is NotSupportedException)
             {
-                Dialogs.GenericWarning($"{path} kon niet worden geopend.\n\n" +
+                Dialogs.GenericWarning($"'{path}' kon niet worden geopend.\n\n" +
                     $"De volgende foutmelding werd gegeven: {ex.Message}");
-                stream = null;
                 return false;
             }
         }

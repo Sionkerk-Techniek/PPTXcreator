@@ -110,7 +110,7 @@ namespace PPTXcreator
             catch (JsonException ex)
             {
                 Dialogs.GenericWarning("Instellingen konden niet worden geladen vanwege ongeldige waarden in " +
-                    $"{SettingsPath}. Standaardwaarden worden gebruikt.\n\nVolledige error: {ex.Message}");
+                    $"'{SettingsPath}'. Standaardwaarden worden gebruikt.\n\nVolledige error: {ex.Message}");
             }
         }
 
@@ -146,7 +146,7 @@ namespace PPTXcreator
             Uri assemblyPath = new Uri(AppContext.BaseDirectory);
             Uri targetPath = new Uri(Path.GetFullPath(path));
             string relativePath = assemblyPath.MakeRelativeUri(targetPath).ToString();
-            relativePath = relativePath.Replace('/', '\\'); // URIs use forward slashes
+            relativePath = Uri.UnescapeDataString(relativePath).Replace("/", "\\"); // URIs use forward slashes
             
             if (relativePath.StartsWith("..")) return path;
             else return relativePath;
