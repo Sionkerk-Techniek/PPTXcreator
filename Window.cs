@@ -24,7 +24,6 @@ namespace PPTXcreator
             textBoxJsonServices.Text = Settings.Instance.PathServicesJson;
             textBoxOutputFolder.Text = Settings.Instance.PathOutputFolder;
             checkBoxQRedit.Checked = Settings.Instance.EnableEditQR;
-            checkBoxQRsave.Checked = Settings.Instance.EnableExportQR;
             checkBoxAutoPopulate.Checked = Settings.Instance.EnableAutoPopulate;
 
             if (Settings.Instance.NextService != DateTime.MinValue)

@@ -86,9 +86,6 @@ namespace PPTXcreator
         [JsonPropertyName("QR-afbeeldingen bewerken")]
         public bool EnableEditQR { get; set; } = true;
 
-        [JsonPropertyName("QR opslaan in de outputfolder")]
-        public bool EnableExportQR { get; set; } = true;
-
         public KeywordSettings Keywords { get; set; } = new KeywordSettings();
 
         /// <summary>

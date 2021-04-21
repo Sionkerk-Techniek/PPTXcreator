@@ -38,7 +38,6 @@ namespace PPTXcreator
             System.Windows.Forms.Label labelVoorgangerNu;
             System.Windows.Forms.Label labelLiturgie;
             System.Windows.Forms.Label labelOutputFolder;
-            System.Windows.Forms.Label label13;
             System.Windows.Forms.Label labelCollecte3;
             System.Windows.Forms.Label labelCollecte1;
             System.Windows.Forms.Label labelQRPath;
@@ -56,7 +55,6 @@ namespace PPTXcreator
             System.Windows.Forms.GroupBox groupBoxAutoPopulate;
             System.Windows.Forms.Label labelJsonServices;
             System.Windows.Forms.Label labelThema;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window));
             this.textBoxOrganist = new System.Windows.Forms.TextBox();
             this.dateTimePickerNext = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerCurrent = new System.Windows.Forms.DateTimePicker();
@@ -66,7 +64,6 @@ namespace PPTXcreator
             this.textBoxVoorgangerNextTitel = new System.Windows.Forms.TextBox();
             this.textBoxVoorgangerNuTitel = new System.Windows.Forms.TextBox();
             this.textBoxVoorgangerNuNaam = new System.Windows.Forms.TextBox();
-            this.checkBoxQRsave = new System.Windows.Forms.CheckBox();
             this.checkBoxQRedit = new System.Windows.Forms.CheckBox();
             this.buttonQRSelect = new System.Windows.Forms.Button();
             this.textBoxQRPath = new System.Windows.Forms.TextBox();
@@ -81,6 +78,7 @@ namespace PPTXcreator
             this.textBoxTemplateDuring = new System.Windows.Forms.TextBox();
             this.buttonTemplateBeforeSelect = new System.Windows.Forms.Button();
             this.textBoxTemplateBefore = new System.Windows.Forms.TextBox();
+            this.checkBoxAutoPopulate = new System.Windows.Forms.CheckBox();
             this.buttonJsonServicesSelect = new System.Windows.Forms.Button();
             this.textBoxJsonServices = new System.Windows.Forms.TextBox();
             this.tabControl = new System.Windows.Forms.TabControl();
@@ -106,7 +104,6 @@ namespace PPTXcreator
             this.ContentIdentifier = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabInstellingen = new System.Windows.Forms.TabPage();
-            this.checkBoxAutoPopulate = new System.Windows.Forms.CheckBox();
             labelOrganist = new System.Windows.Forms.Label();
             labelDatumTijdNext = new System.Windows.Forms.Label();
             labelDatumTijdNu = new System.Windows.Forms.Label();
@@ -116,7 +113,6 @@ namespace PPTXcreator
             labelVoorgangerNu = new System.Windows.Forms.Label();
             labelLiturgie = new System.Windows.Forms.Label();
             labelOutputFolder = new System.Windows.Forms.Label();
-            label13 = new System.Windows.Forms.Label();
             labelCollecte3 = new System.Windows.Forms.Label();
             labelCollecte1 = new System.Windows.Forms.Label();
             labelQRPath = new System.Windows.Forms.Label();
@@ -153,30 +149,27 @@ namespace PPTXcreator
             // labelOrganist
             // 
             labelOrganist.AutoSize = true;
-            labelOrganist.Font = new System.Drawing.Font("Arial", 8.830189F);
-            labelOrganist.Location = new System.Drawing.Point(14, 35);
+            labelOrganist.Location = new System.Drawing.Point(14, 32);
             labelOrganist.Name = "labelOrganist";
-            labelOrganist.Size = new System.Drawing.Size(86, 16);
+            labelOrganist.Size = new System.Drawing.Size(79, 17);
             labelOrganist.TabIndex = 12;
             labelOrganist.Text = "Deze dienst:";
             // 
             // labelDatumTijdNext
             // 
             labelDatumTijdNext.AutoSize = true;
-            labelDatumTijdNext.Font = new System.Drawing.Font("Arial", 8.830189F);
-            labelDatumTijdNext.Location = new System.Drawing.Point(14, 63);
+            labelDatumTijdNext.Location = new System.Drawing.Point(14, 62);
             labelDatumTijdNext.Name = "labelDatumTijdNext";
-            labelDatumTijdNext.Size = new System.Drawing.Size(113, 16);
+            labelDatumTijdNext.Size = new System.Drawing.Size(105, 17);
             labelDatumTijdNext.TabIndex = 12;
             labelDatumTijdNext.Text = "Volgende dienst:";
             // 
             // labelDatumTijdNu
             // 
             labelDatumTijdNu.AutoSize = true;
-            labelDatumTijdNu.Font = new System.Drawing.Font("Arial", 8.830189F);
-            labelDatumTijdNu.Location = new System.Drawing.Point(14, 35);
+            labelDatumTijdNu.Location = new System.Drawing.Point(14, 32);
             labelDatumTijdNu.Name = "labelDatumTijdNu";
-            labelDatumTijdNu.Size = new System.Drawing.Size(86, 16);
+            labelDatumTijdNu.Size = new System.Drawing.Size(79, 17);
             labelDatumTijdNu.TabIndex = 1;
             labelDatumTijdNu.Text = "Deze dienst:";
             // 
@@ -184,10 +177,10 @@ namespace PPTXcreator
             // 
             labelVoorgangerUit2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             labelVoorgangerUit2.AutoSize = true;
-            labelVoorgangerUit2.Location = new System.Drawing.Point(356, 63);
+            labelVoorgangerUit2.Location = new System.Drawing.Point(358, 63);
             labelVoorgangerUit2.Margin = new System.Windows.Forms.Padding(0);
             labelVoorgangerUit2.Name = "labelVoorgangerUit2";
-            labelVoorgangerUit2.Size = new System.Drawing.Size(23, 16);
+            labelVoorgangerUit2.Size = new System.Drawing.Size(22, 17);
             labelVoorgangerUit2.TabIndex = 9;
             labelVoorgangerUit2.Text = "uit";
             // 
@@ -195,39 +188,37 @@ namespace PPTXcreator
             // 
             labelVoorgangerUit1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             labelVoorgangerUit1.AutoSize = true;
-            labelVoorgangerUit1.Location = new System.Drawing.Point(356, 35);
+            labelVoorgangerUit1.Location = new System.Drawing.Point(358, 31);
             labelVoorgangerUit1.Margin = new System.Windows.Forms.Padding(0);
             labelVoorgangerUit1.Name = "labelVoorgangerUit1";
-            labelVoorgangerUit1.Size = new System.Drawing.Size(23, 16);
+            labelVoorgangerUit1.Size = new System.Drawing.Size(22, 17);
             labelVoorgangerUit1.TabIndex = 8;
             labelVoorgangerUit1.Text = "uit";
             // 
             // labelVoorgangerNext
             // 
             labelVoorgangerNext.AutoSize = true;
-            labelVoorgangerNext.Font = new System.Drawing.Font("Arial", 8.830189F);
-            labelVoorgangerNext.Location = new System.Drawing.Point(14, 63);
+            labelVoorgangerNext.Location = new System.Drawing.Point(14, 64);
             labelVoorgangerNext.Name = "labelVoorgangerNext";
-            labelVoorgangerNext.Size = new System.Drawing.Size(113, 16);
+            labelVoorgangerNext.Size = new System.Drawing.Size(105, 17);
             labelVoorgangerNext.TabIndex = 1;
             labelVoorgangerNext.Text = "Volgende dienst:";
             // 
             // labelVoorgangerNu
             // 
             labelVoorgangerNu.AutoSize = true;
-            labelVoorgangerNu.Font = new System.Drawing.Font("Arial", 8.830189F);
-            labelVoorgangerNu.Location = new System.Drawing.Point(14, 35);
+            labelVoorgangerNu.Location = new System.Drawing.Point(14, 32);
             labelVoorgangerNu.Name = "labelVoorgangerNu";
-            labelVoorgangerNu.Size = new System.Drawing.Size(86, 16);
+            labelVoorgangerNu.Size = new System.Drawing.Size(79, 17);
             labelVoorgangerNu.TabIndex = 0;
             labelVoorgangerNu.Text = "Deze dienst:";
             // 
             // labelLiturgie
             // 
             labelLiturgie.AutoSize = true;
-            labelLiturgie.Location = new System.Drawing.Point(9, 18);
+            labelLiturgie.Location = new System.Drawing.Point(9, 15);
             labelLiturgie.Name = "labelLiturgie";
-            labelLiturgie.Size = new System.Drawing.Size(471, 32);
+            labelLiturgie.Size = new System.Drawing.Size(438, 34);
             labelLiturgie.TabIndex = 2;
             labelLiturgie.Text = "Vul hier de liturgie in. Lege rijen in de tabel komen niet in de presentaties.\r\nS" +
     "paties voor en na een dubbele punt, komma of streepje zijn niet nodig.";
@@ -235,49 +226,36 @@ namespace PPTXcreator
             // labelOutputFolder
             // 
             labelOutputFolder.AutoSize = true;
-            labelOutputFolder.Font = new System.Drawing.Font("Arial", 8.830189F);
-            labelOutputFolder.Location = new System.Drawing.Point(14, 35);
+            labelOutputFolder.Location = new System.Drawing.Point(14, 32);
             labelOutputFolder.Name = "labelOutputFolder";
-            labelOutputFolder.Size = new System.Drawing.Size(95, 16);
+            labelOutputFolder.Size = new System.Drawing.Size(90, 17);
             labelOutputFolder.TabIndex = 1;
             labelOutputFolder.Text = "Output folder:";
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Font = new System.Drawing.Font("Arial", 8.830189F);
-            label13.Location = new System.Drawing.Point(14, 35);
-            label13.Name = "label13";
-            label13.Size = new System.Drawing.Size(0, 16);
-            label13.TabIndex = 0;
             // 
             // labelCollecte3
             // 
             labelCollecte3.AutoSize = true;
-            labelCollecte3.Font = new System.Drawing.Font("Arial", 8.830189F);
-            labelCollecte3.Location = new System.Drawing.Point(14, 91);
+            labelCollecte3.Location = new System.Drawing.Point(14, 96);
             labelCollecte3.Name = "labelCollecte3";
-            labelCollecte3.Size = new System.Drawing.Size(103, 16);
+            labelCollecte3.Size = new System.Drawing.Size(95, 17);
             labelCollecte3.TabIndex = 1;
             labelCollecte3.Text = "Derde collecte:";
             // 
             // labelCollecte1
             // 
             labelCollecte1.AutoSize = true;
-            labelCollecte1.Font = new System.Drawing.Font("Arial", 8.830189F);
-            labelCollecte1.Location = new System.Drawing.Point(14, 35);
+            labelCollecte1.Location = new System.Drawing.Point(14, 32);
             labelCollecte1.Name = "labelCollecte1";
-            labelCollecte1.Size = new System.Drawing.Size(105, 16);
+            labelCollecte1.Size = new System.Drawing.Size(95, 17);
             labelCollecte1.TabIndex = 0;
             labelCollecte1.Text = "Eerste collecte:";
             // 
             // labelQRPath
             // 
             labelQRPath.AutoSize = true;
-            labelQRPath.Font = new System.Drawing.Font("Arial", 8.830189F);
-            labelQRPath.Location = new System.Drawing.Point(14, 35);
+            labelQRPath.Location = new System.Drawing.Point(14, 32);
             labelQRPath.Name = "labelQRPath";
-            labelQRPath.Size = new System.Drawing.Size(95, 16);
+            labelQRPath.Size = new System.Drawing.Size(86, 17);
             labelQRPath.TabIndex = 1;
             labelQRPath.Text = "Bestandspad:";
             // 
@@ -287,18 +265,18 @@ namespace PPTXcreator
             | System.Windows.Forms.AnchorStyles.Right)));
             groupBoxOrganist.Controls.Add(this.textBoxOrganist);
             groupBoxOrganist.Controls.Add(labelOrganist);
-            groupBoxOrganist.Location = new System.Drawing.Point(6, 234);
+            groupBoxOrganist.Location = new System.Drawing.Point(6, 245);
             groupBoxOrganist.Name = "groupBoxOrganist";
-            groupBoxOrganist.Size = new System.Drawing.Size(527, 69);
+            groupBoxOrganist.Size = new System.Drawing.Size(527, 70);
             groupBoxOrganist.TabIndex = 5;
             groupBoxOrganist.TabStop = false;
             groupBoxOrganist.Text = "Organist";
             // 
             // textBoxOrganist
             // 
-            this.textBoxOrganist.Location = new System.Drawing.Point(132, 32);
+            this.textBoxOrganist.Location = new System.Drawing.Point(133, 29);
             this.textBoxOrganist.Name = "textBoxOrganist";
-            this.textBoxOrganist.Size = new System.Drawing.Size(175, 22);
+            this.textBoxOrganist.Size = new System.Drawing.Size(175, 25);
             this.textBoxOrganist.TabIndex = 14;
             this.textBoxOrganist.Text = "naam";
             // 
@@ -312,7 +290,7 @@ namespace PPTXcreator
             groupBoxDatumTijd.Controls.Add(this.dateTimePickerCurrent);
             groupBoxDatumTijd.Location = new System.Drawing.Point(6, 15);
             groupBoxDatumTijd.Name = "groupBoxDatumTijd";
-            groupBoxDatumTijd.Size = new System.Drawing.Size(527, 97);
+            groupBoxDatumTijd.Size = new System.Drawing.Size(527, 103);
             groupBoxDatumTijd.TabIndex = 4;
             groupBoxDatumTijd.TabStop = false;
             groupBoxDatumTijd.Text = "Datum en tijd";
@@ -321,10 +299,10 @@ namespace PPTXcreator
             // 
             this.dateTimePickerNext.CustomFormat = "yyyy-MM-dd HH:mm";
             this.dateTimePickerNext.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerNext.Location = new System.Drawing.Point(132, 61);
+            this.dateTimePickerNext.Location = new System.Drawing.Point(133, 59);
             this.dateTimePickerNext.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
             this.dateTimePickerNext.Name = "dateTimePickerNext";
-            this.dateTimePickerNext.Size = new System.Drawing.Size(175, 22);
+            this.dateTimePickerNext.Size = new System.Drawing.Size(175, 25);
             this.dateTimePickerNext.TabIndex = 13;
             this.dateTimePickerNext.Value = new System.DateTime(2021, 1, 3, 16, 15, 0, 0);
             this.dateTimePickerNext.ValueChanged += new System.EventHandler(this.DateTimePickerNextChanged);
@@ -333,10 +311,10 @@ namespace PPTXcreator
             // 
             this.dateTimePickerCurrent.CustomFormat = "yyyy-MM-dd HH:mm";
             this.dateTimePickerCurrent.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerCurrent.Location = new System.Drawing.Point(132, 33);
+            this.dateTimePickerCurrent.Location = new System.Drawing.Point(133, 29);
             this.dateTimePickerCurrent.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
-            this.dateTimePickerCurrent.Name = "dateTimePickerNu";
-            this.dateTimePickerCurrent.Size = new System.Drawing.Size(175, 22);
+            this.dateTimePickerCurrent.Name = "dateTimePickerCurrent";
+            this.dateTimePickerCurrent.Size = new System.Drawing.Size(175, 25);
             this.dateTimePickerCurrent.TabIndex = 2;
             this.dateTimePickerCurrent.Value = new System.DateTime(2021, 1, 3, 9, 30, 0, 0);
             this.dateTimePickerCurrent.ValueChanged += new System.EventHandler(this.DateTimePickerCurrentChanged);
@@ -355,10 +333,9 @@ namespace PPTXcreator
             groupBoxVoorgangers.Controls.Add(this.textBoxVoorgangerNuNaam);
             groupBoxVoorgangers.Controls.Add(labelVoorgangerNext);
             groupBoxVoorgangers.Controls.Add(labelVoorgangerNu);
-            groupBoxVoorgangers.Font = new System.Drawing.Font("Arial", 8.830189F);
-            groupBoxVoorgangers.Location = new System.Drawing.Point(6, 124);
+            groupBoxVoorgangers.Location = new System.Drawing.Point(6, 129);
             groupBoxVoorgangers.Name = "groupBoxVoorgangers";
-            groupBoxVoorgangers.Size = new System.Drawing.Size(527, 97);
+            groupBoxVoorgangers.Size = new System.Drawing.Size(527, 105);
             groupBoxVoorgangers.TabIndex = 3;
             groupBoxVoorgangers.TabStop = false;
             groupBoxVoorgangers.Text = "Voorgangers";
@@ -366,18 +343,18 @@ namespace PPTXcreator
             // textBoxVoorgangerNextPlaats
             // 
             this.textBoxVoorgangerNextPlaats.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxVoorgangerNextPlaats.Location = new System.Drawing.Point(382, 60);
+            this.textBoxVoorgangerNextPlaats.Location = new System.Drawing.Point(382, 61);
             this.textBoxVoorgangerNextPlaats.Name = "textBoxVoorgangerNextPlaats";
-            this.textBoxVoorgangerNextPlaats.Size = new System.Drawing.Size(124, 22);
+            this.textBoxVoorgangerNextPlaats.Size = new System.Drawing.Size(124, 25);
             this.textBoxVoorgangerNextPlaats.TabIndex = 11;
             this.textBoxVoorgangerNextPlaats.Text = "plaats";
             // 
             // textBoxVoorgangerNuPlaats
             // 
             this.textBoxVoorgangerNuPlaats.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxVoorgangerNuPlaats.Location = new System.Drawing.Point(382, 32);
+            this.textBoxVoorgangerNuPlaats.Location = new System.Drawing.Point(382, 29);
             this.textBoxVoorgangerNuPlaats.Name = "textBoxVoorgangerNuPlaats";
-            this.textBoxVoorgangerNuPlaats.Size = new System.Drawing.Size(124, 22);
+            this.textBoxVoorgangerNuPlaats.Size = new System.Drawing.Size(124, 25);
             this.textBoxVoorgangerNuPlaats.TabIndex = 10;
             this.textBoxVoorgangerNuPlaats.Text = "plaats";
             // 
@@ -385,9 +362,9 @@ namespace PPTXcreator
             // 
             this.textBoxVoorgangerNextNaam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxVoorgangerNextNaam.Location = new System.Drawing.Point(178, 60);
+            this.textBoxVoorgangerNextNaam.Location = new System.Drawing.Point(180, 61);
             this.textBoxVoorgangerNextNaam.Name = "textBoxVoorgangerNextNaam";
-            this.textBoxVoorgangerNextNaam.Size = new System.Drawing.Size(175, 22);
+            this.textBoxVoorgangerNextNaam.Size = new System.Drawing.Size(175, 25);
             this.textBoxVoorgangerNextNaam.TabIndex = 7;
             this.textBoxVoorgangerNextNaam.Text = "naam";
             // 
@@ -401,9 +378,9 @@ namespace PPTXcreator
             this.textBoxVoorgangerNextTitel.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.textBoxVoorgangerNextTitel.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBoxVoorgangerNextTitel.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.textBoxVoorgangerNextTitel.Location = new System.Drawing.Point(132, 60);
+            this.textBoxVoorgangerNextTitel.Location = new System.Drawing.Point(133, 61);
             this.textBoxVoorgangerNextTitel.Name = "textBoxVoorgangerNextTitel";
-            this.textBoxVoorgangerNextTitel.Size = new System.Drawing.Size(41, 22);
+            this.textBoxVoorgangerNextTitel.Size = new System.Drawing.Size(41, 25);
             this.textBoxVoorgangerNextTitel.TabIndex = 6;
             this.textBoxVoorgangerNextTitel.Text = "titel";
             // 
@@ -417,9 +394,9 @@ namespace PPTXcreator
             this.textBoxVoorgangerNuTitel.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.textBoxVoorgangerNuTitel.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBoxVoorgangerNuTitel.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.textBoxVoorgangerNuTitel.Location = new System.Drawing.Point(132, 32);
+            this.textBoxVoorgangerNuTitel.Location = new System.Drawing.Point(133, 29);
             this.textBoxVoorgangerNuTitel.Name = "textBoxVoorgangerNuTitel";
-            this.textBoxVoorgangerNuTitel.Size = new System.Drawing.Size(41, 22);
+            this.textBoxVoorgangerNuTitel.Size = new System.Drawing.Size(41, 25);
             this.textBoxVoorgangerNuTitel.TabIndex = 5;
             this.textBoxVoorgangerNuTitel.Text = "titel";
             // 
@@ -427,9 +404,9 @@ namespace PPTXcreator
             // 
             this.textBoxVoorgangerNuNaam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxVoorgangerNuNaam.Location = new System.Drawing.Point(178, 32);
+            this.textBoxVoorgangerNuNaam.Location = new System.Drawing.Point(180, 29);
             this.textBoxVoorgangerNuNaam.Name = "textBoxVoorgangerNuNaam";
-            this.textBoxVoorgangerNuNaam.Size = new System.Drawing.Size(175, 22);
+            this.textBoxVoorgangerNuNaam.Size = new System.Drawing.Size(175, 25);
             this.textBoxVoorgangerNuNaam.TabIndex = 4;
             this.textBoxVoorgangerNuNaam.Text = "naam";
             // 
@@ -437,58 +414,45 @@ namespace PPTXcreator
             // 
             groupBoxQR.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            groupBoxQR.Controls.Add(this.checkBoxQRsave);
             groupBoxQR.Controls.Add(this.checkBoxQRedit);
             groupBoxQR.Controls.Add(this.buttonQRSelect);
             groupBoxQR.Controls.Add(this.textBoxQRPath);
             groupBoxQR.Controls.Add(labelQRPath);
-            groupBoxQR.Location = new System.Drawing.Point(6, 159);
+            groupBoxQR.Location = new System.Drawing.Point(6, 180);
             groupBoxQR.Name = "groupBoxQR";
-            groupBoxQR.Size = new System.Drawing.Size(527, 126);
+            groupBoxQR.Size = new System.Drawing.Size(527, 104);
             groupBoxQR.TabIndex = 5;
             groupBoxQR.TabStop = false;
             groupBoxQR.Text = "QR-code";
-            // 
-            // checkBoxQRsave
-            // 
-            this.checkBoxQRsave.AutoSize = true;
-            this.checkBoxQRsave.Enabled = false;
-            this.checkBoxQRsave.Location = new System.Drawing.Point(17, 90);
-            this.checkBoxQRsave.Name = "checkBoxQRsave";
-            this.checkBoxQRsave.Size = new System.Drawing.Size(195, 20);
-            this.checkBoxQRsave.TabIndex = 17;
-            this.checkBoxQRsave.Text = "Opslaan in de outputfolder";
-            this.checkBoxQRsave.UseVisualStyleBackColor = true;
             // 
             // checkBoxQRedit
             // 
             this.checkBoxQRedit.AutoSize = true;
             this.checkBoxQRedit.Enabled = false;
-            this.checkBoxQRedit.Location = new System.Drawing.Point(17, 64);
+            this.checkBoxQRedit.Location = new System.Drawing.Point(17, 68);
             this.checkBoxQRedit.Name = "checkBoxQRedit";
-            this.checkBoxQRedit.Size = new System.Drawing.Size(249, 20);
+            this.checkBoxQRedit.Size = new System.Drawing.Size(321, 21);
             this.checkBoxQRedit.TabIndex = 16;
-            this.checkBoxQRedit.Text = "Bijsnijden en zwart-wit maken (WIP)";
+            this.checkBoxQRedit.Text = "Bijsnijden en zwart-wit maken (komt in versie 1.1.0)";
             this.checkBoxQRedit.UseVisualStyleBackColor = true;
             // 
             // buttonQRSelect
             // 
-            this.buttonQRSelect.Location = new System.Drawing.Point(479, 31);
+            this.buttonQRSelect.Location = new System.Drawing.Point(479, 27);
             this.buttonQRSelect.Margin = new System.Windows.Forms.Padding(0);
             this.buttonQRSelect.Name = "buttonQRSelect";
-            this.buttonQRSelect.Size = new System.Drawing.Size(29, 24);
+            this.buttonQRSelect.Size = new System.Drawing.Size(29, 27);
             this.buttonQRSelect.TabIndex = 15;
             this.buttonQRSelect.Text = "...";
-            this.buttonQRSelect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonQRSelect.UseVisualStyleBackColor = true;
             this.buttonQRSelect.Click += new System.EventHandler(this.ButtonSelectQR);
             // 
             // textBoxQRPath
             // 
-            this.textBoxQRPath.Location = new System.Drawing.Point(132, 32);
+            this.textBoxQRPath.Location = new System.Drawing.Point(132, 28);
             this.textBoxQRPath.Name = "textBoxQRPath";
             this.textBoxQRPath.ReadOnly = true;
-            this.textBoxQRPath.Size = new System.Drawing.Size(344, 22);
+            this.textBoxQRPath.Size = new System.Drawing.Size(344, 25);
             this.textBoxQRPath.TabIndex = 14;
             // 
             // groupBoxCollecte
@@ -501,10 +465,9 @@ namespace PPTXcreator
             groupBoxCollecte.Controls.Add(this.textBoxCollecte1);
             groupBoxCollecte.Controls.Add(labelCollecte3);
             groupBoxCollecte.Controls.Add(labelCollecte1);
-            groupBoxCollecte.Font = new System.Drawing.Font("Arial", 8.830189F);
             groupBoxCollecte.Location = new System.Drawing.Point(6, 15);
             groupBoxCollecte.Name = "groupBoxCollecte";
-            groupBoxCollecte.Size = new System.Drawing.Size(527, 126);
+            groupBoxCollecte.Size = new System.Drawing.Size(527, 139);
             groupBoxCollecte.TabIndex = 4;
             groupBoxCollecte.TabStop = false;
             groupBoxCollecte.Text = "Collectedoelen";
@@ -513,18 +476,17 @@ namespace PPTXcreator
             // 
             this.textBoxCollecte2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxCollecte2.Location = new System.Drawing.Point(132, 60);
+            this.textBoxCollecte2.Location = new System.Drawing.Point(132, 61);
             this.textBoxCollecte2.Name = "textBoxCollecte2";
-            this.textBoxCollecte2.Size = new System.Drawing.Size(185, 22);
+            this.textBoxCollecte2.Size = new System.Drawing.Size(185, 25);
             this.textBoxCollecte2.TabIndex = 9;
             // 
             // labelCollecte2
             // 
             labelCollecte2.AutoSize = true;
-            labelCollecte2.Font = new System.Drawing.Font("Arial", 8.830189F);
-            labelCollecte2.Location = new System.Drawing.Point(14, 63);
+            labelCollecte2.Location = new System.Drawing.Point(14, 64);
             labelCollecte2.Name = "labelCollecte2";
-            labelCollecte2.Size = new System.Drawing.Size(113, 16);
+            labelCollecte2.Size = new System.Drawing.Size(103, 17);
             labelCollecte2.TabIndex = 8;
             labelCollecte2.Text = "Tweede collecte:";
             // 
@@ -536,9 +498,9 @@ namespace PPTXcreator
             "Gebouwonderhoud"});
             this.textBoxCollecte3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
             this.textBoxCollecte3.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBoxCollecte3.Location = new System.Drawing.Point(132, 88);
+            this.textBoxCollecte3.Location = new System.Drawing.Point(132, 93);
             this.textBoxCollecte3.Name = "textBoxCollecte3";
-            this.textBoxCollecte3.Size = new System.Drawing.Size(185, 22);
+            this.textBoxCollecte3.Size = new System.Drawing.Size(185, 25);
             this.textBoxCollecte3.TabIndex = 7;
             // 
             // textBoxCollecte1
@@ -549,9 +511,9 @@ namespace PPTXcreator
             "Diaconie"});
             this.textBoxCollecte1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
             this.textBoxCollecte1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBoxCollecte1.Location = new System.Drawing.Point(132, 32);
+            this.textBoxCollecte1.Location = new System.Drawing.Point(132, 29);
             this.textBoxCollecte1.Name = "textBoxCollecte1";
-            this.textBoxCollecte1.Size = new System.Drawing.Size(185, 22);
+            this.textBoxCollecte1.Size = new System.Drawing.Size(185, 25);
             this.textBoxCollecte1.TabIndex = 4;
             // 
             // groupBoxOutput
@@ -559,33 +521,30 @@ namespace PPTXcreator
             groupBoxOutput.Controls.Add(this.buttonOutputFolderSelect);
             groupBoxOutput.Controls.Add(this.textBoxOutputFolder);
             groupBoxOutput.Controls.Add(labelOutputFolder);
-            groupBoxOutput.Controls.Add(label13);
-            groupBoxOutput.Font = new System.Drawing.Font("Arial", 8.830189F);
             groupBoxOutput.Location = new System.Drawing.Point(6, 15);
             groupBoxOutput.Name = "groupBoxOutput";
-            groupBoxOutput.Size = new System.Drawing.Size(527, 69);
+            groupBoxOutput.Size = new System.Drawing.Size(527, 68);
             groupBoxOutput.TabIndex = 4;
             groupBoxOutput.TabStop = false;
             groupBoxOutput.Text = "Output";
             // 
             // buttonOutputFolderSelect
             // 
-            this.buttonOutputFolderSelect.Location = new System.Drawing.Point(479, 31);
+            this.buttonOutputFolderSelect.Location = new System.Drawing.Point(479, 27);
             this.buttonOutputFolderSelect.Margin = new System.Windows.Forms.Padding(0);
             this.buttonOutputFolderSelect.Name = "buttonOutputFolderSelect";
-            this.buttonOutputFolderSelect.Size = new System.Drawing.Size(29, 24);
+            this.buttonOutputFolderSelect.Size = new System.Drawing.Size(29, 27);
             this.buttonOutputFolderSelect.TabIndex = 5;
             this.buttonOutputFolderSelect.Text = "...";
-            this.buttonOutputFolderSelect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonOutputFolderSelect.UseVisualStyleBackColor = true;
             this.buttonOutputFolderSelect.Click += new System.EventHandler(this.ButtonSelectOutputFolder);
             // 
             // textBoxOutputFolder
             // 
-            this.textBoxOutputFolder.Location = new System.Drawing.Point(132, 32);
+            this.textBoxOutputFolder.Location = new System.Drawing.Point(132, 28);
             this.textBoxOutputFolder.Name = "textBoxOutputFolder";
             this.textBoxOutputFolder.ReadOnly = true;
-            this.textBoxOutputFolder.Size = new System.Drawing.Size(344, 22);
+            this.textBoxOutputFolder.Size = new System.Drawing.Size(344, 25);
             this.textBoxOutputFolder.TabIndex = 4;
             // 
             // groupBoxTemplates
@@ -599,40 +558,38 @@ namespace PPTXcreator
             groupBoxTemplates.Controls.Add(this.buttonTemplateBeforeSelect);
             groupBoxTemplates.Controls.Add(this.textBoxTemplateBefore);
             groupBoxTemplates.Controls.Add(labelTemplateBefore);
-            groupBoxTemplates.Location = new System.Drawing.Point(6, 96);
+            groupBoxTemplates.Location = new System.Drawing.Point(6, 102);
             groupBoxTemplates.Name = "groupBoxTemplates";
-            groupBoxTemplates.Size = new System.Drawing.Size(527, 127);
+            groupBoxTemplates.Size = new System.Drawing.Size(527, 133);
             groupBoxTemplates.TabIndex = 5;
             groupBoxTemplates.TabStop = false;
             groupBoxTemplates.Text = "Templates";
             // 
             // buttonTemplateAfterSelect
             // 
-            this.buttonTemplateAfterSelect.Location = new System.Drawing.Point(479, 87);
+            this.buttonTemplateAfterSelect.Location = new System.Drawing.Point(479, 91);
             this.buttonTemplateAfterSelect.Margin = new System.Windows.Forms.Padding(0);
             this.buttonTemplateAfterSelect.Name = "buttonTemplateAfterSelect";
-            this.buttonTemplateAfterSelect.Size = new System.Drawing.Size(29, 24);
+            this.buttonTemplateAfterSelect.Size = new System.Drawing.Size(29, 27);
             this.buttonTemplateAfterSelect.TabIndex = 24;
             this.buttonTemplateAfterSelect.Text = "...";
-            this.buttonTemplateAfterSelect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonTemplateAfterSelect.UseVisualStyleBackColor = true;
             this.buttonTemplateAfterSelect.Click += new System.EventHandler(this.ButtonSelectTemplateAfter);
             // 
             // textBoxTemplateAfter
             // 
-            this.textBoxTemplateAfter.Location = new System.Drawing.Point(132, 88);
+            this.textBoxTemplateAfter.Location = new System.Drawing.Point(132, 92);
             this.textBoxTemplateAfter.Name = "textBoxTemplateAfter";
             this.textBoxTemplateAfter.ReadOnly = true;
-            this.textBoxTemplateAfter.Size = new System.Drawing.Size(344, 22);
+            this.textBoxTemplateAfter.Size = new System.Drawing.Size(344, 25);
             this.textBoxTemplateAfter.TabIndex = 23;
             // 
             // labelTemplateAfter
             // 
             labelTemplateAfter.AutoSize = true;
-            labelTemplateAfter.Font = new System.Drawing.Font("Arial", 8.830189F);
-            labelTemplateAfter.Location = new System.Drawing.Point(14, 91);
+            labelTemplateAfter.Location = new System.Drawing.Point(14, 95);
             labelTemplateAfter.Name = "labelTemplateAfter";
-            labelTemplateAfter.Size = new System.Drawing.Size(71, 16);
+            labelTemplateAfter.Size = new System.Drawing.Size(67, 17);
             labelTemplateAfter.TabIndex = 22;
             labelTemplateAfter.Text = "Na dienst:";
             // 
@@ -641,10 +598,9 @@ namespace PPTXcreator
             this.buttonTemplateDuringSelect.Location = new System.Drawing.Point(479, 59);
             this.buttonTemplateDuringSelect.Margin = new System.Windows.Forms.Padding(0);
             this.buttonTemplateDuringSelect.Name = "buttonTemplateDuringSelect";
-            this.buttonTemplateDuringSelect.Size = new System.Drawing.Size(29, 24);
+            this.buttonTemplateDuringSelect.Size = new System.Drawing.Size(29, 27);
             this.buttonTemplateDuringSelect.TabIndex = 21;
             this.buttonTemplateDuringSelect.Text = "...";
-            this.buttonTemplateDuringSelect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonTemplateDuringSelect.UseVisualStyleBackColor = true;
             this.buttonTemplateDuringSelect.Click += new System.EventHandler(this.ButtonSelectTemplateDuring);
             // 
@@ -653,46 +609,43 @@ namespace PPTXcreator
             this.textBoxTemplateDuring.Location = new System.Drawing.Point(132, 60);
             this.textBoxTemplateDuring.Name = "textBoxTemplateDuring";
             this.textBoxTemplateDuring.ReadOnly = true;
-            this.textBoxTemplateDuring.Size = new System.Drawing.Size(344, 22);
+            this.textBoxTemplateDuring.Size = new System.Drawing.Size(344, 25);
             this.textBoxTemplateDuring.TabIndex = 20;
             // 
             // labelTemplateDuring
             // 
             labelTemplateDuring.AutoSize = true;
-            labelTemplateDuring.Font = new System.Drawing.Font("Arial", 8.830189F);
             labelTemplateDuring.Location = new System.Drawing.Point(14, 63);
             labelTemplateDuring.Name = "labelTemplateDuring";
-            labelTemplateDuring.Size = new System.Drawing.Size(99, 16);
+            labelTemplateDuring.Size = new System.Drawing.Size(91, 17);
             labelTemplateDuring.TabIndex = 19;
             labelTemplateDuring.Text = "Tijdens dienst:";
             // 
             // buttonTemplateBeforeSelect
             // 
-            this.buttonTemplateBeforeSelect.Location = new System.Drawing.Point(479, 31);
+            this.buttonTemplateBeforeSelect.Location = new System.Drawing.Point(479, 27);
             this.buttonTemplateBeforeSelect.Margin = new System.Windows.Forms.Padding(0);
             this.buttonTemplateBeforeSelect.Name = "buttonTemplateBeforeSelect";
-            this.buttonTemplateBeforeSelect.Size = new System.Drawing.Size(29, 24);
+            this.buttonTemplateBeforeSelect.Size = new System.Drawing.Size(29, 27);
             this.buttonTemplateBeforeSelect.TabIndex = 18;
             this.buttonTemplateBeforeSelect.Text = "...";
-            this.buttonTemplateBeforeSelect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonTemplateBeforeSelect.UseVisualStyleBackColor = true;
             this.buttonTemplateBeforeSelect.Click += new System.EventHandler(this.ButtonSelectTemplateBefore);
             // 
             // textBoxTemplateBefore
             // 
-            this.textBoxTemplateBefore.Location = new System.Drawing.Point(132, 32);
+            this.textBoxTemplateBefore.Location = new System.Drawing.Point(132, 28);
             this.textBoxTemplateBefore.Name = "textBoxTemplateBefore";
             this.textBoxTemplateBefore.ReadOnly = true;
-            this.textBoxTemplateBefore.Size = new System.Drawing.Size(344, 22);
+            this.textBoxTemplateBefore.Size = new System.Drawing.Size(344, 25);
             this.textBoxTemplateBefore.TabIndex = 17;
             // 
             // labelTemplateBefore
             // 
             labelTemplateBefore.AutoSize = true;
-            labelTemplateBefore.Font = new System.Drawing.Font("Arial", 8.830189F);
-            labelTemplateBefore.Location = new System.Drawing.Point(14, 35);
+            labelTemplateBefore.Location = new System.Drawing.Point(14, 32);
             labelTemplateBefore.Name = "labelTemplateBefore";
-            labelTemplateBefore.Size = new System.Drawing.Size(83, 16);
+            labelTemplateBefore.Size = new System.Drawing.Size(78, 17);
             labelTemplateBefore.TabIndex = 16;
             labelTemplateBefore.Text = "Voor dienst:";
             // 
@@ -702,50 +655,61 @@ namespace PPTXcreator
             groupBoxAutoPopulate.Controls.Add(this.buttonJsonServicesSelect);
             groupBoxAutoPopulate.Controls.Add(this.textBoxJsonServices);
             groupBoxAutoPopulate.Controls.Add(labelJsonServices);
-            groupBoxAutoPopulate.Location = new System.Drawing.Point(6, 237);
+            groupBoxAutoPopulate.Location = new System.Drawing.Point(6, 257);
             groupBoxAutoPopulate.Name = "groupBoxAutoPopulate";
-            groupBoxAutoPopulate.Size = new System.Drawing.Size(527, 99);
+            groupBoxAutoPopulate.Size = new System.Drawing.Size(527, 102);
             groupBoxAutoPopulate.TabIndex = 6;
             groupBoxAutoPopulate.TabStop = false;
             groupBoxAutoPopulate.Text = "Automatisch invullen";
             // 
+            // checkBoxAutoPopulate
+            // 
+            this.checkBoxAutoPopulate.AutoSize = true;
+            this.checkBoxAutoPopulate.Checked = true;
+            this.checkBoxAutoPopulate.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxAutoPopulate.Location = new System.Drawing.Point(17, 65);
+            this.checkBoxAutoPopulate.Name = "checkBoxAutoPopulate";
+            this.checkBoxAutoPopulate.Size = new System.Drawing.Size(313, 21);
+            this.checkBoxAutoPopulate.TabIndex = 22;
+            this.checkBoxAutoPopulate.Text = "Vul velden automatisch in op basis van de datum";
+            this.checkBoxAutoPopulate.UseVisualStyleBackColor = true;
+            this.checkBoxAutoPopulate.CheckedChanged += new System.EventHandler(this.CheckBoxAutoPopulateChanged);
+            // 
             // buttonJsonServicesSelect
             // 
-            this.buttonJsonServicesSelect.Location = new System.Drawing.Point(479, 31);
+            this.buttonJsonServicesSelect.Location = new System.Drawing.Point(479, 27);
             this.buttonJsonServicesSelect.Margin = new System.Windows.Forms.Padding(0);
             this.buttonJsonServicesSelect.Name = "buttonJsonServicesSelect";
-            this.buttonJsonServicesSelect.Size = new System.Drawing.Size(29, 24);
+            this.buttonJsonServicesSelect.Size = new System.Drawing.Size(29, 27);
             this.buttonJsonServicesSelect.TabIndex = 21;
             this.buttonJsonServicesSelect.Text = "...";
-            this.buttonJsonServicesSelect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonJsonServicesSelect.UseVisualStyleBackColor = true;
             this.buttonJsonServicesSelect.Click += new System.EventHandler(this.ButtonSelectJsonServices);
             // 
             // textBoxJsonServices
             // 
-            this.textBoxJsonServices.Location = new System.Drawing.Point(132, 32);
+            this.textBoxJsonServices.Location = new System.Drawing.Point(132, 28);
             this.textBoxJsonServices.Name = "textBoxJsonServices";
             this.textBoxJsonServices.ReadOnly = true;
-            this.textBoxJsonServices.Size = new System.Drawing.Size(344, 22);
+            this.textBoxJsonServices.Size = new System.Drawing.Size(344, 25);
             this.textBoxJsonServices.TabIndex = 20;
             // 
             // labelJsonServices
             // 
             labelJsonServices.AutoSize = true;
-            labelJsonServices.Font = new System.Drawing.Font("Arial", 8.830189F);
-            labelJsonServices.Location = new System.Drawing.Point(14, 35);
+            labelJsonServices.Location = new System.Drawing.Point(14, 32);
             labelJsonServices.Name = "labelJsonServices";
-            labelJsonServices.Size = new System.Drawing.Size(102, 16);
+            labelJsonServices.Size = new System.Drawing.Size(94, 17);
             labelJsonServices.TabIndex = 19;
             labelJsonServices.Text = "JSON bestand:";
             // 
             // labelThema
             // 
+            labelThema.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             labelThema.AutoSize = true;
-            labelThema.Font = new System.Drawing.Font("Arial", 8.830189F);
-            labelThema.Location = new System.Drawing.Point(9, 283);
+            labelThema.Location = new System.Drawing.Point(9, 290);
             labelThema.Name = "labelThema";
-            labelThema.Size = new System.Drawing.Size(215, 16);
+            labelThema.Size = new System.Drawing.Size(197, 17);
             labelThema.TabIndex = 17;
             labelThema.Text = "Thema van de preek (optioneel):";
             // 
@@ -758,12 +722,11 @@ namespace PPTXcreator
             this.tabControl.Controls.Add(this.tabCollecte);
             this.tabControl.Controls.Add(this.tabLiturgie);
             this.tabControl.Controls.Add(this.tabInstellingen);
-            this.tabControl.Font = new System.Drawing.Font("Arial", 8.830189F);
-            this.tabControl.Location = new System.Drawing.Point(4, 4);
+            this.tabControl.Location = new System.Drawing.Point(4, 5);
             this.tabControl.Name = "tabControl";
             this.tabControl.Padding = new System.Drawing.Point(8, 3);
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(547, 386);
+            this.tabControl.Size = new System.Drawing.Size(547, 398);
             this.tabControl.TabIndex = 0;
             // 
             // tabGeneral
@@ -774,10 +737,10 @@ namespace PPTXcreator
             this.tabGeneral.Controls.Add(groupBoxOrganist);
             this.tabGeneral.Controls.Add(groupBoxDatumTijd);
             this.tabGeneral.Controls.Add(groupBoxVoorgangers);
-            this.tabGeneral.Location = new System.Drawing.Point(4, 25);
+            this.tabGeneral.Location = new System.Drawing.Point(4, 26);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(539, 357);
+            this.tabGeneral.Size = new System.Drawing.Size(539, 368);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "Algemeen";
             this.tabGeneral.UseVisualStyleBackColor = true;
@@ -785,7 +748,7 @@ namespace PPTXcreator
             // buttonSettingsGeneral
             // 
             this.buttonSettingsGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonSettingsGeneral.Location = new System.Drawing.Point(6, 321);
+            this.buttonSettingsGeneral.Location = new System.Drawing.Point(6, 332);
             this.buttonSettingsGeneral.Name = "buttonSettingsGeneral";
             this.buttonSettingsGeneral.Size = new System.Drawing.Size(100, 30);
             this.buttonSettingsGeneral.TabIndex = 8;
@@ -797,7 +760,7 @@ namespace PPTXcreator
             // 
             this.buttonPreviousGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonPreviousGeneral.Enabled = false;
-            this.buttonPreviousGeneral.Location = new System.Drawing.Point(347, 321);
+            this.buttonPreviousGeneral.Location = new System.Drawing.Point(347, 332);
             this.buttonPreviousGeneral.Name = "buttonPreviousGeneral";
             this.buttonPreviousGeneral.Size = new System.Drawing.Size(90, 30);
             this.buttonPreviousGeneral.TabIndex = 7;
@@ -808,7 +771,7 @@ namespace PPTXcreator
             // buttonNextGeneral
             // 
             this.buttonNextGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonNextGeneral.Location = new System.Drawing.Point(443, 321);
+            this.buttonNextGeneral.Location = new System.Drawing.Point(443, 332);
             this.buttonNextGeneral.Name = "buttonNextGeneral";
             this.buttonNextGeneral.Size = new System.Drawing.Size(90, 30);
             this.buttonNextGeneral.TabIndex = 6;
@@ -823,10 +786,10 @@ namespace PPTXcreator
             this.tabCollecte.Controls.Add(this.buttonNextCollection);
             this.tabCollecte.Controls.Add(groupBoxQR);
             this.tabCollecte.Controls.Add(groupBoxCollecte);
-            this.tabCollecte.Location = new System.Drawing.Point(4, 25);
+            this.tabCollecte.Location = new System.Drawing.Point(4, 26);
             this.tabCollecte.Name = "tabCollecte";
             this.tabCollecte.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCollecte.Size = new System.Drawing.Size(539, 357);
+            this.tabCollecte.Size = new System.Drawing.Size(539, 368);
             this.tabCollecte.TabIndex = 3;
             this.tabCollecte.Text = "Collecte";
             this.tabCollecte.UseVisualStyleBackColor = true;
@@ -834,7 +797,7 @@ namespace PPTXcreator
             // buttonSettingsCollection
             // 
             this.buttonSettingsCollection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonSettingsCollection.Location = new System.Drawing.Point(6, 321);
+            this.buttonSettingsCollection.Location = new System.Drawing.Point(6, 332);
             this.buttonSettingsCollection.Name = "buttonSettingsCollection";
             this.buttonSettingsCollection.Size = new System.Drawing.Size(100, 30);
             this.buttonSettingsCollection.TabIndex = 11;
@@ -845,7 +808,7 @@ namespace PPTXcreator
             // buttonPreviousCollection
             // 
             this.buttonPreviousCollection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonPreviousCollection.Location = new System.Drawing.Point(347, 321);
+            this.buttonPreviousCollection.Location = new System.Drawing.Point(347, 332);
             this.buttonPreviousCollection.Name = "buttonPreviousCollection";
             this.buttonPreviousCollection.Size = new System.Drawing.Size(90, 30);
             this.buttonPreviousCollection.TabIndex = 10;
@@ -856,7 +819,7 @@ namespace PPTXcreator
             // buttonNextCollection
             // 
             this.buttonNextCollection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonNextCollection.Location = new System.Drawing.Point(443, 321);
+            this.buttonNextCollection.Location = new System.Drawing.Point(443, 332);
             this.buttonNextCollection.Name = "buttonNextCollection";
             this.buttonNextCollection.Size = new System.Drawing.Size(90, 30);
             this.buttonNextCollection.TabIndex = 9;
@@ -877,21 +840,21 @@ namespace PPTXcreator
             this.tabLiturgie.Controls.Add(this.buttonFinish);
             this.tabLiturgie.Controls.Add(this.dataGridView);
             this.tabLiturgie.Controls.Add(labelLiturgie);
-            this.tabLiturgie.Location = new System.Drawing.Point(4, 25);
+            this.tabLiturgie.Location = new System.Drawing.Point(4, 26);
             this.tabLiturgie.Name = "tabLiturgie";
             this.tabLiturgie.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLiturgie.Size = new System.Drawing.Size(539, 357);
+            this.tabLiturgie.Size = new System.Drawing.Size(539, 368);
             this.tabLiturgie.TabIndex = 1;
             this.tabLiturgie.Text = "Liturgie";
             this.tabLiturgie.UseVisualStyleBackColor = true;
             // 
             // textBoxThema
             // 
-            this.textBoxThema.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxThema.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxThema.Location = new System.Drawing.Point(230, 280);
+            this.textBoxThema.Location = new System.Drawing.Point(230, 286);
             this.textBoxThema.Name = "textBoxThema";
-            this.textBoxThema.Size = new System.Drawing.Size(185, 22);
+            this.textBoxThema.Size = new System.Drawing.Size(185, 25);
             this.textBoxThema.TabIndex = 18;
             // 
             // buttonRowMoveDown
@@ -899,7 +862,7 @@ namespace PPTXcreator
             this.buttonRowMoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRowMoveDown.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_keyboard_arrow_down_black_24dp;
             this.buttonRowMoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowMoveDown.Location = new System.Drawing.Point(503, 173);
+            this.buttonRowMoveDown.Location = new System.Drawing.Point(503, 172);
             this.buttonRowMoveDown.Name = "buttonRowMoveDown";
             this.buttonRowMoveDown.Size = new System.Drawing.Size(30, 30);
             this.buttonRowMoveDown.TabIndex = 16;
@@ -911,7 +874,7 @@ namespace PPTXcreator
             this.buttonRowMoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRowMoveUp.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_keyboard_arrow_up_black_24dp;
             this.buttonRowMoveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowMoveUp.Location = new System.Drawing.Point(503, 137);
+            this.buttonRowMoveUp.Location = new System.Drawing.Point(503, 136);
             this.buttonRowMoveUp.Name = "buttonRowMoveUp";
             this.buttonRowMoveUp.Size = new System.Drawing.Size(30, 30);
             this.buttonRowMoveUp.TabIndex = 15;
@@ -923,7 +886,7 @@ namespace PPTXcreator
             this.buttonRowRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRowRemove.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_remove_black_24dp;
             this.buttonRowRemove.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowRemove.Location = new System.Drawing.Point(503, 101);
+            this.buttonRowRemove.Location = new System.Drawing.Point(503, 100);
             this.buttonRowRemove.Name = "buttonRowRemove";
             this.buttonRowRemove.Size = new System.Drawing.Size(30, 30);
             this.buttonRowRemove.TabIndex = 14;
@@ -935,7 +898,7 @@ namespace PPTXcreator
             this.buttonRowAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRowAdd.BackgroundImage = global::PPTXcreator.Properties.Resources.baseline_add_black_24dp;
             this.buttonRowAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRowAdd.Location = new System.Drawing.Point(503, 65);
+            this.buttonRowAdd.Location = new System.Drawing.Point(503, 64);
             this.buttonRowAdd.Name = "buttonRowAdd";
             this.buttonRowAdd.Size = new System.Drawing.Size(30, 30);
             this.buttonRowAdd.TabIndex = 13;
@@ -945,7 +908,7 @@ namespace PPTXcreator
             // buttonSettingsLiturgy
             // 
             this.buttonSettingsLiturgy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonSettingsLiturgy.Location = new System.Drawing.Point(6, 321);
+            this.buttonSettingsLiturgy.Location = new System.Drawing.Point(6, 332);
             this.buttonSettingsLiturgy.Name = "buttonSettingsLiturgy";
             this.buttonSettingsLiturgy.Size = new System.Drawing.Size(100, 30);
             this.buttonSettingsLiturgy.TabIndex = 11;
@@ -956,7 +919,7 @@ namespace PPTXcreator
             // buttonPreviousLiturgy
             // 
             this.buttonPreviousLiturgy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonPreviousLiturgy.Location = new System.Drawing.Point(287, 321);
+            this.buttonPreviousLiturgy.Location = new System.Drawing.Point(287, 332);
             this.buttonPreviousLiturgy.Name = "buttonPreviousLiturgy";
             this.buttonPreviousLiturgy.Size = new System.Drawing.Size(90, 30);
             this.buttonPreviousLiturgy.TabIndex = 10;
@@ -967,7 +930,7 @@ namespace PPTXcreator
             // buttonFinish
             // 
             this.buttonFinish.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonFinish.Location = new System.Drawing.Point(383, 321);
+            this.buttonFinish.Location = new System.Drawing.Point(383, 332);
             this.buttonFinish.Name = "buttonFinish";
             this.buttonFinish.Size = new System.Drawing.Size(150, 30);
             this.buttonFinish.TabIndex = 9;
@@ -981,7 +944,8 @@ namespace PPTXcreator
             this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView.BackgroundColor = System.Drawing.Color.LightGray;
+            this.dataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.dataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -990,15 +954,17 @@ namespace PPTXcreator
             this.ContentName});
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView.GridColor = System.Drawing.SystemColors.ControlLight;
-            this.dataGridView.Location = new System.Drawing.Point(7, 65);
+            this.dataGridView.Location = new System.Drawing.Point(7, 64);
             this.dataGridView.MultiSelect = false;
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersWidth = 25;
-            this.dataGridView.Size = new System.Drawing.Size(490, 206);
+            this.dataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.Size = new System.Drawing.Size(490, 208);
             this.dataGridView.TabIndex = 3;
             // 
             // ContentType
             // 
+            this.ContentType.FillWeight = 71.2743F;
             this.ContentType.HeaderText = "Type";
             this.ContentType.Items.AddRange(new object[] {
             "Psalm",
@@ -1013,16 +979,17 @@ namespace PPTXcreator
             // 
             // ContentIdentifier
             // 
+            this.ContentIdentifier.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ContentIdentifier.FillWeight = 101.0462F;
             this.ContentIdentifier.HeaderText = "Bijbelgedeelte of liednummer met verzen";
             this.ContentIdentifier.MinimumWidth = 6;
             this.ContentIdentifier.Name = "ContentIdentifier";
             this.ContentIdentifier.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ContentIdentifier.ToolTipText = resources.GetString("ContentIdentifier.ToolTipText");
-            this.ContentIdentifier.Width = 160;
             // 
             // ContentName
             // 
             this.ContentName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ContentName.FillWeight = 127.6795F;
             this.ContentName.HeaderText = "Liednaam";
             this.ContentName.MinimumWidth = 6;
             this.ContentName.Name = "ContentName";
@@ -1035,39 +1002,28 @@ namespace PPTXcreator
             this.tabInstellingen.Controls.Add(groupBoxAutoPopulate);
             this.tabInstellingen.Controls.Add(groupBoxTemplates);
             this.tabInstellingen.Controls.Add(groupBoxOutput);
-            this.tabInstellingen.Location = new System.Drawing.Point(4, 25);
+            this.tabInstellingen.Location = new System.Drawing.Point(4, 26);
             this.tabInstellingen.Name = "tabInstellingen";
             this.tabInstellingen.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInstellingen.Size = new System.Drawing.Size(539, 357);
+            this.tabInstellingen.Size = new System.Drawing.Size(539, 368);
             this.tabInstellingen.TabIndex = 2;
             this.tabInstellingen.Text = "Instellingen";
             this.tabInstellingen.UseVisualStyleBackColor = true;
             this.tabInstellingen.Leave += new System.EventHandler(this.FocusLeaveSettingsTab);
             // 
-            // checkBoxAutoPopulate
-            // 
-            this.checkBoxAutoPopulate.AutoSize = true;
-            this.checkBoxAutoPopulate.Location = new System.Drawing.Point(17, 63);
-            this.checkBoxAutoPopulate.Name = "checkBoxAutoPopulate";
-            this.checkBoxAutoPopulate.Size = new System.Drawing.Size(334, 20);
-            this.checkBoxAutoPopulate.TabIndex = 22;
-            this.checkBoxAutoPopulate.Text = "Vul velden automatisch in op basis van de datum";
-            this.checkBoxAutoPopulate.UseVisualStyleBackColor = true;
-            this.checkBoxAutoPopulate.CheckedChanged += new System.EventHandler(this.CheckBoxAutoPopulateChanged);
-            // 
             // Window
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.ClientSize = new System.Drawing.Size(554, 394);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(554, 409);
             this.Controls.Add(this.tabControl);
-            this.Font = new System.Drawing.Font("Arial", 8.830189F);
+            this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = global::PPTXcreator.Properties.Resources.Icon;
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(570, 448);
             this.Name = "Window";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Presentatiemaker Sionkerk Houten";
             groupBoxOrganist.ResumeLayout(false);
             groupBoxOrganist.PerformLayout();
@@ -1111,7 +1067,6 @@ namespace PPTXcreator
         private System.Windows.Forms.DateTimePicker dateTimePickerNext;
         private System.Windows.Forms.TextBox textBoxOrganist;
         private System.Windows.Forms.TabPage tabInstellingen;
-        private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.Button buttonNextGeneral;
         private System.Windows.Forms.Button buttonPreviousGeneral;
         private System.Windows.Forms.Button buttonSettingsGeneral;
@@ -1133,10 +1088,6 @@ namespace PPTXcreator
         private System.Windows.Forms.Button buttonRowMoveDown;
         private System.Windows.Forms.Button buttonRowMoveUp;
         private System.Windows.Forms.Button buttonRowRemove;
-        private System.Windows.Forms.CheckBox checkBoxQRsave;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ContentType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ContentIdentifier;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ContentName;
         private System.Windows.Forms.Button buttonTemplateAfterSelect;
         private System.Windows.Forms.TextBox textBoxTemplateAfter;
         private System.Windows.Forms.Button buttonTemplateDuringSelect;
@@ -1148,6 +1099,10 @@ namespace PPTXcreator
         private System.Windows.Forms.TextBox textBoxJsonServices;
         private System.Windows.Forms.TextBox textBoxThema;
         private System.Windows.Forms.CheckBox checkBoxAutoPopulate;
+        private System.Windows.Forms.DataGridView dataGridView;
+        private System.Windows.Forms.DataGridViewComboBoxColumn ContentType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContentIdentifier;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContentName;
     }
 }
 
