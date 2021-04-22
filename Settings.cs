@@ -86,9 +86,6 @@ namespace PPTXcreator
         [JsonPropertyName("QR-afbeeldingen bewerken")]
         public bool EnableEditQR { get; set; } = true;
 
-        [JsonPropertyName("QR opslaan in de outputfolder")]
-        public bool EnableExportQR { get; set; } = true;
-
         public KeywordSettings Keywords { get; set; } = new KeywordSettings();
 
         /// <summary>
@@ -110,7 +107,7 @@ namespace PPTXcreator
             catch (JsonException ex)
             {
                 Dialogs.GenericWarning("Instellingen konden niet worden geladen vanwege ongeldige waarden in " +
-                    $"{SettingsPath}. Standaardwaarden worden gebruikt.\n\nVolledige error: {ex.Message}");
+                    $"'{SettingsPath}'. Standaardwaarden worden gebruikt.\n\nVolledige error: {ex.Message}");
             }
         }
 
@@ -146,7 +143,7 @@ namespace PPTXcreator
             Uri assemblyPath = new Uri(AppContext.BaseDirectory);
             Uri targetPath = new Uri(Path.GetFullPath(path));
             string relativePath = assemblyPath.MakeRelativeUri(targetPath).ToString();
-            relativePath = relativePath.Replace('/', '\\'); // URIs use forward slashes
+            relativePath = Uri.UnescapeDataString(relativePath).Replace("/", "\\"); // URIs use forward slashes
             
             if (relativePath.StartsWith("..")) return path;
             else return relativePath;

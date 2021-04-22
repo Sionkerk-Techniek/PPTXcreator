@@ -72,7 +72,7 @@ namespace PPTXcreator
         /// </summary>
         /// <param name="run">The run to replace</param>
         /// <param name="elements">The ServiceElements to replace the run by</param>
-        public void ReplaceMultilineKeywords(Run run, List<ServiceElement> elements)
+        public void ReplaceMultilineKeywords(Run run, IEnumerable<ServiceElement> elements)
         {
             // Get the paragraph and textbody the run is a child of
             Paragraph par = (Paragraph)run.Parent;
@@ -102,10 +102,13 @@ namespace PPTXcreator
         }
 
         /// <summary>
-        /// Replace '[zingen]' and '[lezen]' text in the document with songs and readings
+        /// Replace placeholder text in the document with songs and readings
         /// </summary>
-        public void ReplaceMultilineKeywords(List<ServiceElement> songs, List<ServiceElement> readings)
+        public void ReplaceMultilineKeywords(IEnumerable<ServiceElement> songs, IEnumerable<ServiceElement> readings)
         {
+            // Prevent removing the paragraph if there are no songs/readings
+            if (readings.Count() == 0) readings = readings.Append(new ServiceElement());
+
             // Loop over all Drawing.Run elements in the document
             foreach (SlidePart slidePart in Slides)
             {
@@ -138,10 +141,22 @@ namespace PPTXcreator
                 {
                     // Get the ImagePart by id, and replace the image
                     ImagePart imagePart = (ImagePart)slidePart.GetPartById(rId);
-                    FileStream imageStream = File.OpenRead(imagePath);
+                    FileStream imageStream;
+                    if (!Program.TryGetFileStream(imagePath, out imageStream)) return;
                     imagePart.FeedData(imageStream);
                     imageStream.Close();
                 }
+            }
+        }
+
+        private void RemoveImage(SlidePart slidePart)
+        {
+            // Loop over all picture objects
+            foreach (Presentation.Picture pic in slidePart.Slide.Descendants<Presentation.Picture>())
+            {
+                // Remove the image if the description matches the ImageDescription setting
+                string description = pic.NonVisualPictureProperties.NonVisualDrawingProperties.Description;
+                if (description == Settings.Instance.ImageDescription) pic.Remove();
             }
         }
 
@@ -184,6 +199,15 @@ namespace PPTXcreator
             Presentation.SlideId targetSlideId = idList.AppendChild(new Presentation.SlideId());
             targetSlideId.Id = maxId + 1;
             targetSlideId.RelationshipId = PresPart.GetIdOfPart(targetSlidePart);
+            
+            // Copy all ImageParts from the source slide to the new one
+            IEnumerable<ImagePart> imageParts = sourceSlidePart.ImageParts;
+            foreach (ImagePart img in imageParts)
+            {
+                string rId = sourceSlidePart.GetIdOfPart(img);
+                ImagePart newImagePart = targetSlidePart.AddImagePart(img.ContentType, rId);
+                newImagePart.FeedData(img.GetStream(FileMode.Open));
+            }
 
             PresPart.Presentation.Save();
             return targetSlidePart;
@@ -195,11 +219,11 @@ namespace PPTXcreator
         /// </summary>
         /// <param name="keywords">A dictionary containing replaceable strings
         /// and what they should be replaced by</param>
-        public void DuplicateAndReplace(Dictionary<string, string> keywords)
+        public void DuplicateAndReplace(Dictionary<string, string> keywords, bool ShowQR)
         {
             SlidePart slidePart = DuplicateFirstSlide();
             ReplaceKeywords(keywords, slidePart.Slide);
-            // ReplaceImage can also be used if necessary
+            if (!ShowQR) RemoveImage(slidePart);
         }
 
         /// <summary>

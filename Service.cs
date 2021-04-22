@@ -45,7 +45,7 @@ namespace PPTXcreator
             }
             catch (Exception ex) when (ex is JsonException || ex is InvalidOperationException)
             {
-                Dialogs.GenericWarning($"{Settings.Instance.PathServicesJson}" +
+                Dialogs.GenericWarning($"'{Settings.Instance.PathServicesJson}'" +
                     $" heeft niet de juiste structuur.\n\nDe volgende foutmelding werd gegeven: {ex.Message}");
                 return (current, next);
             }

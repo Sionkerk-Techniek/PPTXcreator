@@ -24,11 +24,10 @@ namespace PPTXcreator
             textBoxJsonServices.Text = Settings.Instance.PathServicesJson;
             textBoxOutputFolder.Text = Settings.Instance.PathOutputFolder;
             checkBoxQRedit.Checked = Settings.Instance.EnableEditQR;
-            checkBoxQRsave.Checked = Settings.Instance.EnableExportQR;
             checkBoxAutoPopulate.Checked = Settings.Instance.EnableAutoPopulate;
-            
+
             if (Settings.Instance.NextService != DateTime.MinValue)
-                dateTimePickerNu.Value = Settings.Instance.NextService;
+                dateTimePickerCurrent.Value = Settings.Instance.NextService; // automatically triggers the ValueChanged event
         }
 
         /// <summary>
@@ -116,17 +115,17 @@ namespace PPTXcreator
             }
         }
 
-        private void DateTimePickerNu_Leave(object sender, EventArgs e)
+        private void DateTimePickerCurrentChanged(object sender, EventArgs e)
         {
             if (Settings.Instance.EnableAutoPopulate)
             {
-                (Service current, Service next) = Service.GetCurrentAndNext(dateTimePickerNu.Value);
+                (Service current, Service next) = Service.GetCurrentAndNext(dateTimePickerCurrent.Value);
                 SetFormDataCurrent(current);
                 SetFormDataNext(next);
             }
         }
 
-        private void DateTimePickerNext_Leave(object sender, EventArgs e)
+        private void DateTimePickerNextChanged(object sender, EventArgs e)
         {
             if (Settings.Instance.EnableAutoPopulate)
             {
@@ -165,10 +164,10 @@ namespace PPTXcreator
             KeywordSettings tags = Settings.Instance.Keywords;
             Dictionary<string, string> keywords = new Dictionary<string, string>
             {
-                { tags.ServiceTime, GetTime(dateTimePickerNu) },
+                { tags.ServiceTime, GetTime(dateTimePickerCurrent) },
                 { tags.ServiceNextTime, GetTime(dateTimePickerNext) },
                 { tags.ServiceNextDate, GetDateLong(dateTimePickerNext) },
-                { tags.Pastor, $"{textBoxVoorgangerNuTitel.Text} {textBoxVoorgangerNuNaam.Text}" },
+                { tags.Pastor, $"{TitleCase(textBoxVoorgangerNuTitel.Text)} {textBoxVoorgangerNuNaam.Text}" },
                 { tags.PastorPlace, textBoxVoorgangerNuPlaats.Text },
                 { tags.PastorNext, $"{textBoxVoorgangerNextTitel.Text} {textBoxVoorgangerNextNaam.Text}" },
                 { tags.PastorNextPlace, textBoxVoorgangerNextPlaats.Text },
@@ -180,6 +179,12 @@ namespace PPTXcreator
             };
 
             return keywords;
+        }
+
+        private static string TitleCase(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return input;
+            return char.ToUpper(input[0]) + input.Substring(1);
         }
 
         private static string GetTime(DateTimePicker dateTimePicker)
@@ -293,6 +298,29 @@ namespace PPTXcreator
             Settings.Save();
         }
 
+        private void CheckBoxAutoPopulateChanged(object sender, EventArgs e)
+        {
+            Settings.Instance.EnableAutoPopulate = ((CheckBox)sender).Checked;
+        }
+
+        private List<ServiceElement> GetServiceElements()
+        {
+            List<ServiceElement> elements = new List<ServiceElement>();
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                ServiceElement newElement = new ServiceElement(row);
+                if (elements.Count > 0)
+                {
+                    // If the previous element was a song and this one is a reading, show a QR on the last one
+                    if (elements.Last().IsReading && newElement.IsSong) newElement.ShowQR = true;
+                }
+                elements.Add(newElement);
+            }
+            elements.RemoveAt(elements.Count - 1); // Last row in the dataframe is a placeholder
+
+            return elements;
+        }
+
         /// <summary>
         /// Check if the values are not the default values, and ask the user if they want to continue
         /// if there are more than one default values present
@@ -351,28 +379,28 @@ namespace PPTXcreator
             if (!CheckValidInputs()) return;
             if (!Directory.Exists(Settings.Instance.PathOutputFolder))
             {
-                Dialogs.GenericWarning("De outputfolder bestaat niet, selecteer een bestaande folder in de instellingen");
+                Dialogs.GenericWarning("De outputfolder bestaat niet, " +
+                    "selecteer een bestaande folder in de instellingen");
                 return;
             }
 
             Dictionary<string, string> keywords = GetFormKeywords();
-            List<ServiceElement> elements = new List<ServiceElement>();
-            foreach (DataGridViewRow row in dataGridView.Rows)
-            {
-                elements.Add(new ServiceElement(row));
-            }
+            List<ServiceElement> elements = GetServiceElements();
+            string filenamepart = GetFilenamePart(dateTimePickerCurrent);
 
-            PowerPoint beforeService = CreatePowerpoint(Settings.Instance.PathTemplateBefore, Settings.Instance.PathOutputFolder + "/outputbefore.pptx");
+            PowerPoint beforeService = CreatePowerpoint(Settings.Instance.PathTemplateBefore,
+                Settings.Instance.PathOutputFolder + $"/voor {filenamepart}.pptx");
             if (beforeService == null) return;
             beforeService.ReplaceKeywords(keywords);
             beforeService.ReplaceImage(textBoxQRPath.Text);
             beforeService.ReplaceMultilineKeywords(
-                (from ServiceElement element in elements where element.IsSong select element).ToList(),
-                (from ServiceElement element in elements where !element.IsSong select element).ToList()
+                from ServiceElement element in elements where element.IsSong select element,
+                from ServiceElement element in elements where element.IsReading select element
             );
             beforeService.SaveClose();
 
-            PowerPoint duringService = CreatePowerpoint(Settings.Instance.PathTemplateDuring, Settings.Instance.PathOutputFolder + "/outputduring.pptx");
+            PowerPoint duringService = CreatePowerpoint(Settings.Instance.PathTemplateDuring,
+                Settings.Instance.PathOutputFolder + $"/tijdens {filenamepart}.pptx");
             if (duringService == null) return;
             duringService.ReplaceKeywords(keywords);
             duringService.ReplaceImage(textBoxQRPath.Text);
@@ -382,17 +410,19 @@ namespace PPTXcreator
                 duringService.DuplicateAndReplace(new Dictionary<string, string> {
                     { tags.ServiceElementTitle, element.Title },
                     { tags.ServiceElementSubtitle, element.Subtitle }
-                });
+                }, element.ShowQR);
             }
             duringService.SaveClose();
 
-            PowerPoint afterService = CreatePowerpoint(Settings.Instance.PathTemplateAfter, Settings.Instance.PathOutputFolder + "/outputafter.pptx");
+            PowerPoint afterService = CreatePowerpoint(Settings.Instance.PathTemplateAfter,
+                Settings.Instance.PathOutputFolder + $"/na {filenamepart}.pptx");
             if (afterService == null) return;
             afterService.ReplaceKeywords(keywords);
             afterService.ReplaceImage(textBoxQRPath.Text);
             afterService.SaveClose();
 
-            Dialogs.GenericInformation("Voltooid", $"De presentaties zijn gemaakt en staan in {Settings.Instance.PathOutputFolder}.");
+            Dialogs.GenericInformation("Voltooid", $"De presentaties zijn gemaakt " +
+                $"en staan in de folder '{Settings.Instance.PathOutputFolder}'.");
         }
 
         private static PowerPoint CreatePowerpoint(string templatePath, string outputPath)
@@ -402,17 +432,40 @@ namespace PPTXcreator
                 PowerPoint powerpoint = new PowerPoint(templatePath, outputPath);
                 return powerpoint;
             }
-            catch (IOException)
+            catch (FileNotFoundException ex)
             {
-                Dialogs.GenericWarning("Niet alle presentaties konden worden gemaakt omdat een of meer " +
-                    "bestanden op de outputlocatie geopend zijn. Sluit PowerPoint en probeer het opnieuw.");
-                return null;
+                Dialogs.GenericWarning($"Het bestand '{ex.FileName}' is niet gevonden. Controleer het bestandspad en probeer opnieuw.");
             }
+            catch (DirectoryNotFoundException)
+            {
+                Dialogs.GenericWarning($"Het bestandspad '{templatePath}' of '{outputPath}' bestaat niet. Controleer het bestandspad " +
+                    $"en probeer opnieuw");
+            }
+            catch (IOException ex) when ((ex.HResult & 0x0000FFFF) == 32)
+            {
+                Dialogs.GenericWarning($"Het bestand '{outputPath}' kon niet worden bewerkt omdat het geopend is in een ander " +
+                    "programma. Sluit het bestand en probeer opnieuw.");
+            }
+            catch (Exception ex) when (ex is IOException
+                || ex is UnauthorizedAccessException
+                || ex is NotSupportedException
+                || ex is System.Security.SecurityException)
+            {
+                Dialogs.GenericWarning($"'{templatePath}' of '{outputPath}' kon niet worden geopend.\n\n" +
+                    $"De volgende foutmelding werd gegeven: {ex.Message}");
+            }
+            return null;
         }
 
-        private void CheckBoxAutoPopulateChanged(object sender, EventArgs e)
+        private static string GetFilenamePart(DateTimePicker dateTimePicker)
         {
-            Settings.Instance.EnableAutoPopulate = ((CheckBox)sender).Checked;
+            string output = "";
+            DateTime dateTime = dateTimePicker.Value;
+            if (dateTime.Hour < 12) output += "ochtend ";
+            else if (dateTime.Hour < 18) output += "middag ";
+            else output += "avond ";
+            output += dateTime.ToString("yyyy-MM-dd");
+            return output;
         }
     }
 }
