@@ -284,6 +284,11 @@ namespace PPTXcreator
         private void ButtonNextTab(object sender, EventArgs e)
         {
             int index = tabControl.SelectedIndex;
+            // I have no idea why this prevents a crash when using multiple screens at different scaling
+            if (index == 1 && dataGridView.CurrentCell is null)
+            {
+                dataGridView.Rows[0].Cells[1].Selected = true;
+            }
             tabControl.SelectTab(index + 1);
         }
 
