@@ -308,6 +308,9 @@ namespace PPTXcreator
             Settings.Instance.EnableAutoPopulate = ((CheckBox)sender).Checked;
         }
 
+        /// <summary>
+        /// Get a list of ServiceElements from the DataGridView
+        /// </summary>
         private List<ServiceElement> GetServiceElements()
         {
             List<ServiceElement> elements = new List<ServiceElement>();
@@ -379,8 +382,12 @@ namespace PPTXcreator
             return true;
         }
 
+        /// <summary>
+        /// Create the three presentations with information from the user interface
+        /// </summary>
         public void CreatePresentations(object sender, EventArgs e)
         {
+            // Check if fields are filled in and if the output folder is right
             if (!CheckValidInputs()) return;
             if (!Directory.Exists(Settings.Instance.PathOutputFolder))
             {
@@ -389,27 +396,38 @@ namespace PPTXcreator
                 return;
             }
 
+            // Get the filled in information from the window
+            KeywordSettings tags = Settings.Instance.Keywords;
             Dictionary<string, string> keywords = GetFormKeywords();
             List<ServiceElement> elements = GetServiceElements();
             string filenamepart = GetFilenamePart(dateTimePickerCurrent);
 
+            // Create the presentation before the service
             PowerPoint beforeService = CreatePowerpoint(Settings.Instance.PathTemplateBefore,
                 Settings.Instance.PathOutputFolder + $"/voor {filenamepart}.pptx");
+
             if (beforeService == null) return;
+            if (string.IsNullOrWhiteSpace(keywords[tags.Theme]))
+                beforeService.RemoveThemeRuns();
+
             beforeService.ReplaceKeywords(keywords);
             beforeService.ReplaceImage(textBoxQRPath.Text);
             beforeService.ReplaceMultilineKeywords(
                 from ServiceElement element in elements where element.IsSong select element,
                 from ServiceElement element in elements where element.IsReading select element
             );
+
             beforeService.SaveClose();
 
+            // Create the presentation during the service
             PowerPoint duringService = CreatePowerpoint(Settings.Instance.PathTemplateDuring,
                 Settings.Instance.PathOutputFolder + $"/tijdens {filenamepart}.pptx");
+
             if (duringService == null) return;
+
             duringService.ReplaceKeywords(keywords);
             duringService.ReplaceImage(textBoxQRPath.Text);
-            KeywordSettings tags = Settings.Instance.Keywords;
+
             foreach (ServiceElement element in elements)
             {
                 duringService.DuplicateAndReplace(new Dictionary<string, string> {
@@ -417,19 +435,28 @@ namespace PPTXcreator
                     { tags.ServiceElementSubtitle, element.Subtitle }
                 }, element.ShowQR);
             }
+
             duringService.SaveClose();
 
+            // Create the presentation after the service
             PowerPoint afterService = CreatePowerpoint(Settings.Instance.PathTemplateAfter,
                 Settings.Instance.PathOutputFolder + $"/na {filenamepart}.pptx");
+
             if (afterService == null) return;
+
             afterService.ReplaceKeywords(keywords);
             afterService.ReplaceImage(textBoxQRPath.Text);
+
             afterService.SaveClose();
 
+            // Done, message the user
             Dialogs.GenericInformation("Voltooid", $"De presentaties zijn gemaakt " +
                 $"en staan in de folder '{Settings.Instance.PathOutputFolder}'.");
         }
 
+        /// <summary>
+        /// Try to create a new <see cref="PowerPoint"/> object, handle exceptions
+        /// </summary>
         private static PowerPoint CreatePowerpoint(string templatePath, string outputPath)
         {
             try

@@ -55,7 +55,7 @@ namespace PPTXcreator
             set => pathServicesJson = GetPath(value);
         }
 
-        private string pathOutputFolder = "./output";
+        private string pathOutputFolder = AppContext.BaseDirectory;
         [JsonPropertyName("Outputfolder")]
         public string PathOutputFolder
         {

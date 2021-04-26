@@ -97,7 +97,7 @@ namespace PPTXcreator
             }
             catch (IOException ex) when (ex is DirectoryNotFoundException || ex is FileNotFoundException)
             {
-                Dialogs.GenericWarning($"'{path}' kon niet worden geopgend omdat het bestand niet gevonden is.");
+                Dialogs.GenericWarning($"'{path}' kon niet worden geopend omdat het bestand niet gevonden is.");
                 return false;
             }
             catch (Exception ex) when (ex is IOException

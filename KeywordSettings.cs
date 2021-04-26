@@ -32,6 +32,9 @@ namespace PPTXcreator
         [JsonPropertyName("Thema")]
         public string Theme { get; set; } = "[thema]";
 
+        [JsonPropertyName("Thema header identifier")]
+        public string ThemeHeaderIdentifier { get; set; } = "thema van de preek";
+
         [JsonPropertyName("Collectedoel 1")]
         public string Collection1 { get; set; } = "[collectedoel 1]";
 
