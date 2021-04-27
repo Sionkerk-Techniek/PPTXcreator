@@ -1,0 +1,35 @@
+name: Package
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout source
+
+    - name: Setup MSBuild path
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+
+    - name: Get NuGet packages
+      run: nuget restore PPTXcreator.sln
+
+    - name: Build and package solution
+      run: msbuild PPTXcreator.sln /t:Build;Package /p:Configuration=Release
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: PPTXcreator
+        path: bin\Release\
+        retention-days: 7
