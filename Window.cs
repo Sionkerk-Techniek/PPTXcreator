@@ -37,7 +37,7 @@ namespace PPTXcreator
         private void ButtonSelectQR(object sender, EventArgs e)
         {
             string path = Dialogs.SelectFile(
-                "JPEG (*.jpeg)|*.jpeg|PNG (*.png)|*.png|Alle bestanden (*.*)|*.*",
+                "Afbeelding (*.jpeg; *.jpg; *.png)|*.jpeg;*.jpg;*.png|Alle bestanden (*.*)|*.*",
                 "Selecteer de QR-code"
             );
 

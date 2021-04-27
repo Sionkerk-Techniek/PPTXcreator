@@ -140,8 +140,12 @@ namespace PPTXcreator
         /// </summary>
         public static string GetPath(string path)
         {
+            if (string.IsNullOrWhiteSpace(path)) return path;
+
             Uri assemblyPath = new Uri(AppContext.BaseDirectory);
             Uri targetPath = new Uri(Path.GetFullPath(path));
+            if (assemblyPath == targetPath) return path;
+
             string relativePath = assemblyPath.MakeRelativeUri(targetPath).ToString();
             relativePath = Uri.UnescapeDataString(relativePath).Replace("/", "\\"); // URIs use forward slashes
             
