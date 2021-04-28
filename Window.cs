@@ -452,6 +452,7 @@ namespace PPTXcreator
             // Done, message the user
             Dialogs.GenericInformation("Voltooid", $"De presentaties zijn gemaakt " +
                 $"en staan in de folder '{Settings.Instance.PathOutputFolder}'.");
+            Settings.Instance.NextService = dateTimePickerNext.Value;
         }
 
         /// <summary>
