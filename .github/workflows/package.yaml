@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  build:
+  package:
 
     runs-on: windows-latest
 
@@ -25,7 +25,7 @@ jobs:
       run: nuget restore PPTXcreator.sln
 
     - name: Build and package solution
-      run: msbuild PPTXcreator.sln /t:Build;Package /p:Configuration=Release
+      run: msbuild PPTXcreator.sln /t:"Build;Package" /p:Configuration=Release
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
