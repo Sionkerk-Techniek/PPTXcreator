@@ -47,6 +47,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -77,8 +78,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -161,6 +164,9 @@
     <PackageReference Include="DocumentFormat.OpenXml">
       <Version>2.12.3</Version>
     </PackageReference>
+    <PackageReference Include="ILMerge">
+      <Version>3.0.41</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces">
       <Version>5.0.0</Version>
     </PackageReference>
@@ -198,6 +204,16 @@
       <Version>4.5.0</Version>
     </PackageReference>
   </ItemGroup>
+  <Target Name="Package" Condition="'$(Configuration)' == 'Release'">
+    <ItemGroup>
+      <ILMergeFiles Include="bin\Release\*.dll" />
+    </ItemGroup>
+    <Exec Command="$(ILMergeConsolePath) bin\Release\PPTXcreator.exe /out:bin\Release\PPTXcreator.exe @(ILMergeFiles, ' ') /log /ndebug" />
+    <Delete Files="@(ILMergeFiles);bin\Release\PPTXcreator.pdb" />
+    <WriteLinesToFile File="bin\Release\settings.json" Lines="{}" Overwrite="true" />
+    <MakeDir Directories="bin\Publish\" />
+    <ZipDirectory DestinationFile="bin\Publish\PPTXcreator.zip" SourceDirectory="bin\Release" Overwrite="true" />
+  </Target>
   <ItemGroup>
     <Content Include="Resources\Icon.ico" />
   </ItemGroup>

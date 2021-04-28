@@ -55,7 +55,7 @@ namespace PPTXcreator
             set => pathServicesJson = GetPath(value);
         }
 
-        private string pathOutputFolder = "./output";
+        private string pathOutputFolder = AppContext.BaseDirectory;
         [JsonPropertyName("Outputfolder")]
         public string PathOutputFolder
         {
@@ -140,8 +140,12 @@ namespace PPTXcreator
         /// </summary>
         public static string GetPath(string path)
         {
+            if (string.IsNullOrWhiteSpace(path)) return path;
+
             Uri assemblyPath = new Uri(AppContext.BaseDirectory);
             Uri targetPath = new Uri(Path.GetFullPath(path));
+            if (assemblyPath == targetPath) return path;
+
             string relativePath = assemblyPath.MakeRelativeUri(targetPath).ToString();
             relativePath = Uri.UnescapeDataString(relativePath).Replace("/", "\\"); // URIs use forward slashes
             

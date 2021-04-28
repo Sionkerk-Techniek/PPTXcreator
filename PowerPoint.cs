@@ -123,6 +123,27 @@ namespace PPTXcreator
         }
 
         /// <summary>
+        /// Removes the runs containing <see cref="KeywordSettings.ThemeHeaderIdentifier"/>
+        /// </summary>
+        /// <param name="slide"></param>
+        public void RemoveThemeRuns()
+        {
+            // Loop over slides
+            foreach (SlidePart slide in Slides)
+            {
+                // Loop over text in the slide
+                foreach (Text text in slide.Slide.Descendants<Text>())
+                {
+                    if (text.Text.ToLower().Contains(Settings.Instance.Keywords.ThemeHeaderIdentifier)
+                        || text.Text.Contains(Settings.Instance.Keywords.Theme))
+                    {
+                        text.Parent.Remove();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Replaces the image with description <see cref="Settings.QRdescription"/>
         /// with the image at <paramref name="imagePath"/>.
         /// </summary>
@@ -141,27 +162,15 @@ namespace PPTXcreator
                 {
                     // Get the ImagePart by id, and replace the image
                     ImagePart imagePart = (ImagePart)slidePart.GetPartById(rId);
-                    FileStream imageStream;
-                    if (!Program.TryGetFileStream(imagePath, out imageStream)) return;
+                    if (!Program.TryGetFileStream(imagePath, out FileStream imageStream)) return;
                     imagePart.FeedData(imageStream);
                     imageStream.Close();
                 }
             }
         }
 
-        private void RemoveImage(SlidePart slidePart)
-        {
-            // Loop over all picture objects
-            foreach (Presentation.Picture pic in slidePart.Slide.Descendants<Presentation.Picture>())
-            {
-                // Remove the image if the description matches the ImageDescription setting
-                string description = pic.NonVisualPictureProperties.NonVisualDrawingProperties.Description;
-                if (description == Settings.Instance.ImageDescription) pic.Remove();
-            }
-        }
-
         /// <summary>
-        /// Replaces the image with description <see cref="Settings.QRdescription"/>
+        /// Replaces the image with description <see cref="Settings.ImageDescription"/>
         /// with the image at <paramref name="imagePath"/>.
         /// </summary>
         public void ReplaceImage(string imagePath)
@@ -172,6 +181,20 @@ namespace PPTXcreator
             foreach (SlidePart slidePart in Slides)
             {
                 ReplaceImage(imagePath, slidePart);
+            }
+        }
+
+        /// <summary>
+        /// Removes the image with description <see cref="Settings.ImageDescription"/>
+        /// </summary>
+        private void RemoveImage(SlidePart slidePart)
+        {
+            // Loop over all picture objects
+            foreach (Presentation.Picture pic in slidePart.Slide.Descendants<Presentation.Picture>())
+            {
+                // Remove the image if the description matches the ImageDescription setting
+                string description = pic.NonVisualPictureProperties.NonVisualDrawingProperties.Description;
+                if (description == Settings.Instance.ImageDescription) pic.Remove();
             }
         }
 
