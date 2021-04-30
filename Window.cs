@@ -41,11 +41,7 @@ namespace PPTXcreator
                 "Selecteer de QR-code"
             );
 
-            if (!string.IsNullOrEmpty(path))
-            {
-                textBoxQRPath.Text = path;
-                Settings.Instance.PathQRImage = path;
-            }
+            if (!string.IsNullOrEmpty(path)) textBoxQRPath.Text = path;
         }
 
         /// <summary>
@@ -306,6 +302,17 @@ namespace PPTXcreator
         private void CheckBoxAutoPopulateChanged(object sender, EventArgs e)
         {
             Settings.Instance.EnableAutoPopulate = ((CheckBox)sender).Checked;
+        }
+
+        private void CheckBoxEnableEditQRChanged(object sender, EventArgs e)
+        {
+            Settings.Instance.EnableEditQR = ((CheckBox)sender).Checked;
+        }
+
+        public void CheckBoxEnableEditQRSetValue(bool value)
+        {
+            Settings.Instance.EnableEditQR = value;
+            checkBoxQRedit.Checked = value;
         }
 
         /// <summary>

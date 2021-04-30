@@ -3,6 +3,8 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
+using System.Drawing.Imaging;
 using DocumentFormat.OpenXml;
 using Presentation = DocumentFormat.OpenXml.Presentation;
 using DocumentFormat.OpenXml.Drawing;
@@ -72,7 +74,7 @@ namespace PPTXcreator
         /// </summary>
         /// <param name="run">The run to replace</param>
         /// <param name="elements">The ServiceElements to replace the run by</param>
-        public void ReplaceMultilineKeywords(Run run, IEnumerable<ServiceElement> elements)
+        private void ReplaceMultilineKeywords(Run run, IEnumerable<ServiceElement> elements)
         {
             // Get the paragraph and textbody the run is a child of
             Paragraph par = (Paragraph)run.Parent;
@@ -162,9 +164,9 @@ namespace PPTXcreator
                 {
                     // Get the ImagePart by id, and replace the image
                     ImagePart imagePart = (ImagePart)slidePart.GetPartById(rId);
-                    if (!Program.TryGetFileStream(imagePath, out FileStream imageStream)) return;
-                    imagePart.FeedData(imageStream);
-                    imageStream.Close();
+                    Stream imageStream = GetEditedImage(imagePath);
+                    if (imageStream != null) imagePart.FeedData(imageStream);
+                    imageStream.Dispose();
                 }
             }
         }
@@ -196,6 +198,59 @@ namespace PPTXcreator
                 string description = pic.NonVisualPictureProperties.NonVisualDrawingProperties.Description;
                 if (description == Settings.Instance.ImageDescription) pic.Remove();
             }
+        }
+
+        /// <summary>
+        /// Loads the file located at <paramref name="path"/> and applies crop and threshold
+        /// </summary>
+        public static Stream GetEditedImage(string path)
+        {
+            // Try to get the filestream, return it without editing if EnableEditQR is false
+            if (!Program.TryGetFileStream(path, out FileStream originalImageStream))
+                return null;
+            if (!Settings.Instance.EnableEditQR)
+                return originalImageStream;
+
+            // Check if the cropping region is valid, don't edit if it isn't
+            Bitmap originalImage = new Bitmap(originalImageStream);
+            ImageSettings settings = Settings.Instance.ImageParameters;
+            if (!settings.IsValid()
+                || settings.OffsetX + settings.Width > originalImage.Width
+                || settings.OffsetY + settings.Height > originalImage.Height)
+            {
+                Dialogs.GenericWarning("De afbeelding kan niet worden bewerkt omdat het gebied " +
+                    $"waar naar bijgesneden moet worden ({settings}) niet bestaat in de afbeelding " +
+                    $"met resolutie {originalImage.Width}x{originalImage.Height}.");
+                Program.MainWindow.CheckBoxEnableEditQRSetValue(false);
+                return originalImageStream;
+            }
+
+            // Crop the image
+            System.Drawing.Rectangle crop = new System.Drawing.Rectangle(
+                settings.OffsetX, settings.OffsetY, settings.Width, settings.Height);
+            Bitmap editedImage = originalImage.Clone(crop, PixelFormat.DontCare);
+
+            // Manually iterate over the pixels to apply the threshold
+            for (int x = 0; x < settings.Width; x++)
+            {
+                for (int y = 0; y < settings.Height; y++)
+                {
+                    // GetPixel and SetPixel are slow, but it shouldn't be a problem for a single image
+                    Color pixel = editedImage.GetPixel(x, y);
+                    if (pixel.GetBrightness() >= settings.Threshold)
+                        editedImage.SetPixel(x, y, Color.White);
+                    else
+                        editedImage.SetPixel(x, y, Color.Black);
+                }
+            }
+
+            // Convert to 1-bit indexed png and save to stream
+            MemoryStream memoryStream = new MemoryStream();
+            crop.X = crop.Y = 0; // include full image, .Clone always needs a rectangle for some reason
+            editedImage.Clone(crop, PixelFormat.Format1bppIndexed).Save(memoryStream, ImageFormat.Png);
+            memoryStream.Position = 0;
+            originalImageStream.Dispose();
+            return memoryStream;
         }
 
         /// <summary>

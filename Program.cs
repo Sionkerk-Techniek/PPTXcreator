@@ -7,6 +7,8 @@ namespace PPTXcreator
 {
     static class Program
     {
+        public static Window MainWindow { get; private set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -25,7 +27,8 @@ namespace PPTXcreator
             // start UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Window());
+            MainWindow = new Window();
+            Application.Run(MainWindow);
 
             Settings.Save();
         }

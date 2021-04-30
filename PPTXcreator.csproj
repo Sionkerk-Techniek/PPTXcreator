@@ -96,6 +96,7 @@
   <ItemGroup>
     <Compile Include="CollectionsInfo.cs" />
     <Compile Include="Dialogs.cs" />
+    <Compile Include="ImageSettings.cs" />
     <Compile Include="KeywordSettings.cs" />
     <Compile Include="PowerPoint.cs" />
     <Compile Include="Service.cs" />

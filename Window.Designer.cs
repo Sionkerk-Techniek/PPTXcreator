@@ -428,13 +428,13 @@ namespace PPTXcreator
             // checkBoxQRedit
             // 
             this.checkBoxQRedit.AutoSize = true;
-            this.checkBoxQRedit.Enabled = false;
             this.checkBoxQRedit.Location = new System.Drawing.Point(17, 68);
             this.checkBoxQRedit.Name = "checkBoxQRedit";
-            this.checkBoxQRedit.Size = new System.Drawing.Size(321, 21);
+            this.checkBoxQRedit.Size = new System.Drawing.Size(197, 21);
             this.checkBoxQRedit.TabIndex = 16;
-            this.checkBoxQRedit.Text = "Bijsnijden en zwart-wit maken (komt in versie 1.1.0)";
+            this.checkBoxQRedit.Text = "Bijsnijden en zwart-wit maken";
             this.checkBoxQRedit.UseVisualStyleBackColor = true;
+            this.checkBoxQRedit.CheckedChanged += new System.EventHandler(this.CheckBoxEnableEditQRChanged);
             // 
             // buttonQRSelect
             // 
