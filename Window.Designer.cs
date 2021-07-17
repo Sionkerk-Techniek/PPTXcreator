@@ -56,6 +56,8 @@ namespace PPTXcreator
             System.Windows.Forms.Label labelJsonServices;
             System.Windows.Forms.Label labelThema;
             this.textBoxOrganist = new System.Windows.Forms.TextBox();
+            this.buttonNextDatetime = new System.Windows.Forms.Button();
+            this.buttonPreviousDatetime = new System.Windows.Forms.Button();
             this.dateTimePickerNext = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerCurrent = new System.Windows.Forms.DateTimePicker();
             this.textBoxVoorgangerNextPlaats = new System.Windows.Forms.TextBox();
@@ -104,6 +106,7 @@ namespace PPTXcreator
             this.ContentIdentifier = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabInstellingen = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
             labelOrganist = new System.Windows.Forms.Label();
             labelDatumTijdNext = new System.Windows.Forms.Label();
             labelDatumTijdNu = new System.Windows.Forms.Label();
@@ -284,6 +287,8 @@ namespace PPTXcreator
             // 
             groupBoxDatumTijd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            groupBoxDatumTijd.Controls.Add(this.buttonNextDatetime);
+            groupBoxDatumTijd.Controls.Add(this.buttonPreviousDatetime);
             groupBoxDatumTijd.Controls.Add(this.dateTimePickerNext);
             groupBoxDatumTijd.Controls.Add(labelDatumTijdNext);
             groupBoxDatumTijd.Controls.Add(labelDatumTijdNu);
@@ -294,6 +299,30 @@ namespace PPTXcreator
             groupBoxDatumTijd.TabIndex = 4;
             groupBoxDatumTijd.TabStop = false;
             groupBoxDatumTijd.Text = "Datum en tijd";
+            // 
+            // buttonNextDatetime
+            // 
+            this.buttonNextDatetime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonNextDatetime.BackgroundImage = global::PPTXcreator.Properties.Resources.outline_update_black_24dp;
+            this.buttonNextDatetime.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonNextDatetime.Location = new System.Drawing.Point(316, 58);
+            this.buttonNextDatetime.Name = "buttonNextDatetime";
+            this.buttonNextDatetime.Size = new System.Drawing.Size(27, 27);
+            this.buttonNextDatetime.TabIndex = 18;
+            this.buttonNextDatetime.UseVisualStyleBackColor = true;
+            this.buttonNextDatetime.Click += new System.EventHandler(this.ButtonNextDatetime);
+            // 
+            // buttonPreviousDatetime
+            // 
+            this.buttonPreviousDatetime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPreviousDatetime.BackgroundImage = global::PPTXcreator.Properties.Resources.outline_update_black_24dp_mirrored;
+            this.buttonPreviousDatetime.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonPreviousDatetime.Location = new System.Drawing.Point(316, 28);
+            this.buttonPreviousDatetime.Name = "buttonPreviousDatetime";
+            this.buttonPreviousDatetime.Size = new System.Drawing.Size(27, 27);
+            this.buttonPreviousDatetime.TabIndex = 17;
+            this.buttonPreviousDatetime.UseVisualStyleBackColor = true;
+            this.buttonPreviousDatetime.Click += new System.EventHandler(this.ButtonPreviousDatetime);
             // 
             // dateTimePickerNext
             // 
@@ -1011,12 +1040,24 @@ namespace PPTXcreator
             this.tabInstellingen.UseVisualStyleBackColor = true;
             this.tabInstellingen.Leave += new System.EventHandler(this.FocusLeaveSettingsTab);
             // 
+            // label1
+            // 
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label1.Location = new System.Drawing.Point(454, 9);
+            this.label1.Name = "label1";
+            this.label1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label1.Size = new System.Drawing.Size(90, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "versie 1.1.0";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(554, 409);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.tabControl);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = global::PPTXcreator.Properties.Resources.Icon;
@@ -1103,6 +1144,9 @@ namespace PPTXcreator
         private System.Windows.Forms.DataGridViewComboBoxColumn ContentType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ContentIdentifier;
         private System.Windows.Forms.DataGridViewTextBoxColumn ContentName;
+        private System.Windows.Forms.Button buttonNextDatetime;
+        private System.Windows.Forms.Button buttonPreviousDatetime;
+        private System.Windows.Forms.Label label1;
     }
 }
 
