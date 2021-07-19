@@ -63,14 +63,6 @@ namespace PPTXcreator
             set => pathOutputFolder = GetPath(value);
         }
 
-        private string pathQRImage;
-        [JsonIgnore]
-        public string PathQRImage
-        {
-            get => pathQRImage;
-            set => pathQRImage = GetPath(value);
-        }
-
         [JsonPropertyName("QR placeholder beschrijving")]
         public string ImageDescription { get; set; } = "QR-code";
 
@@ -84,7 +76,10 @@ namespace PPTXcreator
         public bool EnableAutoPopulate { get; set; } = true;
 
         [JsonPropertyName("QR-afbeeldingen bewerken")]
-        public bool EnableEditQR { get; set; } = true;
+        public bool EnableEditQR { get; set; } = false;
+
+        [JsonPropertyName("QR-afbeelding bewerkingsparameters")]
+        public ImageSettings ImageParameters { get; set; } = new ImageSettings();
 
         public KeywordSettings Keywords { get; set; } = new KeywordSettings();
 

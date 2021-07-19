@@ -19,25 +19,25 @@ namespace PPTXcreator
         public string Organist { get; set; } = "organist";
 
         /// <summary>
-        /// Data class containing information about a service
+        /// Get an array of service elements from the JSON file at <see cref="Settings.PathServicesJson"/>
         /// </summary>
-        public static (Service current, Service next) GetCurrentAndNext(DateTime datetime)
+        /// <returns>An array of service elements, or null if the file could not be read</returns>
+        public static JsonElement[] GetJsonElements()
         {
-            // Initialize some values
-            JsonElement[] services;
-            Service current = new Service();
-            Service next = new Service();
+            JsonElement[] services = null;
 
             // Load the file contents
+            // TODO: caching - current method will give performance issues if the files become large or are loaded very often
             if (!Program.TryGetFileContents(Settings.Instance.PathServicesJson, out string servicesFile))
             {
-                return (current, next);
+                return services;
             }
 
             // Parse the file contents
             try
             {
-                JsonDocumentOptions options = new JsonDocumentOptions() {
+                JsonDocumentOptions options = new JsonDocumentOptions()
+                {
                     AllowTrailingCommas = true,
                     CommentHandling = JsonCommentHandling.Skip
                 };
@@ -47,8 +47,22 @@ namespace PPTXcreator
             {
                 Dialogs.GenericWarning($"'{Settings.Instance.PathServicesJson}'" +
                     $" heeft niet de juiste structuur.\n\nDe volgende foutmelding werd gegeven: {ex.Message}");
-                return (current, next);
             }
+
+            return services;
+        }
+
+        /// <summary>
+        /// Build service objects for the current and next service from JSON data
+        /// </summary>
+        public static (Service current, Service next) GetCurrentAndNext(DateTime datetime)
+        {
+            // Initialize some values
+            Service current = new Service();
+            Service next = new Service();
+            JsonElement[] services = GetJsonElements();
+
+            if (services == null) return (current, next);
 
             // Iterate over all services in servicesjson and find the one which matches datetime
             for (int i = 0; i < services.Length; i++)
@@ -72,6 +86,32 @@ namespace PPTXcreator
             }
 
             return (current, next);
+        }
+
+        public static DateTime GetPrevious(DateTime current)
+        {
+            JsonElement[] services = GetJsonElements();
+            List<DateTime> dateTimes = (from JsonElement service in services
+                                        let dateTime = service.GetProperty("Datetime").GetDateTime()
+                                        orderby dateTime
+                                        where dateTime < current
+                                        select dateTime).ToList();
+
+            if (dateTimes.Count == 0) return DateTime.MinValue;
+            else return dateTimes.Last();
+        }
+
+        public static DateTime GetNext(DateTime current)
+        {
+            JsonElement[] services = GetJsonElements();
+            List<DateTime> dateTimes = (from JsonElement service in services
+                                        let dateTime = service.GetProperty("Datetime").GetDateTime()
+                                        orderby dateTime
+                                        where dateTime > current
+                                        select dateTime).ToList();
+
+            if (dateTimes.Count == 0) return DateTime.MinValue;
+            else return dateTimes.First();
         }
     }
 }

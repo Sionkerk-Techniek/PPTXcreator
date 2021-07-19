@@ -96,6 +96,7 @@
   <ItemGroup>
     <Compile Include="CollectionsInfo.cs" />
     <Compile Include="Dialogs.cs" />
+    <Compile Include="ImageSettings.cs" />
     <Compile Include="KeywordSettings.cs" />
     <Compile Include="PowerPoint.cs" />
     <Compile Include="Service.cs" />
@@ -216,6 +217,8 @@
   </Target>
   <ItemGroup>
     <Content Include="Resources\Icon.ico" />
+    <None Include="Resources\outline_update_black_24dp_mirrored.png" />
+    <None Include="Resources\outline_update_black_24dp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

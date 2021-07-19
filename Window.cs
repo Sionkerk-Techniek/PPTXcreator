@@ -41,11 +41,7 @@ namespace PPTXcreator
                 "Selecteer de QR-code"
             );
 
-            if (!string.IsNullOrEmpty(path))
-            {
-                textBoxQRPath.Text = path;
-                Settings.Instance.PathQRImage = path;
-            }
+            if (!string.IsNullOrEmpty(path)) textBoxQRPath.Text = path;
         }
 
         /// <summary>
@@ -104,7 +100,7 @@ namespace PPTXcreator
         private void ButtonSelectJsonServices(object sender, EventArgs e)
         {
             string path = Dialogs.SelectFile(
-               "JSON (*.json)|*.json",
+                "JSON (*.json)|*.json",
                 "Selecteer het diensten JSON-bestand"
             );
 
@@ -113,6 +109,20 @@ namespace PPTXcreator
                 textBoxJsonServices.Text = path;
                 Settings.Instance.PathServicesJson = path;
             }
+        }
+
+        private void ButtonPreviousDatetime(object sender, EventArgs e)
+        {
+            DateTime dateTime = Service.GetPrevious(dateTimePickerCurrent.Value);
+            if (dateTime != DateTime.MinValue) 
+                dateTimePickerCurrent.Value = dateTime;
+        }
+
+        private void ButtonNextDatetime(object sender, EventArgs e)
+        {
+            DateTime dateTime = Service.GetNext(dateTimePickerCurrent.Value);
+            if (dateTime != DateTime.MinValue)
+                dateTimePickerCurrent.Value = dateTime;
         }
 
         private void DateTimePickerCurrentChanged(object sender, EventArgs e)
@@ -306,6 +316,17 @@ namespace PPTXcreator
         private void CheckBoxAutoPopulateChanged(object sender, EventArgs e)
         {
             Settings.Instance.EnableAutoPopulate = ((CheckBox)sender).Checked;
+        }
+
+        private void CheckBoxEnableEditQRChanged(object sender, EventArgs e)
+        {
+            Settings.Instance.EnableEditQR = ((CheckBox)sender).Checked;
+        }
+
+        public void CheckBoxEnableEditQRSetValue(bool value)
+        {
+            Settings.Instance.EnableEditQR = value;
+            checkBoxQRedit.Checked = value;
         }
 
         /// <summary>
