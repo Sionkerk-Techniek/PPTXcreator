@@ -40,14 +40,22 @@ namespace PPTXcreator
                 };
 
                 // Parse the json string and order the JsonElements by the Datetime property
-                JsonCache = JsonDocument.Parse(fileContent, options).RootElement.EnumerateArray()
-                    .OrderBy(element => element.GetProperty("Datetime").GetDateTime()).ToArray();
+                using (JsonDocument document = JsonDocument.Parse(fileContent, options))
+                {
+                    JsonCache = document.RootElement.EnumerateArray()
+                        .OrderBy(element => element.GetProperty("Datetime").GetDateTime())
+                        .Select(element => element.Clone()).ToArray();
+                }
             }
             catch (Exception ex) when (ex is JsonException || ex is InvalidOperationException)
             {
                 Dialogs.GenericWarning($"'{Settings.Instance.PathServicesJson}'" +
                     $" heeft niet de juiste structuur.\n\nDe volgende foutmelding werd gegeven: {ex.Message}");
             }
+
+            // Forcing the GC should be avoided, but the previous JsonCache contents refuse to be disposed.
+            // This method isn't likely to run often anyway.
+            GC.Collect();
         }
 
         /// <summary>
