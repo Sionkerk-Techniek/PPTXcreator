@@ -108,19 +108,20 @@ namespace PPTXcreator
             {
                 textBoxJsonServices.Text = path;
                 Settings.Instance.PathServicesJson = path;
+                Service.UpdateJsonCache();
             }
         }
 
         private void ButtonPreviousDatetime(object sender, EventArgs e)
         {
-            DateTime dateTime = Service.GetPrevious(dateTimePickerCurrent.Value);
+            DateTime dateTime = Service.GetPreviousDatetime(dateTimePickerCurrent.Value);
             if (dateTime != DateTime.MinValue) 
                 dateTimePickerCurrent.Value = dateTime;
         }
 
         private void ButtonNextDatetime(object sender, EventArgs e)
         {
-            DateTime dateTime = Service.GetNext(dateTimePickerCurrent.Value);
+            DateTime dateTime = Service.GetNextDatetime(dateTimePickerCurrent.Value);
             if (dateTime != DateTime.MinValue)
                 dateTimePickerCurrent.Value = dateTime;
         }
@@ -129,19 +130,15 @@ namespace PPTXcreator
         {
             if (Settings.Instance.EnableAutoPopulate)
             {
-                (Service current, Service next) = Service.GetCurrentAndNext(dateTimePickerCurrent.Value);
-                SetFormDataCurrent(current);
-                SetFormDataNext(next);
+                SetFormDataCurrent(Service.GetCurrent(dateTimePickerCurrent.Value));
+                SetFormDataNext(Service.GetNext(dateTimePickerCurrent.Value));
             }
         }
 
         private void DateTimePickerNextChanged(object sender, EventArgs e)
         {
             if (Settings.Instance.EnableAutoPopulate)
-            {
-                (Service next, _) = Service.GetCurrentAndNext(dateTimePickerNext.Value);
-                SetFormDataNext(next);
-            }
+                SetFormDataNext(Service.GetCurrent(dateTimePickerNext.Value));
         }
 
         private void SetFormDataCurrent(Service service)
