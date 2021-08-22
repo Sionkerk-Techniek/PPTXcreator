@@ -757,6 +757,7 @@ namespace PPTXcreator
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(547, 398);
             this.tabControl.TabIndex = 0;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.PreventBlackDropdown);
             // 
             // tabGeneral
             // 
@@ -1048,7 +1049,7 @@ namespace PPTXcreator
             this.labelVersion.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelVersion.Size = new System.Drawing.Size(90, 17);
             this.labelVersion.TabIndex = 25;
-            this.labelVersion.Text = "versie 1.1.0";
+            this.labelVersion.Text = "versie 1.1.1";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // Window
