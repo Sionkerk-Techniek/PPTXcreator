@@ -12,7 +12,7 @@ namespace PPTXcreator
         {
             // Get all releases
             GitHubClient client = new GitHubClient(new ProductHeaderValue("PPTXcreator"));
-            IReadOnlyList<Release> releases = await client.Repository.Release.GetAll("Sionkerk-Houten", "PPTXcreator");
+            IReadOnlyList<Release> releases = await client.Repository.Release.GetAll("Sionkerk-Techniek", "PPTXcreator");
 
             // Get latest version number
             Version latestGithubVersion;

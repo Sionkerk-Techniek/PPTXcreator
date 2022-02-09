@@ -18,16 +18,28 @@ namespace PPTXcreator
             InitializeComponent();
 
             // Load settings into the form
-            textBoxTemplateBefore.Text = Settings.Instance.PathTemplateBefore;
-            textBoxTemplateDuring.Text = Settings.Instance.PathTemplateDuring;
-            textBoxTemplateAfter.Text = Settings.Instance.PathTemplateAfter;
-            textBoxJsonServices.Text = Settings.Instance.PathServicesJson;
-            textBoxOutputFolder.Text = Settings.Instance.PathOutputFolder;
-            checkBoxQRedit.Checked = Settings.Instance.EnableEditQR;
-            checkBoxAutoPopulate.Checked = Settings.Instance.EnableAutoPopulate;
+            Settings settings = Settings.Instance;
+
+            textBoxTemplateBefore.Text = settings.PathTemplateBefore;
+            textBoxTemplateDuring.Text = settings.PathTemplateDuring;
+            textBoxTemplateAfter.Text = settings.PathTemplateAfter;
+            textBoxJsonServices.Text = settings.PathServicesJson;
+            textBoxOutputFolder.Text = settings.PathOutputFolder;
+
+            checkBoxQRedit.Checked = settings.EnableEditQR;
+            checkBoxAutoPopulate.Checked = settings.EnableAutoPopulate;
+
+            numericXMinQR.Enabled = settings.EnableEditQR;
+            numericXMinQR.Value = settings.ImageParameters.OffsetX;
+            numericYMinQR.Enabled = settings.EnableEditQR;
+            numericYMinQR.Value = settings.ImageParameters.OffsetY;
+            numericXMaxQR.Enabled = settings.EnableEditQR;
+            numericXMaxQR.Value = settings.ImageParameters.OffsetX + settings.ImageParameters.Width;
+            numericYMaxQR.Enabled = settings.EnableEditQR;
+            numericYMaxQR.Value = settings.ImageParameters.OffsetY + settings.ImageParameters.Height;
 
             if (Settings.Instance.NextService != DateTime.MinValue)
-                dateTimePickerCurrent.Value = Settings.Instance.NextService; // automatically triggers the ValueChanged event
+                dateTimePickerCurrent.Value = Settings.Instance.NextService; // triggers the ValueChanged event
         }
 
         /// <summary>
@@ -325,6 +337,10 @@ namespace PPTXcreator
         private void CheckBoxEnableEditQRChanged(object sender, EventArgs e)
         {
             Settings.Instance.EnableEditQR = ((CheckBox)sender).Checked;
+            numericXMinQR.Enabled = Settings.Instance.EnableEditQR;
+            numericYMinQR.Enabled = Settings.Instance.EnableEditQR;
+            numericXMaxQR.Enabled = Settings.Instance.EnableEditQR;
+            numericYMaxQR.Enabled = Settings.Instance.EnableEditQR;
         }
 
         public void CheckBoxEnableEditQRSetValue(bool value)
@@ -492,17 +508,18 @@ namespace PPTXcreator
             }
             catch (FileNotFoundException ex)
             {
-                Dialogs.GenericWarning($"Het bestand '{ex.FileName}' is niet gevonden. Controleer het bestandspad en probeer opnieuw.");
+                Dialogs.GenericWarning($"Het bestand '{ex.FileName}' is niet gevonden." +
+                    "Controleer het bestandspad en probeer opnieuw.");
             }
             catch (DirectoryNotFoundException)
             {
-                Dialogs.GenericWarning($"Het bestandspad '{templatePath}' of '{outputPath}' bestaat niet. Controleer het bestandspad " +
-                    $"en probeer opnieuw");
+                Dialogs.GenericWarning($"Het bestandspad '{templatePath}' of '{outputPath}'" +
+                    "bestaat niet. Controleer het bestandspad en probeer opnieuw");
             }
             catch (IOException ex) when ((ex.HResult & 0x0000FFFF) == 32)
             {
-                Dialogs.GenericWarning($"Het bestand '{outputPath}' kon niet worden bewerkt omdat het geopend is in een ander " +
-                    "programma. Sluit het bestand en probeer opnieuw.");
+                Dialogs.GenericWarning($"Het bestand '{outputPath}' kon niet worden bewerkt omdat " +
+                    "het geopend is in een ander programma. Sluit het bestand en probeer opnieuw.");
             }
             catch (Exception ex) when (ex is IOException
                 || ex is UnauthorizedAccessException
@@ -524,6 +541,25 @@ namespace PPTXcreator
             else output += "avond ";
             output += dateTime.ToString("yyyy-MM-dd");
             return output;
+        }
+
+        private void CropRegionChanged(object sender, EventArgs e)
+        {
+            if (numericXMinQR.Value >= numericXMaxQR.Value)
+                numericXMaxQR.Value = numericXMinQR.Value + 1;
+            if (numericYMinQR.Value >= numericYMaxQR.Value)
+                numericYMaxQR.Value = numericYMinQR.Value + 1;
+
+            Settings.Instance.ImageParameters.OffsetX = (int)numericXMinQR.Value;
+            Settings.Instance.ImageParameters.OffsetY = (int)numericYMinQR.Value;
+            Settings.Instance.ImageParameters.Width  = (int)(numericXMaxQR.Value - numericXMinQR.Value);
+            Settings.Instance.ImageParameters.Height = (int)(numericYMaxQR.Value - numericYMinQR.Value);
+        }
+
+        private void CropRegionSelectOnFocus(object sender, EventArgs e)
+        {
+            // for some reason this doesn't happen automatically like with other fields
+            ((NumericUpDown)sender).Select(start: 0, length: 4); // max length is 4
         }
     }
 }

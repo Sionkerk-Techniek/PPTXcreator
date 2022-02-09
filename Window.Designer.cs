@@ -45,6 +45,8 @@ namespace PPTXcreator
             System.Windows.Forms.GroupBox groupBoxDatumTijd;
             System.Windows.Forms.GroupBox groupBoxVoorgangers;
             System.Windows.Forms.GroupBox groupBoxQR;
+            System.Windows.Forms.Label labelQRMax;
+            System.Windows.Forms.Label labelQRMin;
             System.Windows.Forms.GroupBox groupBoxCollecte;
             System.Windows.Forms.Label labelCollecte2;
             System.Windows.Forms.GroupBox groupBoxOutput;
@@ -66,6 +68,10 @@ namespace PPTXcreator
             this.textBoxVoorgangerNextTitel = new System.Windows.Forms.TextBox();
             this.textBoxVoorgangerNuTitel = new System.Windows.Forms.TextBox();
             this.textBoxVoorgangerNuNaam = new System.Windows.Forms.TextBox();
+            this.numericYMaxQR = new System.Windows.Forms.NumericUpDown();
+            this.numericXMaxQR = new System.Windows.Forms.NumericUpDown();
+            this.numericYMinQR = new System.Windows.Forms.NumericUpDown();
+            this.numericXMinQR = new System.Windows.Forms.NumericUpDown();
             this.checkBoxQRedit = new System.Windows.Forms.CheckBox();
             this.buttonQRSelect = new System.Windows.Forms.Button();
             this.textBoxQRPath = new System.Windows.Forms.TextBox();
@@ -123,6 +129,8 @@ namespace PPTXcreator
             groupBoxDatumTijd = new System.Windows.Forms.GroupBox();
             groupBoxVoorgangers = new System.Windows.Forms.GroupBox();
             groupBoxQR = new System.Windows.Forms.GroupBox();
+            labelQRMax = new System.Windows.Forms.Label();
+            labelQRMin = new System.Windows.Forms.Label();
             groupBoxCollecte = new System.Windows.Forms.GroupBox();
             labelCollecte2 = new System.Windows.Forms.Label();
             groupBoxOutput = new System.Windows.Forms.GroupBox();
@@ -137,6 +145,10 @@ namespace PPTXcreator
             groupBoxDatumTijd.SuspendLayout();
             groupBoxVoorgangers.SuspendLayout();
             groupBoxQR.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericYMaxQR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericXMaxQR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericYMinQR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericXMinQR)).BeginInit();
             groupBoxCollecte.SuspendLayout();
             groupBoxOutput.SuspendLayout();
             groupBoxTemplates.SuspendLayout();
@@ -443,16 +455,116 @@ namespace PPTXcreator
             // 
             groupBoxQR.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            groupBoxQR.Controls.Add(labelQRMax);
+            groupBoxQR.Controls.Add(this.numericYMaxQR);
+            groupBoxQR.Controls.Add(this.numericXMaxQR);
+            groupBoxQR.Controls.Add(this.numericYMinQR);
+            groupBoxQR.Controls.Add(this.numericXMinQR);
+            groupBoxQR.Controls.Add(labelQRMin);
             groupBoxQR.Controls.Add(this.checkBoxQRedit);
             groupBoxQR.Controls.Add(this.buttonQRSelect);
             groupBoxQR.Controls.Add(this.textBoxQRPath);
             groupBoxQR.Controls.Add(labelQRPath);
-            groupBoxQR.Location = new System.Drawing.Point(6, 180);
+            groupBoxQR.Location = new System.Drawing.Point(6, 167);
             groupBoxQR.Name = "groupBoxQR";
-            groupBoxQR.Size = new System.Drawing.Size(527, 104);
+            groupBoxQR.Size = new System.Drawing.Size(527, 148);
             groupBoxQR.TabIndex = 8;
             groupBoxQR.TabStop = false;
             groupBoxQR.Text = "QR-code";
+            // 
+            // labelQRMax
+            // 
+            labelQRMax.AutoSize = true;
+            labelQRMax.Location = new System.Drawing.Point(274, 107);
+            labelQRMax.Name = "labelQRMax";
+            labelQRMax.Size = new System.Drawing.Size(111, 17);
+            labelQRMax.TabIndex = 16;
+            labelQRMax.Text = "Pixel rechtsonder:";
+            // 
+            // numericYMaxQR
+            // 
+            this.numericYMaxQR.Location = new System.Drawing.Point(457, 105);
+            this.numericYMaxQR.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericYMaxQR.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericYMaxQR.Name = "numericYMaxQR";
+            this.numericYMaxQR.Size = new System.Drawing.Size(51, 25);
+            this.numericYMaxQR.TabIndex = 18;
+            this.numericYMaxQR.Value = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericYMaxQR.Enter += new System.EventHandler(this.CropRegionSelectOnFocus);
+            this.numericYMaxQR.Validated += new System.EventHandler(this.CropRegionChanged);
+            // 
+            // numericXMaxQR
+            // 
+            this.numericXMaxQR.Location = new System.Drawing.Point(400, 105);
+            this.numericXMaxQR.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericXMaxQR.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericXMaxQR.Name = "numericXMaxQR";
+            this.numericXMaxQR.Size = new System.Drawing.Size(51, 25);
+            this.numericXMaxQR.TabIndex = 17;
+            this.numericXMaxQR.Value = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericXMaxQR.Enter += new System.EventHandler(this.CropRegionSelectOnFocus);
+            this.numericXMaxQR.Validated += new System.EventHandler(this.CropRegionChanged);
+            // 
+            // numericYMinQR
+            // 
+            this.numericYMinQR.Location = new System.Drawing.Point(189, 105);
+            this.numericYMinQR.Maximum = new decimal(new int[] {
+            9998,
+            0,
+            0,
+            0});
+            this.numericYMinQR.Name = "numericYMinQR";
+            this.numericYMinQR.Size = new System.Drawing.Size(51, 25);
+            this.numericYMinQR.TabIndex = 15;
+            this.numericYMinQR.Enter += new System.EventHandler(this.CropRegionSelectOnFocus);
+            this.numericYMinQR.Validated += new System.EventHandler(this.CropRegionChanged);
+            // 
+            // numericXMinQR
+            // 
+            this.numericXMinQR.Location = new System.Drawing.Point(132, 105);
+            this.numericXMinQR.Maximum = new decimal(new int[] {
+            9998,
+            0,
+            0,
+            0});
+            this.numericXMinQR.Name = "numericXMinQR";
+            this.numericXMinQR.Size = new System.Drawing.Size(51, 25);
+            this.numericXMinQR.TabIndex = 14;
+            this.numericXMinQR.Enter += new System.EventHandler(this.CropRegionSelectOnFocus);
+            this.numericXMinQR.Validated += new System.EventHandler(this.CropRegionChanged);
+            // 
+            // labelQRMin
+            // 
+            labelQRMin.AutoSize = true;
+            labelQRMin.Location = new System.Drawing.Point(14, 107);
+            labelQRMin.Name = "labelQRMin";
+            labelQRMin.Size = new System.Drawing.Size(102, 17);
+            labelQRMin.TabIndex = 13;
+            labelQRMin.Text = "Pixel linksboven:";
             // 
             // checkBoxQRedit
             // 
@@ -830,7 +942,7 @@ namespace PPTXcreator
             this.buttonSettingsCollection.Location = new System.Drawing.Point(6, 332);
             this.buttonSettingsCollection.Name = "buttonSettingsCollection";
             this.buttonSettingsCollection.Size = new System.Drawing.Size(100, 30);
-            this.buttonSettingsCollection.TabIndex = 13;
+            this.buttonSettingsCollection.TabIndex = 19;
             this.buttonSettingsCollection.Text = "Instellingen";
             this.buttonSettingsCollection.UseVisualStyleBackColor = true;
             this.buttonSettingsCollection.Click += new System.EventHandler(this.ButtonGotoSettingsTab);
@@ -841,7 +953,7 @@ namespace PPTXcreator
             this.buttonPreviousCollection.Location = new System.Drawing.Point(347, 332);
             this.buttonPreviousCollection.Name = "buttonPreviousCollection";
             this.buttonPreviousCollection.Size = new System.Drawing.Size(90, 30);
-            this.buttonPreviousCollection.TabIndex = 14;
+            this.buttonPreviousCollection.TabIndex = 20;
             this.buttonPreviousCollection.Text = "Terug";
             this.buttonPreviousCollection.UseVisualStyleBackColor = true;
             this.buttonPreviousCollection.Click += new System.EventHandler(this.ButtonPreviousTab);
@@ -852,7 +964,7 @@ namespace PPTXcreator
             this.buttonNextCollection.Location = new System.Drawing.Point(443, 332);
             this.buttonNextCollection.Name = "buttonNextCollection";
             this.buttonNextCollection.Size = new System.Drawing.Size(90, 30);
-            this.buttonNextCollection.TabIndex = 15;
+            this.buttonNextCollection.TabIndex = 21;
             this.buttonNextCollection.Text = "Verder";
             this.buttonNextCollection.UseVisualStyleBackColor = true;
             this.buttonNextCollection.Click += new System.EventHandler(this.ButtonNextTab);
@@ -1049,7 +1161,7 @@ namespace PPTXcreator
             this.labelVersion.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelVersion.Size = new System.Drawing.Size(90, 17);
             this.labelVersion.TabIndex = 25;
-            this.labelVersion.Text = "versie 1.1.1";
+            this.labelVersion.Text = "versie 1.2.0";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // Window
@@ -1075,6 +1187,10 @@ namespace PPTXcreator
             groupBoxVoorgangers.PerformLayout();
             groupBoxQR.ResumeLayout(false);
             groupBoxQR.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericYMaxQR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericXMaxQR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericYMinQR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericXMinQR)).EndInit();
             groupBoxCollecte.ResumeLayout(false);
             groupBoxCollecte.PerformLayout();
             groupBoxOutput.ResumeLayout(false);
@@ -1148,6 +1264,10 @@ namespace PPTXcreator
         private System.Windows.Forms.Button buttonNextDatetime;
         private System.Windows.Forms.Button buttonPreviousDatetime;
         private System.Windows.Forms.Label labelVersion;
+        private System.Windows.Forms.NumericUpDown numericYMaxQR;
+        private System.Windows.Forms.NumericUpDown numericXMaxQR;
+        private System.Windows.Forms.NumericUpDown numericYMinQR;
+        private System.Windows.Forms.NumericUpDown numericXMinQR;
     }
 }
 

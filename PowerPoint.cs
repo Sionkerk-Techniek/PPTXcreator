@@ -230,17 +230,20 @@ namespace PPTXcreator
                 settings.OffsetX, settings.OffsetY, settings.Width, settings.Height);
             Bitmap editedImage = originalImage.Clone(crop, PixelFormat.DontCare);
 
-            // Manually iterate over the pixels to apply the threshold
-            for (int x = 0; x < settings.Width; x++)
+            if (!originalImage.PixelFormat.HasFlag(PixelFormat.Indexed))
             {
-                for (int y = 0; y < settings.Height; y++)
+                // Manually iterate over the pixels to apply the threshold
+                for (int x = 0; x < settings.Width; x++)
                 {
-                    // GetPixel and SetPixel are slow, but it shouldn't be a problem for a single image
-                    Color pixel = editedImage.GetPixel(x, y);
-                    if (pixel.GetBrightness() >= settings.Threshold)
-                        editedImage.SetPixel(x, y, Color.White);
-                    else
-                        editedImage.SetPixel(x, y, Color.Black);
+                    for (int y = 0; y < settings.Height; y++)
+                    {
+                        // GetPixel and SetPixel are slow, but it shouldn't be a problem for a single image
+                        Color pixel = editedImage.GetPixel(x, y);
+                        if (pixel.GetBrightness() >= settings.Threshold)
+                            editedImage.SetPixel(x, y, Color.White);
+                        else
+                            editedImage.SetPixel(x, y, Color.Black);
+                    }
                 }
             }
 
