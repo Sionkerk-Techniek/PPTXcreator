@@ -111,6 +111,16 @@ namespace PPTXcreator.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] liednamen {
+            get {
+                object obj = ResourceManager.GetObject("liednamen", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap outline_update_black_24dp {

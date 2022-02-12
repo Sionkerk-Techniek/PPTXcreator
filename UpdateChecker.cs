@@ -6,7 +6,7 @@ using Octokit;
 
 namespace PPTXcreator
 {
-    static class UpdateChecker
+    public static class UpdateChecker
     {
         public static async Task CheckReleases()
         {

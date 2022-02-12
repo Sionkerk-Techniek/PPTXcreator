@@ -8,7 +8,7 @@ using System.IO;
 
 namespace PPTXcreator
 {
-    static class Dialogs
+    public static class Dialogs
     {
         public static void GenericWarning(string message)
         {
@@ -40,6 +40,10 @@ namespace PPTXcreator
             );
         }
 
+        /// <summary>
+        /// Show a folder selection window and check if the selected folder exists
+        /// </summary>
+        /// <returns>The path to the selected folder, or null if the path is invalid</returns>
         public static string SelectFolder(string description)
         {
             FolderBrowserDialog folderDialog = new FolderBrowserDialog
@@ -62,6 +66,10 @@ namespace PPTXcreator
             return null;
         }
 
+        /// <summary>
+        /// Show a file selection window and check if the selected file exists
+        /// </summary>
+        /// <returns>The path to the selected file, or null if the path is invalid</returns>
         public static string SelectFile(string filter, string title)
         {
             OpenFileDialog fileDialog = new OpenFileDialog
@@ -87,16 +95,6 @@ namespace PPTXcreator
             return null;
         }
 
-        public static DialogResult CreateNewSettingsfile(string path)
-        {
-            return MessageBox.Show(
-                $"Het configuratiebestand is niet gevonden op locatie '{path}'. Wil je een nieuw bestand maken?",
-                "Er is een fout opgetreden",
-                MessageBoxButtons.YesNoCancel,
-                MessageBoxIcon.Warning
-            );
-        }
-
         public static void UpdateAvailable(string newversion)
         {
             DialogResult result = MessageBox.Show(
@@ -108,7 +106,7 @@ namespace PPTXcreator
 
             if (result == DialogResult.Yes)
             {
-                System.Diagnostics.Process.Start("https://github.com/Sionkerk-Houten/PPTXcreator/releases/latest");
+                System.Diagnostics.Process.Start("https://github.com/Sionkerk-Techniek/PPTXcreator/releases/latest");
             }
         }
     }

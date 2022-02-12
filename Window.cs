@@ -43,7 +43,7 @@ namespace PPTXcreator
         }
 
         /// <summary>
-        /// Selects a file and sets this.textBoxQRPath.Text and
+        /// Select a file and sets this.textBoxQRPath.Text and
         /// QRFile to the path
         /// </summary>
         private void ButtonSelectQR(object sender, EventArgs e)
@@ -57,7 +57,7 @@ namespace PPTXcreator
         }
 
         /// <summary>
-        /// Selects a directory and sets <see cref="textBoxOutputFolder"/>.Text
+        /// Select a directory and sets <see cref="textBoxOutputFolder"/>.Text
         /// and <see cref="Settings.OutputFolder"/> to the path
         /// </summary>
         private void ButtonSelectOutputFolder(object sender, EventArgs e)
@@ -70,6 +70,10 @@ namespace PPTXcreator
             }
         }
 
+        /// <summary>
+        /// Select a template file for the first presentation
+        /// and sets <see cref="Settings.PathTemplateBefore"/>
+        /// </summary>
         private void ButtonSelectTemplateBefore(object sender, EventArgs e)
         {
             string path = Dialogs.SelectFile(
@@ -83,6 +87,10 @@ namespace PPTXcreator
             }
         }
 
+        /// <summary>
+        /// Select a template file for the second presentation
+        /// and sets <see cref="Settings.PathTemplateDuring"/>
+        /// </summary>
         private void ButtonSelectTemplateDuring(object sender, EventArgs e)
         {
             string path = Dialogs.SelectFile(
@@ -96,6 +104,10 @@ namespace PPTXcreator
             }
         }
 
+        /// <summary>
+        /// Select a template file for the third presentation
+        /// and sets <see cref="Settings.PathTemplateAfter"/>
+        /// </summary>
         private void ButtonSelectTemplateAfter(object sender, EventArgs e)
         {
             string path = Dialogs.SelectFile(
@@ -109,6 +121,10 @@ namespace PPTXcreator
             }
         }
 
+        /// <summary>
+        /// Select the json file for autofilling fields
+        /// and sets <see cref="Settings.PathServicesJson"/>
+        /// </summary>
         private void ButtonSelectJsonServices(object sender, EventArgs e)
         {
             string path = Dialogs.SelectFile(
@@ -124,6 +140,9 @@ namespace PPTXcreator
             }
         }
 
+        /// <summary>
+        /// Get the previous service date and updates the datetime picker
+        /// </summary>
         private void ButtonPreviousDatetime(object sender, EventArgs e)
         {
             DateTime dateTime = Service.GetPreviousDatetime(dateTimePickerCurrent.Value);
@@ -131,6 +150,9 @@ namespace PPTXcreator
                 dateTimePickerCurrent.Value = dateTime;
         }
 
+        /// <summary>
+        /// Get the next service date and updates the datetime picker
+        /// </summary>
         private void ButtonNextDatetime(object sender, EventArgs e)
         {
             DateTime dateTime = Service.GetNextDatetime(dateTimePickerCurrent.Value);
@@ -138,6 +160,10 @@ namespace PPTXcreator
                 dateTimePickerCurrent.Value = dateTime;
         }
 
+        /// <summary>
+        /// Autofill fields for the current and next service
+        /// if <see cref="Settings.EnableAutoPopulate"/> is true
+        /// </summary>
         private void DateTimePickerCurrentChanged(object sender, EventArgs e)
         {
             if (Settings.Instance.EnableAutoPopulate)
@@ -147,12 +173,19 @@ namespace PPTXcreator
             }
         }
 
+        /// <summary>
+        /// Autofill fields for the next service
+        /// if <see cref="Settings.EnableAutoPopulate"/> is true
+        /// </summary>
         private void DateTimePickerNextChanged(object sender, EventArgs e)
         {
             if (Settings.Instance.EnableAutoPopulate)
                 SetFormDataNext(Service.GetCurrent(dateTimePickerNext.Value));
         }
 
+        /// <summary>
+        /// Autofill fields for the current and next service
+        /// </summary>
         private void SetFormDataCurrent(Service service)
         {
             textBoxVoorgangerNuTitel.Text = service.Pastor.Title;
@@ -166,6 +199,9 @@ namespace PPTXcreator
             textBoxOrganist.Text = service.Organist;
         }
 
+        /// <summary>
+        /// Autofill fields for the next service
+        /// </summary>
         private void SetFormDataNext(Service nextService)
         {
             if (nextService.Datetime != DateTime.MinValue)
@@ -178,6 +214,10 @@ namespace PPTXcreator
             textBoxVoorgangerNextPlaats.Text = nextService.Pastor.Place;
         }
 
+        /// <summary>
+        /// Retrieve form information and return it as a dictionary of strings, where every key is
+        /// a placeholder string in a template and its value the value it should be replaced by
+        /// </summary>
         public Dictionary<string, string> GetFormKeywords()
         {
             KeywordSettings tags = Settings.Instance.Keywords;
@@ -200,17 +240,26 @@ namespace PPTXcreator
             return keywords;
         }
 
+        /// <summary>
+        /// Make the first character in a string uppercase
+        /// </summary>
         private static string TitleCase(string input)
         {
             if (string.IsNullOrEmpty(input)) return input;
             return char.ToUpper(input[0]) + input.Substring(1);
         }
 
+        /// <summary>
+        /// Convert a DateTimePicker to a H:mm string (24-hour time without leading zero)
+        /// </summary>
         private static string GetTime(DateTimePicker dateTimePicker)
         {
             return dateTimePicker.Value.ToString("H:mm", CultureInfo.InvariantCulture);
         }
 
+        /// <summary>
+        /// Convert a DateTimePicker to a date in the long notation without year, e.g. '30 februari'
+        /// </summary>
         private static string GetDateLong(DateTimePicker dateTimePicker)
         {
             // Dictionary to avoid not having the nl-NL resource when using System.Globalization
@@ -223,11 +272,17 @@ namespace PPTXcreator
             return $"{dateTimePicker.Value.Day} {monthNames[dateTimePicker.Value.Month]}";
         }
 
+        /// <summary>
+        /// Add a row to the datagridview
+        /// </summary>
         private void ButtonAddDatagridviewRow(object sender, EventArgs e)
         {
             dataGridView.Rows.Add();
         }
 
+        /// <summary>
+        /// Remove the selected row(s) from the datagridview
+        /// </summary>
         private void ButtonRemoveDatagridviewRow(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
@@ -256,6 +311,9 @@ namespace PPTXcreator
             }
         }
 
+        /// <summary>
+        /// Decrement the current DataGridViewRow's index
+        /// </summary>
         private void ButtonMoveUpDatagridviewRow(object sender, EventArgs e)
         {
             if (dataGridView.CurrentRow is null) return;
@@ -272,6 +330,9 @@ namespace PPTXcreator
             UpdateDatagridviewSelection(index - 1);
         }
 
+        /// <summary>
+        /// Increment the current DataGridViewRow's index
+        /// </summary>
         private void ButtonMoveDownDatagridviewRow(object sender, EventArgs e)
         {
             if (dataGridView.CurrentRow is null) return;
@@ -288,6 +349,9 @@ namespace PPTXcreator
             UpdateDatagridviewSelection(index + 1);
         }
 
+        /// <summary>
+        /// Set the CurrentRow of the datagridview to the one at index <paramref name="index"/>
+        /// </summary>
         private void UpdateDatagridviewSelection(int index)
         {
             dataGridView.ClearSelection();
@@ -295,9 +359,67 @@ namespace PPTXcreator
             dataGridView.CurrentCell = dataGridView.Rows[index].Cells[0];
         }
 
-        private void ButtonGotoSettingsTab(object sender, EventArgs e)
+        /// <summary>
+        /// Color cells of a DataGridViewRow based on the type of service
+        /// </summary>
+        /// <param name="currentrow"></param>
+        /// <param name="serviceElementType"></param>
+        private void UpdateDatagridviewRowStyle(DataGridViewRow currentrow, string serviceElementType)
         {
-            tabControl.SelectTab("tabInstellingen");
+            DataGridViewCellStyle disabledStyle = dataGridView.DefaultCellStyle.Clone();
+            disabledStyle.BackColor = Color.LightGray;
+
+            switch (serviceElementType)
+            {
+                case null:
+                    return;
+                case "Lezing":
+                case "Psalm":
+                case "Psalm (WK)":
+                    currentrow.Cells[1].Style = dataGridView.DefaultCellStyle;
+                    currentrow.Cells[2].Style = disabledStyle;
+                    return;
+                case "Lied (Overig)":
+                    currentrow.Cells[1].Style = disabledStyle;
+                    currentrow.Cells[2].Style = dataGridView.DefaultCellStyle;
+                    return;
+                case "Lied (WK)":
+                case "Lied (OTH)":
+                default:
+                    currentrow.Cells[1].Style = dataGridView.DefaultCellStyle;
+                    currentrow.Cells[2].Style = dataGridView.DefaultCellStyle;
+                    return;
+            }
+        }
+
+        /// <summary>
+        /// Autofill the song's name if applicable and call <see cref="UpdateDatagridviewRowStyle"/>
+        /// </summary>
+        private void AutofillDatagridview(object sender, DataGridViewCellEventArgs e)
+        {
+            // Prevent annoying NRE's
+            DataGridViewRow currentrow;
+            string serviceElementType;
+            try
+            {
+                currentrow = dataGridView.CurrentRow;
+                serviceElementType = (string)currentrow.Cells[0].Value;
+            }
+            catch (NullReferenceException)
+            {
+                return;
+            }
+
+            // Show which fields have to be filled in
+            UpdateDatagridviewRowStyle(currentrow, serviceElementType);
+
+            // Get the song number, convert it to a name and fill it in in the form
+            if (serviceElementType != "Lied (WK)") return;
+            string songnumber = ((string)dataGridView.CurrentCell.Value).Split(':')[0].Trim();
+            string songname = Songnames.GetName(songnumber);
+            if (songname is null) return;
+
+            currentrow.Cells[2].Value = songname;
         }
 
         /// <summary>
@@ -310,6 +432,11 @@ namespace PPTXcreator
             {
                 dataGridView.Rows[0].Cells[0].Selected = true;
             }
+        }
+
+        private void ButtonGotoSettingsTab(object sender, EventArgs e)
+        {
+            tabControl.SelectTab("tabInstellingen");
         }
 
         private void ButtonNextTab(object sender, EventArgs e)
@@ -532,6 +659,10 @@ namespace PPTXcreator
             return null;
         }
 
+        /// <summary>
+        /// Convert <paramref name="dateTimePicker"/> to a yyyy-MM-dd string 
+        /// and prefix what part of the day it is
+        /// </summary>
         private static string GetFilenamePart(DateTimePicker dateTimePicker)
         {
             string output = "";
@@ -543,6 +674,11 @@ namespace PPTXcreator
             return output;
         }
 
+        /// <summary>
+        /// Check if the crop region is valid and save it to the imageparameters
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CropRegionChanged(object sender, EventArgs e)
         {
             if (numericXMinQR.Value >= numericXMaxQR.Value)

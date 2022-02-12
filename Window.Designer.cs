@@ -1103,6 +1103,7 @@ namespace PPTXcreator
             this.dataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView.Size = new System.Drawing.Size(490, 208);
             this.dataGridView.TabIndex = 2;
+            this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.AutofillDatagridview);
             // 
             // ContentType
             // 
@@ -1161,7 +1162,7 @@ namespace PPTXcreator
             this.labelVersion.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelVersion.Size = new System.Drawing.Size(90, 17);
             this.labelVersion.TabIndex = 25;
-            this.labelVersion.Text = "versie 1.2.0";
+            this.labelVersion.Text = "versie 1.3.0";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // Window

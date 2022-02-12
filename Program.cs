@@ -5,7 +5,7 @@ using System.IO;
 
 namespace PPTXcreator
 {
-    static class Program
+    public static class Program
     {
         public static Window MainWindow { get; private set; }
 
@@ -20,9 +20,12 @@ namespace PPTXcreator
             Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(CrashHandlerUI);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CrashHandlerDomain);
 
+            // Load settings, service information, songnames from disk
             Settings.Load();
             Service.UpdateJsonCache();
+            Songnames.LoadNames();
 
+            // Check for updates
             if (Settings.Instance.EnableUpdateChecker) Task.Run(() => UpdateChecker.CheckReleases());
 
             // start UI
@@ -31,6 +34,7 @@ namespace PPTXcreator
             MainWindow = new Window();
             Application.Run(MainWindow);
 
+            // Save settings when closing
             Settings.Save();
         }
 
