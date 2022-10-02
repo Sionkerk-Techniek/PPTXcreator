@@ -218,6 +218,7 @@
   </Target>
   <ItemGroup>
     <Content Include="Resources\Icon.ico" />
+    <Content Include="Resources\qr_code.png" />
     <EmbeddedResource Include="Resources\liednamen" />
     <None Include="Resources\outline_update_black_24dp_mirrored.png" />
     <None Include="Resources\outline_update_black_24dp.png" />

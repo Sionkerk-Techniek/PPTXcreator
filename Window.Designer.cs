@@ -470,7 +470,7 @@ namespace PPTXcreator
             groupBoxQR.Size = new System.Drawing.Size(527, 148);
             groupBoxQR.TabIndex = 8;
             groupBoxQR.TabStop = false;
-            groupBoxQR.Text = "QR-code";
+            groupBoxQR.Text = "QR-code (optioneel)";
             // 
             // labelQRMax
             // 
@@ -483,6 +483,7 @@ namespace PPTXcreator
             // 
             // numericYMaxQR
             // 
+            this.numericYMaxQR.Enabled = false;
             this.numericYMaxQR.Location = new System.Drawing.Point(457, 105);
             this.numericYMaxQR.Maximum = new decimal(new int[] {
             9999,
@@ -507,6 +508,7 @@ namespace PPTXcreator
             // 
             // numericXMaxQR
             // 
+            this.numericXMaxQR.Enabled = false;
             this.numericXMaxQR.Location = new System.Drawing.Point(400, 105);
             this.numericXMaxQR.Maximum = new decimal(new int[] {
             9999,
@@ -531,6 +533,7 @@ namespace PPTXcreator
             // 
             // numericYMinQR
             // 
+            this.numericYMinQR.Enabled = false;
             this.numericYMinQR.Location = new System.Drawing.Point(189, 105);
             this.numericYMinQR.Maximum = new decimal(new int[] {
             9998,
@@ -545,6 +548,7 @@ namespace PPTXcreator
             // 
             // numericXMinQR
             // 
+            this.numericXMinQR.Enabled = false;
             this.numericXMinQR.Location = new System.Drawing.Point(132, 105);
             this.numericXMinQR.Maximum = new decimal(new int[] {
             9998,
@@ -569,6 +573,7 @@ namespace PPTXcreator
             // checkBoxQRedit
             // 
             this.checkBoxQRedit.AutoSize = true;
+            this.checkBoxQRedit.Enabled = false;
             this.checkBoxQRedit.Location = new System.Drawing.Point(17, 68);
             this.checkBoxQRedit.Name = "checkBoxQRedit";
             this.checkBoxQRedit.Size = new System.Drawing.Size(197, 21);
@@ -595,6 +600,7 @@ namespace PPTXcreator
             this.textBoxQRPath.ReadOnly = true;
             this.textBoxQRPath.Size = new System.Drawing.Size(344, 25);
             this.textBoxQRPath.TabIndex = 10;
+            this.textBoxQRPath.Text = "standaard QR";
             // 
             // groupBoxCollecte
             // 
@@ -1162,7 +1168,7 @@ namespace PPTXcreator
             this.labelVersion.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelVersion.Size = new System.Drawing.Size(90, 17);
             this.labelVersion.TabIndex = 25;
-            this.labelVersion.Text = "versie 1.3.0";
+            this.labelVersion.Text = "versie 1.4.0";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // Window

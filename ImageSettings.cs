@@ -5,16 +5,16 @@ namespace PPTXcreator
     class ImageSettings
     {
         [JsonPropertyName("X-offset")]
-        public int OffsetX { get; set; } = 824;
+        public int OffsetX { get; set; } = 20;
 
         [JsonPropertyName("Y-offset")]
-        public int OffsetY { get; set; } = 544;
+        public int OffsetY { get; set; } = 20;
 
         [JsonPropertyName("Breedte")]
-        public int Width { get; set; } = 400;
+        public int Width { get; set; } = 360;
 
         [JsonPropertyName("Hoogte")]
-        public int Height { get; set; } = 400;
+        public int Height { get; set; } = 360;
 
         public float Threshold { get; set; } = 0.6f;
 

@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -15,8 +16,8 @@ namespace PPTXcreator
     class PowerPoint
     {
         private PresentationDocument Document { get; }
-        private PresentationPart PresPart { get => Document.PresentationPart; }
-        private IEnumerable<SlidePart> Slides { get => PresPart.SlideParts; }
+        private PresentationPart PresPart => Document.PresentationPart;
+        private IEnumerable<SlidePart> Slides => PresPart.SlideParts;
         
         /// <summary>
         /// Constructs a Presentation object from the .pptx file at <paramref name="openPath"/>,
@@ -164,9 +165,9 @@ namespace PPTXcreator
                 {
                     // Get the ImagePart by id, and replace the image
                     ImagePart imagePart = (ImagePart)slidePart.GetPartById(rId);
-                    Stream imageStream = GetEditedImage(imagePath);
-                    if (imageStream != null) imagePart.FeedData(imageStream);
-                    imageStream.Dispose();
+
+                    using (Stream imageStream = GetEditedImage(imagePath))
+                        if (imageStream != null) imagePart.FeedData(imageStream);
                 }
             }
         }
@@ -177,7 +178,8 @@ namespace PPTXcreator
         /// </summary>
         public void ReplaceImage(string imagePath)
         {
-            if (!File.Exists(imagePath)) return;
+            if (!File.Exists(imagePath) && imagePath != "standaard QR")
+                return;
 
             // Loop over slideparts (not really necessary if the slide number is known)
             foreach (SlidePart slidePart in Slides)
@@ -205,15 +207,27 @@ namespace PPTXcreator
         /// </summary>
         public static Stream GetEditedImage(string path)
         {
+            FileStream originalImageStream = null;
+            Bitmap originalImage;
+            ImageSettings settings = Settings.Instance.ImageParameters;
+
             // Try to get the filestream, return it without editing if EnableEditQR is false
-            if (!Program.TryGetFileStream(path, out FileStream originalImageStream))
-                return null;
-            if (!Settings.Instance.EnableEditQR)
-                return originalImageStream;
+            if (path != "standaard QR")
+            {
+                if (!Program.TryGetFileStream(path, out originalImageStream))
+                    return null;
+                if (!Settings.Instance.EnableEditQR)
+                    return originalImageStream;
+
+                originalImage = new Bitmap(originalImageStream);
+            }
+            else
+            {
+                originalImage = Properties.Resources.qr_code;
+                settings = new ImageSettings();
+            }
 
             // Check if the cropping region is valid, don't edit if it isn't
-            Bitmap originalImage = new Bitmap(originalImageStream);
-            ImageSettings settings = Settings.Instance.ImageParameters;
             if (!settings.IsValid()
                 || settings.OffsetX + settings.Width > originalImage.Width
                 || settings.OffsetY + settings.Height > originalImage.Height)
@@ -222,7 +236,18 @@ namespace PPTXcreator
                     $"waar naar bijgesneden moet worden ({settings}) niet bestaat in de afbeelding " +
                     $"met resolutie {originalImage.Width}x{originalImage.Height}.");
                 Program.MainWindow.CheckBoxEnableEditQRSetValue(false);
-                return originalImageStream;
+
+                if (originalImageStream == null)
+                {
+                    MemoryStream imageStream = new MemoryStream();
+                    Properties.Resources.qr_code.Save(imageStream, ImageFormat.Png);
+                    imageStream.Position = 0;
+                    return imageStream;
+                }
+                else
+                {
+                    return originalImageStream;
+                }
             }
 
             // Crop the image
@@ -252,7 +277,7 @@ namespace PPTXcreator
             crop.X = crop.Y = 0; // include full image, .Clone always needs a rectangle for some reason
             editedImage.Clone(crop, PixelFormat.Format1bppIndexed).Save(memoryStream, ImageFormat.Png);
             memoryStream.Position = 0;
-            originalImageStream.Dispose();
+            originalImageStream?.Dispose();
             return memoryStream;
         }
 
@@ -314,6 +339,26 @@ namespace PPTXcreator
         {
             Document.Close();
             Document.Dispose(); // Is this necessary? Probably not but it feels appropiate
+        }
+
+        public void RemoveSlide(int index)
+        {
+            if (Slides.Count() == 1) return; // Prevent illegal slideless presentations
+
+            // Get the SlideIdList
+            Presentation.SlideIdList idList = PresPart.Presentation.SlideIdList;
+
+            if (index >= idList.ChildElements.Count) return; // slide does not exist
+
+            // Get the SlideId from the SlideIdList and delete it from the list
+            Presentation.SlideId sourceSlideId = (Presentation.SlideId)idList.ChildElements[index];
+            string sourceSlideRId = sourceSlideId.RelationshipId;
+            idList.RemoveChild(sourceSlideId);
+
+            // Delete the actual slide
+            PresPart.Presentation.Save();
+            SlidePart sourceSlidePart = (SlidePart)PresPart.GetPartById(sourceSlideId.RelationshipId);
+            PresPart.DeletePart(sourceSlidePart);
         }
     }
 }
