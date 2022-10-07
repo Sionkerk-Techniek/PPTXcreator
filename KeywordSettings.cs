@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace PPTXcreator
 {
-    class KeywordSettings
+    public class KeywordSettings
     {
         [JsonPropertyName("Begintijd dienst")]
         public string ServiceTime { get; set; } = "[tijd]";

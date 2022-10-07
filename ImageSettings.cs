@@ -2,7 +2,7 @@
 
 namespace PPTXcreator
 {
-    class ImageSettings
+    public class ImageSettings
     {
         [JsonPropertyName("X-offset")]
         public int OffsetX { get; set; } = 20;

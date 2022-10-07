@@ -7,7 +7,7 @@ using System.Security;
 
 namespace PPTXcreator
 {
-    class Settings
+    public class Settings
     {
         // Where the settings file is located
         private const string SettingsPath = @"settings.json";
