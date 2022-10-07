@@ -598,15 +598,12 @@ namespace PPTXcreator
                 from ServiceElement element in elements where element.IsReading select element
             );
 
-            beforeService.SaveClose();
-
             // Create the presentation during the service
             PowerPoint duringService = CreatePowerpoint(Settings.Instance.PathTemplateDuring,
                 Settings.Instance.PathOutputFolder + $"/tijdens {filenamepart}.pptx");
 
             if (duringService == null) return;
-
-            duringService.ReplaceKeywords(keywords);
+            
             duringService.ReplaceImage(textBoxQRPath.Text);
 
             foreach (ServiceElement element in elements)
@@ -617,6 +614,9 @@ namespace PPTXcreator
                 }, element.ShowQR);
             }
 
+            duringService.CopyQRSlideFromPresentation(beforeService);
+            duringService.ReplaceKeywords(keywords);
+            beforeService.SaveClose();
             duringService.RemoveSlide(index: 0); // delete template slide
             duringService.SaveClose();
 
@@ -628,7 +628,6 @@ namespace PPTXcreator
 
             afterService.ReplaceKeywords(keywords);
             afterService.ReplaceImage(textBoxQRPath.Text);
-
             afterService.SaveClose();
 
             // Done, message the user
