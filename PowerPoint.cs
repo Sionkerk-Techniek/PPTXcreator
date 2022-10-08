@@ -136,7 +136,7 @@ namespace PPTXcreator
 
             // Set spacing to 0.9 for 6 lines or less, 0.8 for 7 lines, 0.7 for 8, etc
             properties.LineSpacing.SpacingPercent = new SpacingPercent {
-                Val = 90000 - Math.Min((lines - 6) * 10000, 0)
+                Val = 90000 - Math.Max((lines - 6) * 10000, 0)
             };
         }
 
@@ -355,6 +355,20 @@ namespace PPTXcreator
             Document.Dispose(); // Is this necessary? Probably not but it feels appropiate
         }
 
+        public void RemoveHiddenSlides()
+        {
+            PresPart.Presentation.Save();
+            Presentation.SlideIdList idList = PresPart.Presentation.SlideIdList;
+            for (int i = 0; i < idList.Count(); i++)
+            {
+                Presentation.SlideId slideId = (Presentation.SlideId)idList.ChildElements[i];
+                SlidePart slidePart = (SlidePart)PresPart.GetPartById(slideId.RelationshipId);
+
+                if (slidePart.Slide.Show != null && !slidePart.Slide.Show)
+                    RemoveSlide(i);
+            }
+        }
+
         public void RemoveSlide(int index)
         {
             if (Slides.Count() == 1) return; // Prevent illegal slideless presentations
@@ -365,14 +379,13 @@ namespace PPTXcreator
             if (index >= idList.ChildElements.Count) return; // slide does not exist
 
             // Get the SlideId from the SlideIdList and delete it from the list
-            Presentation.SlideId sourceSlideId = (Presentation.SlideId)idList.ChildElements[index];
-            string sourceSlideRId = sourceSlideId.RelationshipId;
-            idList.RemoveChild(sourceSlideId);
+            Presentation.SlideId slideId = (Presentation.SlideId)idList.ChildElements[index];
+            idList.RemoveChild(slideId);
 
             // Delete the actual slide
             PresPart.Presentation.Save();
-            SlidePart sourceSlidePart = (SlidePart)PresPart.GetPartById(sourceSlideId.RelationshipId);
-            PresPart.DeletePart(sourceSlidePart);
+            SlidePart slidePart = (SlidePart)PresPart.GetPartById(slideId.RelationshipId);
+            PresPart.DeletePart(slidePart);
         }
 
         /// <summary>
@@ -385,7 +398,7 @@ namespace PPTXcreator
             uint newId = idList.Max(id => (id as Presentation.SlideId).Id) + 1;
 
             // Get the first SlidePart from the SlideIdList
-            Presentation.SlideId sourceSlideId = (Presentation.SlideId)idList.LastChild;
+            Presentation.SlideId sourceSlideId = (Presentation.SlideId)idList.FirstChild;
             SlidePart sourceSlidePart = (SlidePart)PresPart.GetPartById(sourceSlideId.RelationshipId);
 
             // Create a new slidepart in this presentation, and feed it data from the origin
@@ -396,9 +409,29 @@ namespace PPTXcreator
 
             // Add the slidelayoutpart, fix id
             targetSlidePart.AddPart(sourceSlidePart.SlideLayoutPart);
-            Presentation.SlideId targetSlideId = idList.AppendChild(new Presentation.SlideId());
+            Presentation.SlideId targetSlideId = idList.InsertBefore(new Presentation.SlideId(), idList.LastChild);
             targetSlideId.Id = newId;
             targetSlideId.RelationshipId = PresPart.GetIdOfPart(targetSlidePart);
+
+            // Mess around so that the fonts are mostly the same (but not all of them for some reason)
+            targetSlidePart.SlideLayoutPart.SlideMasterPart.ThemePart.FeedData(
+                originSlidePart.SlideLayoutPart.SlideMasterPart.ThemePart.GetStream());
+
+            // Adjust font things
+            foreach (Run run in targetSlidePart.Slide.Descendants<Run>())
+            {
+                // Brute force the default fonts for runs that don't have any specified
+                if (!run.RunProperties.ChildElements.Any(element => element is TextFontType))
+                {
+                    run.RunProperties.AddChild(new LatinFont() { Typeface = "+mn-lt" }); // usually Calibri
+                    run.RunProperties.AddChild(new EastAsianFont { Typeface = "+mn-ea" });
+                    run.RunProperties.AddChild(new ComplexScriptFont { Typeface = "+mn-cs" });
+                }
+
+                // Increase outline width for better contrast
+                if (run.RunProperties.Outline != null)
+                    run.RunProperties.Outline.Width = 19050; // 1.5 pt
+            }
 
             PresPart.Presentation.Save();
 
@@ -409,9 +442,10 @@ namespace PPTXcreator
                 {
                     ImagePart targetPart = targetSlidePart.AddImagePart(ImagePartType.Png);
                     string rId = targetSlidePart.GetIdOfPart(targetPart);
-
                     pic.BlipFill.Blip.Embed.Value = rId;
-                    targetPart.FeedData(GetEditedImage());
+                    
+                    using (Stream imageStream = GetEditedImage())
+                        if (imageStream != null) targetPart.FeedData(imageStream);
                 }
                 else
                 {

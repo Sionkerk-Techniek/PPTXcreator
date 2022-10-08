@@ -500,17 +500,9 @@ namespace PPTXcreator
         {
             List<ServiceElement> elements = new List<ServiceElement>();
             foreach (DataGridViewRow row in dataGridView.Rows)
-            {
-                ServiceElement newElement = new ServiceElement(row);
-                if (elements.Count > 0)
-                {
-                    // If the previous element was a song and this one is a reading, show a QR on the last one
-                    if (elements.Last().IsReading && newElement.IsSong) newElement.ShowQR = true;
-                }
-                elements.Add(newElement);
-            }
+                elements.Add(new ServiceElement(row));
+            
             elements.RemoveAt(elements.Count - 1); // Last row in the dataframe is a placeholder
-
             return elements;
         }
 
@@ -617,7 +609,7 @@ namespace PPTXcreator
             duringService.CopyQRSlideFromPresentation(beforeService);
             duringService.ReplaceKeywords(keywords);
             beforeService.SaveClose();
-            duringService.RemoveSlide(index: 0); // delete template slide
+            duringService.RemoveHiddenSlides(); // delete template slides
             duringService.SaveClose();
 
             // Create the presentation after the service
