@@ -351,6 +351,7 @@ namespace PPTXcreator
         /// </summary>
         public void SaveClose()
         {
+            SetPackageMetadata();
             Document.Close();
             Document.Dispose(); // Is this necessary? Probably not but it feels appropiate
         }
@@ -452,6 +453,16 @@ namespace PPTXcreator
                     pic.Remove();
                 }
             }
+        }
+
+        public void SetPackageMetadata()
+        {
+            Document.PackageProperties.Title = "Sionkerk Presentatie";
+            Document.PackageProperties.Created = DateTime.Now;
+            Document.PackageProperties.Modified = DateTime.Now;
+            Document.PackageProperties.Creator = "PPTXcreator";
+            Document.PackageProperties.LastModifiedBy = "PPTXcreator";
+            Document.PackageProperties.Revision = "1";
         }
 
         private static bool ImageIsQR(Presentation.Picture pic)
