@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +12,11 @@ using DocumentFormat.OpenXml.Packaging;
 
 namespace PPTXcreator
 {
-    class PowerPoint
+    public class PowerPoint
     {
-        private PresentationDocument Document { get; }
-        private PresentationPart PresPart { get => Document.PresentationPart; }
-        private IEnumerable<SlidePart> Slides { get => PresPart.SlideParts; }
+        public PresentationDocument Document { get; }
+        public PresentationPart PresPart => Document.PresentationPart;
+        public IEnumerable<SlidePart> Slides => PresPart.SlideParts;
         
         /// <summary>
         /// Constructs a Presentation object from the .pptx file at <paramref name="openPath"/>,
@@ -91,6 +91,7 @@ namespace PPTXcreator
                 // A new deep copy of the runproperties is needed for every new run
                 RunProperties runProperties = (RunProperties)run.RunProperties.CloneNode(true);
                 ParagraphProperties parProperties = (ParagraphProperties)par.ParagraphProperties.CloneNode(true);
+                SetLineSpacing(parProperties, elements.Count());
                 Paragraph newPar = new Paragraph(
                     new Run(
                         new Text(text)
@@ -122,6 +123,21 @@ namespace PPTXcreator
                     else if (run.InnerText.Contains(tags.Readings)) ReplaceMultilineKeywords(run, readings);
                 }
             }
+        }
+
+        private void SetLineSpacing(ParagraphProperties properties, int lines)
+        {
+            properties.LineSpacing = new LineSpacing();
+            properties.SpaceBefore = new SpaceBefore() { 
+                SpacingPoints = new SpacingPoints() { 
+                    Val = 1000 
+                } 
+            };
+
+            // Set spacing to 0.9 for 6 lines or less, 0.8 for 7 lines, 0.7 for 8, etc
+            properties.LineSpacing.SpacingPercent = new SpacingPercent {
+                Val = 90000 - Math.Max((lines - 6) * 10000, 0)
+            };
         }
 
         /// <summary>
@@ -157,16 +173,15 @@ namespace PPTXcreator
             foreach (Presentation.Picture pic in slidePart.Slide.Descendants<Presentation.Picture>())
             {
                 // Get the description and rId from the object
-                string description = pic.NonVisualPictureProperties.NonVisualDrawingProperties.Description;
-                string rId = pic.BlipFill.Blip.Embed.Value;
                 
-                if (description == Settings.Instance.ImageDescription)
+                if (ImageIsQR(pic))
                 {
                     // Get the ImagePart by id, and replace the image
+                    string rId = pic.BlipFill.Blip.Embed.Value;
                     ImagePart imagePart = (ImagePart)slidePart.GetPartById(rId);
-                    Stream imageStream = GetEditedImage(imagePath);
-                    if (imageStream != null) imagePart.FeedData(imageStream);
-                    imageStream.Dispose();
+
+                    using (Stream imageStream = GetEditedImage(imagePath))
+                        if (imageStream != null) imagePart.FeedData(imageStream);
                 }
             }
         }
@@ -177,7 +192,8 @@ namespace PPTXcreator
         /// </summary>
         public void ReplaceImage(string imagePath)
         {
-            if (!File.Exists(imagePath)) return;
+            if (!File.Exists(imagePath) && imagePath != "standaard QR")
+                return;
 
             // Loop over slideparts (not really necessary if the slide number is known)
             foreach (SlidePart slidePart in Slides)
@@ -195,25 +211,37 @@ namespace PPTXcreator
             foreach (Presentation.Picture pic in slidePart.Slide.Descendants<Presentation.Picture>())
             {
                 // Remove the image if the description matches the ImageDescription setting
-                string description = pic.NonVisualPictureProperties.NonVisualDrawingProperties.Description;
-                if (description == Settings.Instance.ImageDescription) pic.Remove();
+                if (ImageIsQR(pic))
+                    pic.Remove();
             }
         }
 
         /// <summary>
         /// Loads the file located at <paramref name="path"/> and applies crop and threshold
         /// </summary>
-        public static Stream GetEditedImage(string path)
+        public static Stream GetEditedImage(string path = null)
         {
+            FileStream originalImageStream = null;
+            Bitmap originalImage;
+            ImageSettings settings = Settings.Instance.ImageParameters;
+
             // Try to get the filestream, return it without editing if EnableEditQR is false
-            if (!Program.TryGetFileStream(path, out FileStream originalImageStream))
-                return null;
-            if (!Settings.Instance.EnableEditQR)
-                return originalImageStream;
+            if (path != "standaard QR" && path != null)
+            {
+                if (!Program.TryGetFileStream(path, out originalImageStream))
+                    return null;
+                if (!Settings.Instance.EnableEditQR)
+                    return originalImageStream;
+
+                originalImage = new Bitmap(originalImageStream);
+            }
+            else
+            {
+                originalImage = Properties.Resources.qr_code;
+                settings = new ImageSettings();
+            }
 
             // Check if the cropping region is valid, don't edit if it isn't
-            Bitmap originalImage = new Bitmap(originalImageStream);
-            ImageSettings settings = Settings.Instance.ImageParameters;
             if (!settings.IsValid()
                 || settings.OffsetX + settings.Width > originalImage.Width
                 || settings.OffsetY + settings.Height > originalImage.Height)
@@ -222,7 +250,18 @@ namespace PPTXcreator
                     $"waar naar bijgesneden moet worden ({settings}) niet bestaat in de afbeelding " +
                     $"met resolutie {originalImage.Width}x{originalImage.Height}.");
                 Program.MainWindow.CheckBoxEnableEditQRSetValue(false);
-                return originalImageStream;
+
+                if (originalImageStream == null)
+                {
+                    MemoryStream imageStream = new MemoryStream();
+                    Properties.Resources.qr_code.Save(imageStream, ImageFormat.Png);
+                    imageStream.Position = 0;
+                    return imageStream;
+                }
+                else
+                {
+                    return originalImageStream;
+                }
             }
 
             // Crop the image
@@ -252,7 +291,7 @@ namespace PPTXcreator
             crop.X = crop.Y = 0; // include full image, .Clone always needs a rectangle for some reason
             editedImage.Clone(crop, PixelFormat.Format1bppIndexed).Save(memoryStream, ImageFormat.Png);
             memoryStream.Position = 0;
-            originalImageStream.Dispose();
+            originalImageStream?.Dispose();
             return memoryStream;
         }
 
@@ -312,8 +351,123 @@ namespace PPTXcreator
         /// </summary>
         public void SaveClose()
         {
+            SetPackageMetadata();
             Document.Close();
             Document.Dispose(); // Is this necessary? Probably not but it feels appropiate
+        }
+
+        public void RemoveHiddenSlides()
+        {
+            PresPart.Presentation.Save();
+            Presentation.SlideIdList idList = PresPart.Presentation.SlideIdList;
+            for (int i = 0; i < idList.Count(); i++)
+            {
+                Presentation.SlideId slideId = (Presentation.SlideId)idList.ChildElements[i];
+                SlidePart slidePart = (SlidePart)PresPart.GetPartById(slideId.RelationshipId);
+
+                if (slidePart.Slide.Show != null && !slidePart.Slide.Show)
+                    RemoveSlide(i);
+            }
+        }
+
+        public void RemoveSlide(int index)
+        {
+            if (Slides.Count() == 1) return; // Prevent illegal slideless presentations
+
+            // Get the SlideIdList
+            Presentation.SlideIdList idList = PresPart.Presentation.SlideIdList;
+
+            if (index >= idList.ChildElements.Count) return; // slide does not exist
+
+            // Get the SlideId from the SlideIdList and delete it from the list
+            Presentation.SlideId slideId = (Presentation.SlideId)idList.ChildElements[index];
+            idList.RemoveChild(slideId);
+
+            // Delete the actual slide
+            PresPart.Presentation.Save();
+            SlidePart slidePart = (SlidePart)PresPart.GetPartById(slideId.RelationshipId);
+            PresPart.DeletePart(slidePart);
+        }
+
+        /// <summary>
+        /// Copy the first slide with a QR from presentation <paramref name="origin"/> to this presentation
+        /// </summary>
+        public void CopyQRSlideFromPresentation(PowerPoint origin)
+        {
+            // Get the SlideIdList and the largest id in it, then add one to make a new unique id
+            Presentation.SlideIdList idList = PresPart.Presentation.SlideIdList;
+            uint newId = idList.Max(id => (id as Presentation.SlideId).Id) + 1;
+
+            // Get the first SlidePart from the SlideIdList
+            Presentation.SlideId sourceSlideId = (Presentation.SlideId)idList.FirstChild;
+            SlidePart sourceSlidePart = (SlidePart)PresPart.GetPartById(sourceSlideId.RelationshipId);
+
+            // Create a new slidepart in this presentation, and feed it data from the origin
+            SlidePart targetSlidePart = PresPart.AddNewPart<SlidePart>();
+            SlidePart originSlidePart = origin.PresPart.SlideParts.First(
+                part => part.Slide.Descendants<Presentation.Picture>().Any(pic => ImageIsQR(pic)));
+            targetSlidePart.FeedData(originSlidePart.GetStream());
+
+            // Add the slidelayoutpart, fix id
+            targetSlidePart.AddPart(sourceSlidePart.SlideLayoutPart);
+            Presentation.SlideId targetSlideId = idList.InsertBefore(new Presentation.SlideId(), idList.LastChild);
+            targetSlideId.Id = newId;
+            targetSlideId.RelationshipId = PresPart.GetIdOfPart(targetSlidePart);
+
+            // Mess around so that the fonts are mostly the same (but not all of them for some reason)
+            targetSlidePart.SlideLayoutPart.SlideMasterPart.ThemePart.FeedData(
+                originSlidePart.SlideLayoutPart.SlideMasterPart.ThemePart.GetStream());
+
+            // Adjust font things
+            foreach (Run run in targetSlidePart.Slide.Descendants<Run>())
+            {
+                // Brute force the default fonts for runs that don't have any specified
+                if (!run.RunProperties.ChildElements.Any(element => element is TextFontType))
+                {
+                    run.RunProperties.AddChild(new LatinFont() { Typeface = "+mn-lt" }); // usually Calibri
+                    run.RunProperties.AddChild(new EastAsianFont { Typeface = "+mn-ea" });
+                    run.RunProperties.AddChild(new ComplexScriptFont { Typeface = "+mn-cs" });
+                }
+
+                // Increase outline width for better contrast
+                if (run.RunProperties.Outline != null)
+                    run.RunProperties.Outline.Width = 19050; // 1.5 pt
+            }
+
+            PresPart.Presentation.Save();
+
+            // Remove all pictures which are not the QR, and give the QR its image data back
+            foreach (Presentation.Picture pic in targetSlidePart.Slide.Descendants<Presentation.Picture>().ToList())
+            {
+                if (ImageIsQR(pic))
+                {
+                    ImagePart targetPart = targetSlidePart.AddImagePart(ImagePartType.Png);
+                    string rId = targetSlidePart.GetIdOfPart(targetPart);
+                    pic.BlipFill.Blip.Embed.Value = rId;
+                    
+                    using (Stream imageStream = GetEditedImage())
+                        if (imageStream != null) targetPart.FeedData(imageStream);
+                }
+                else
+                {
+                    pic.Remove();
+                }
+            }
+        }
+
+        public void SetPackageMetadata()
+        {
+            Document.PackageProperties.Title = "Sionkerk Presentatie";
+            Document.PackageProperties.Created = DateTime.Now;
+            Document.PackageProperties.Modified = DateTime.Now;
+            Document.PackageProperties.Creator = "PPTXcreator";
+            Document.PackageProperties.LastModifiedBy = "PPTXcreator";
+            Document.PackageProperties.Revision = "1";
+        }
+
+        private static bool ImageIsQR(Presentation.Picture pic)
+        {
+            return pic.NonVisualPictureProperties.NonVisualDrawingProperties.Description == Settings.Instance.ImageDescription;
         }
     }
 }

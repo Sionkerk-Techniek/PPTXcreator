@@ -29,18 +29,18 @@ namespace PPTXcreator
             checkBoxQRedit.Checked = settings.EnableEditQR;
             checkBoxAutoPopulate.Checked = settings.EnableAutoPopulate;
 
-            numericXMinQR.Enabled = settings.EnableEditQR;
             numericXMinQR.Value = settings.ImageParameters.OffsetX;
-            numericYMinQR.Enabled = settings.EnableEditQR;
             numericYMinQR.Value = settings.ImageParameters.OffsetY;
-            numericXMaxQR.Enabled = settings.EnableEditQR;
             numericXMaxQR.Value = settings.ImageParameters.OffsetX + settings.ImageParameters.Width;
-            numericYMaxQR.Enabled = settings.EnableEditQR;
             numericYMaxQR.Value = settings.ImageParameters.OffsetY + settings.ImageParameters.Height;
 
             if (Settings.Instance.NextService != DateTime.MinValue)
                 dateTimePickerCurrent.Value = Settings.Instance.NextService; // triggers the ValueChanged event
+
+            _initialized = true;
         }
+
+        private readonly bool _initialized = false;
 
         /// <summary>
         /// Select a file and sets this.textBoxQRPath.Text and
@@ -53,7 +53,16 @@ namespace PPTXcreator
                 "Selecteer de QR-code"
             );
 
-            if (!string.IsNullOrEmpty(path)) textBoxQRPath.Text = path;
+            if (!string.IsNullOrEmpty(path))
+            {
+                textBoxQRPath.Text = path;
+
+                checkBoxQRedit.Enabled = true;
+                numericXMinQR.Enabled = checkBoxQRedit.Checked;
+                numericXMaxQR.Enabled = checkBoxQRedit.Checked;
+                numericYMinQR.Enabled = checkBoxQRedit.Checked;
+                numericYMaxQR.Enabled = checkBoxQRedit.Checked;
+            }
         }
 
         /// <summary>
@@ -402,10 +411,14 @@ namespace PPTXcreator
             string serviceElementType;
             try
             {
-                currentrow = dataGridView.CurrentRow;
+                currentrow = dataGridView.Rows[e.RowIndex];
                 serviceElementType = (string)currentrow.Cells[0].Value;
             }
             catch (NullReferenceException)
+            {
+                return;
+            }
+            catch (Exception)
             {
                 return;
             }
@@ -464,10 +477,14 @@ namespace PPTXcreator
         private void CheckBoxEnableEditQRChanged(object sender, EventArgs e)
         {
             Settings.Instance.EnableEditQR = ((CheckBox)sender).Checked;
-            numericXMinQR.Enabled = Settings.Instance.EnableEditQR;
-            numericYMinQR.Enabled = Settings.Instance.EnableEditQR;
-            numericXMaxQR.Enabled = Settings.Instance.EnableEditQR;
-            numericYMaxQR.Enabled = Settings.Instance.EnableEditQR;
+
+            if (_initialized)
+            {
+                numericXMinQR.Enabled = Settings.Instance.EnableEditQR;
+                numericYMinQR.Enabled = Settings.Instance.EnableEditQR;
+                numericXMaxQR.Enabled = Settings.Instance.EnableEditQR;
+                numericYMaxQR.Enabled = Settings.Instance.EnableEditQR;
+            }
         }
 
         public void CheckBoxEnableEditQRSetValue(bool value)
@@ -483,17 +500,9 @@ namespace PPTXcreator
         {
             List<ServiceElement> elements = new List<ServiceElement>();
             foreach (DataGridViewRow row in dataGridView.Rows)
-            {
-                ServiceElement newElement = new ServiceElement(row);
-                if (elements.Count > 0)
-                {
-                    // If the previous element was a song and this one is a reading, show a QR on the last one
-                    if (elements.Last().IsReading && newElement.IsSong) newElement.ShowQR = true;
-                }
-                elements.Add(newElement);
-            }
+                elements.Add(new ServiceElement(row));
+            
             elements.RemoveAt(elements.Count - 1); // Last row in the dataframe is a placeholder
-
             return elements;
         }
 
@@ -511,7 +520,7 @@ namespace PPTXcreator
                 "titel van de voorganger van deze dienst", "titel van de voorganger van de volgende dienst",
                 "naam van de voorganger van deze dienst", "naam van de voorganger van de volgende dienst",
                 "plaats van de voorganger van deze dienst", "plaats van de voorganger van de volgende dienst",
-                "collectedoel 1", "collectedoel 3", "naam van de organist", "bestandspad QR-code", "liturgie"
+                "collectedoel 1", "collectedoel 3", "naam van de organist", "liturgie"
             };
             string[] inputValues = new string[]
             {
@@ -519,21 +528,17 @@ namespace PPTXcreator
                 textBoxVoorgangerNuNaam.Text, textBoxVoorgangerNextNaam.Text,
                 textBoxVoorgangerNuPlaats.Text, textBoxVoorgangerNextPlaats.Text,
                 textBoxCollecte1.Text, textBoxCollecte3.Text, textBoxOrganist.Text,
-                textBoxQRPath.Text, dataGridView.RowCount.ToString()
+                dataGridView.RowCount.ToString()
             };
             string[] defaultValues = new string[]
             {
                 "titel", "titel", "naam", "naam", "plaats", "plaats",
-                "doel 1", "doel 3", "naam", "", "1"
+                "doel 1", "doel 3", "naam", "1"
             };
 
             for (int i = 0; i < inputValues.Length; i++)
-            {
                 if (inputValues[i] == defaultValues[i] || string.IsNullOrWhiteSpace(inputValues[i]))
-                {
                     invalidInputs.Add(fieldNames[i]);
-                }
-            }
 
             if (invalidInputs.Count > 0)
             {
@@ -585,15 +590,12 @@ namespace PPTXcreator
                 from ServiceElement element in elements where element.IsReading select element
             );
 
-            beforeService.SaveClose();
-
             // Create the presentation during the service
             PowerPoint duringService = CreatePowerpoint(Settings.Instance.PathTemplateDuring,
                 Settings.Instance.PathOutputFolder + $"/tijdens {filenamepart}.pptx");
 
             if (duringService == null) return;
-
-            duringService.ReplaceKeywords(keywords);
+            
             duringService.ReplaceImage(textBoxQRPath.Text);
 
             foreach (ServiceElement element in elements)
@@ -604,6 +606,10 @@ namespace PPTXcreator
                 }, element.ShowQR);
             }
 
+            duringService.CopyQRSlideFromPresentation(beforeService);
+            duringService.ReplaceKeywords(keywords);
+            beforeService.SaveClose();
+            duringService.RemoveHiddenSlides(); // delete template slides
             duringService.SaveClose();
 
             // Create the presentation after the service
@@ -612,9 +618,15 @@ namespace PPTXcreator
 
             if (afterService == null) return;
 
+            // Don't show date if the next service is on the same date
+            if (dateTimePickerCurrent.Value.Date == dateTimePickerNext.Value.Date)
+            {
+                afterService.ReplaceKeywords(new Dictionary<string, string>() {
+                    { $"op {tags.ServiceNextDate}" , "" } 
+                });
+            }
             afterService.ReplaceKeywords(keywords);
             afterService.ReplaceImage(textBoxQRPath.Text);
-
             afterService.SaveClose();
 
             // Done, message the user
