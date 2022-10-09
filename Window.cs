@@ -618,6 +618,13 @@ namespace PPTXcreator
 
             if (afterService == null) return;
 
+            // Don't show date if the next service is on the same date
+            if (dateTimePickerCurrent.Value.Date == dateTimePickerNext.Value.Date)
+            {
+                afterService.ReplaceKeywords(new Dictionary<string, string>() {
+                    { $"op {tags.ServiceNextDate}" , "" } 
+                });
+            }
             afterService.ReplaceKeywords(keywords);
             afterService.ReplaceImage(textBoxQRPath.Text);
             afterService.SaveClose();
