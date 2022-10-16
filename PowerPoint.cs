@@ -418,6 +418,9 @@ namespace PPTXcreator
             targetSlidePart.SlideLayoutPart.SlideMasterPart.ThemePart.FeedData(
                 originSlidePart.SlideLayoutPart.SlideMasterPart.ThemePart.GetStream());
 
+            // Remove transition
+            targetSlidePart.Slide.Transition.Remove();
+
             // Adjust font things
             foreach (Run run in targetSlidePart.Slide.Descendants<Run>())
             {
