@@ -1168,7 +1168,7 @@ namespace PPTXcreator
             this.labelVersion.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelVersion.Size = new System.Drawing.Size(90, 17);
             this.labelVersion.TabIndex = 25;
-            this.labelVersion.Text = "versie 1.4.0";
+            this.labelVersion.Text = "versie 1.4.1";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // Window
