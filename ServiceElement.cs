@@ -10,7 +10,8 @@ namespace PPTXcreator
         PsalmWK,
         SongWK,
         SongOTH,
-        SongOther
+        SongOther,
+        Gezang
     }
 
     /// <summary>
@@ -75,6 +76,12 @@ namespace PPTXcreator
                     Type = ElementType.SongOther;
                     if (string.IsNullOrWhiteSpace(songname)) Title = "";
                     else Title = songname.Trim();
+                    break;
+                case "Gezang":
+                    Type = ElementType.Gezang;
+                    Title = "Gezang " + FormatTitle(selection);
+                    if (string.IsNullOrWhiteSpace(songname)) Subtitle = "";
+                    else Subtitle = songname.Trim();
                     break;
                 default:
                     Type = ElementType.None;

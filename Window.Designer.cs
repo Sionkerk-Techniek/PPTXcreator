@@ -108,11 +108,11 @@ namespace PPTXcreator
             this.buttonPreviousLiturgy = new System.Windows.Forms.Button();
             this.buttonFinish = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.tabInstellingen = new System.Windows.Forms.TabPage();
+            this.labelVersion = new System.Windows.Forms.Label();
             this.ContentType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.ContentIdentifier = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabInstellingen = new System.Windows.Forms.TabPage();
-            this.labelVersion = new System.Windows.Forms.Label();
             labelOrganist = new System.Windows.Forms.Label();
             labelDatumTijdNext = new System.Windows.Forms.Label();
             labelDatumTijdNu = new System.Windows.Forms.Label();
@@ -1111,6 +1111,31 @@ namespace PPTXcreator
             this.dataGridView.TabIndex = 2;
             this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.AutofillDatagridview);
             // 
+            // tabInstellingen
+            // 
+            this.tabInstellingen.Controls.Add(groupBoxAutoPopulate);
+            this.tabInstellingen.Controls.Add(groupBoxTemplates);
+            this.tabInstellingen.Controls.Add(groupBoxOutput);
+            this.tabInstellingen.Location = new System.Drawing.Point(4, 26);
+            this.tabInstellingen.Name = "tabInstellingen";
+            this.tabInstellingen.Padding = new System.Windows.Forms.Padding(3);
+            this.tabInstellingen.Size = new System.Drawing.Size(539, 368);
+            this.tabInstellingen.TabIndex = 2;
+            this.tabInstellingen.Text = "Instellingen";
+            this.tabInstellingen.UseVisualStyleBackColor = true;
+            this.tabInstellingen.Leave += new System.EventHandler(this.FocusLeaveSettingsTab);
+            // 
+            // labelVersion
+            // 
+            this.labelVersion.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.labelVersion.Location = new System.Drawing.Point(454, 9);
+            this.labelVersion.Name = "labelVersion";
+            this.labelVersion.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.labelVersion.Size = new System.Drawing.Size(90, 17);
+            this.labelVersion.TabIndex = 25;
+            this.labelVersion.Text = "versie 1.4.2";
+            this.labelVersion.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // ContentType
             // 
             this.ContentType.FillWeight = 71.2743F;
@@ -1121,6 +1146,7 @@ namespace PPTXcreator
             "Lied (WK)",
             "Lied (OTH)",
             "Lied (Overig)",
+            "Gezang",
             "Lezing"});
             this.ContentType.MinimumWidth = 6;
             this.ContentType.Name = "ContentType";
@@ -1145,31 +1171,6 @@ namespace PPTXcreator
             this.ContentName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ContentName.ToolTipText = "De naam van het lied (voor weerklank liederen of overige liederen). Voor psalmen " +
     "of schriftlezingen hoeft hier niets ingevuld te worden.";
-            // 
-            // tabInstellingen
-            // 
-            this.tabInstellingen.Controls.Add(groupBoxAutoPopulate);
-            this.tabInstellingen.Controls.Add(groupBoxTemplates);
-            this.tabInstellingen.Controls.Add(groupBoxOutput);
-            this.tabInstellingen.Location = new System.Drawing.Point(4, 26);
-            this.tabInstellingen.Name = "tabInstellingen";
-            this.tabInstellingen.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInstellingen.Size = new System.Drawing.Size(539, 368);
-            this.tabInstellingen.TabIndex = 2;
-            this.tabInstellingen.Text = "Instellingen";
-            this.tabInstellingen.UseVisualStyleBackColor = true;
-            this.tabInstellingen.Leave += new System.EventHandler(this.FocusLeaveSettingsTab);
-            // 
-            // labelVersion
-            // 
-            this.labelVersion.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.labelVersion.Location = new System.Drawing.Point(454, 9);
-            this.labelVersion.Name = "labelVersion";
-            this.labelVersion.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelVersion.Size = new System.Drawing.Size(90, 17);
-            this.labelVersion.TabIndex = 25;
-            this.labelVersion.Text = "versie 1.4.1";
-            this.labelVersion.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // Window
             // 
@@ -1265,9 +1266,6 @@ namespace PPTXcreator
         private System.Windows.Forms.TextBox textBoxThema;
         private System.Windows.Forms.CheckBox checkBoxAutoPopulate;
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ContentType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ContentIdentifier;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ContentName;
         private System.Windows.Forms.Button buttonNextDatetime;
         private System.Windows.Forms.Button buttonPreviousDatetime;
         private System.Windows.Forms.Label labelVersion;
@@ -1275,6 +1273,9 @@ namespace PPTXcreator
         private System.Windows.Forms.NumericUpDown numericXMaxQR;
         private System.Windows.Forms.NumericUpDown numericYMinQR;
         private System.Windows.Forms.NumericUpDown numericXMinQR;
+        private System.Windows.Forms.DataGridViewComboBoxColumn ContentType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContentIdentifier;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContentName;
     }
 }
 
